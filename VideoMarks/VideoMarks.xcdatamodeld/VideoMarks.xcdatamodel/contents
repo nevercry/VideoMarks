@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
+    <entity name="Image" representedClassName=".Image" syncable="YES">
+        <attribute name="data" attributeType="Binary" syncable="YES"/>
+        <relationship name="fromVideo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Video" inverseName="posterImage" inverseEntity="Video" syncable="YES"/>
+    </entity>
+    <entity name="Video" representedClassName=".Video" syncable="YES">
+        <attribute name="createAt" attributeType="Date" syncable="YES"/>
+        <attribute name="duration" attributeType="String" syncable="YES"/>
+        <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="poster" attributeType="String" syncable="YES"/>
+        <attribute name="source" attributeType="String" defaultValueString="unknow" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" minValueString="1" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="url" attributeType="String" syncable="YES"/>
+        <relationship name="posterImage" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Image" inverseName="fromVideo" inverseEntity="Image" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Image" positionX="-4023" positionY="-405" width="128" height="75"/>
+        <element name="Video" positionX="-4023" positionY="-450" width="128" height="165"/>
+    </elements>
+</model>

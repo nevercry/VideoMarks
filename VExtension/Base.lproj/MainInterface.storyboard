@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nEo-D3-Eep">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Share View Controller-->
+        <scene sceneID="Kxa-fd-kN0">
+            <objects>
+                <viewController id="pvu-P1-lcS" customClass="ShareViewController" customModule="VExtension" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KYy-sI-uwY"/>
+                        <viewControllerLayoutGuide type="bottom" id="N1g-bP-O75"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="ZQi-iE-J2C">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link: unknow" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fE0-h2-sEA">
+                                <rect key="frame" x="20" y="151" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="a7S-aM-hod"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.4802543474" green="0.481250179" blue="0.54225122609999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="j9l-WU-TmC">
+                                <rect key="frame" x="290" y="219" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LMl-yA-0ef">
+                                <rect key="frame" x="264" y="285" width="72" height="30"/>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="Copy Link "/>
+                                <connections>
+                                    <action selector="copyLinksToPasteboard:" destination="pvu-P1-lcS" eventType="touchUpInside" id="fGT-Vt-CZA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LMl-yA-0ef" firstAttribute="centerY" secondItem="ZQi-iE-J2C" secondAttribute="centerY" id="7bt-Vz-HXu"/>
+                            <constraint firstItem="LMl-yA-0ef" firstAttribute="top" secondItem="j9l-WU-TmC" secondAttribute="bottom" constant="46" id="IWS-xs-Nba"/>
+                            <constraint firstItem="j9l-WU-TmC" firstAttribute="centerX" secondItem="ZQi-iE-J2C" secondAttribute="centerX" id="RIf-yz-wxg"/>
+                            <constraint firstItem="LMl-yA-0ef" firstAttribute="centerX" secondItem="ZQi-iE-J2C" secondAttribute="centerX" id="WWJ-md-jI5"/>
+                            <constraint firstItem="j9l-WU-TmC" firstAttribute="top" secondItem="fE0-h2-sEA" secondAttribute="bottom" constant="47" id="Xx2-4n-SAm"/>
+                            <constraint firstItem="fE0-h2-sEA" firstAttribute="leading" secondItem="ZQi-iE-J2C" secondAttribute="leadingMargin" id="rx8-7d-vgP"/>
+                            <constraint firstItem="fE0-h2-sEA" firstAttribute="trailing" secondItem="ZQi-iE-J2C" secondAttribute="trailingMargin" id="u5W-1S-Iq3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ce0-EL-jah">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="EfY-EE-l1n">
+                            <connections>
+                                <action selector="cancel:" destination="pvu-P1-lcS" id="oRQ-NP-zKJ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VX7-Lq-hJh">
+                            <connections>
+                                <action selector="saveToVideoMarks:" destination="pvu-P1-lcS" id="7to-HH-vCG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="LinkLabel" destination="fE0-h2-sEA" id="SRc-h4-jFS"/>
+                        <outlet property="activityStatusView" destination="j9l-WU-TmC" id="mKJ-tB-6HX"/>
+                        <outlet property="copyButton" destination="LMl-yA-0ef" id="7zb-Np-IMT"/>
+                        <outlet property="saveLinkButton" destination="VX7-Lq-hJh" id="Khz-rj-2gq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E6M-zB-Fem" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1317" y="97"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1VU-r3-n4s">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nEo-D3-Eep" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CU6-0c-SIb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pvu-P1-lcS" kind="relationship" relationship="rootViewController" id="WJL-jB-aQq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u7W-H5-w6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="539" y="97"/>
+        </scene>
+    </scenes>
+</document>
