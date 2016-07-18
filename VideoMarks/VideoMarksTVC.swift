@@ -358,7 +358,6 @@ class VideoMarksTVC: UITableViewController {
             }
         }
     }
-
 }
 
 // MARK:- NSFetchedResultsControllerDelegate
@@ -367,7 +366,6 @@ extension VideoMarksTVC: NSFetchedResultsControllerDelegate {
         tableView.beginUpdates()
         print("begin")
     }
-    
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         

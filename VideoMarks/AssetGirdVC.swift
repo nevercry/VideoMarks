@@ -18,7 +18,6 @@ class AssetGirdVC: UICollectionViewController {
     var assetCollection: PHAssetCollection?
     var imageManager: PHCachingImageManager?
     var previousPreheatRect: CGRect?
-    
 
     override func awakeFromNib() {
         imageManager = PHCachingImageManager()
@@ -78,7 +77,6 @@ class AssetGirdVC: UICollectionViewController {
         let preHeight = CGRectGetHeight(preheatRect!)
         
         preheatRect = CGRectInset(preheatRect!, 0.0, -0.5 * preHeight)
-        
         
         let delta = abs(CGRectGetMidY(preheatRect!) - CGRectGetMidY(self.previousPreheatRect!))
         if delta > CGRectGetHeight(self.collectionView!.bounds) / 3.0 {

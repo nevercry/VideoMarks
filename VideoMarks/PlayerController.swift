@@ -42,11 +42,9 @@ class PlayerController: NSObject {
     // MARK: - 播放视频
     func playVideo(player: AVPlayer, inViewController: UIViewController) {
         player.actionAtItemEnd = .None
-        avPlayer.modalTransitionStyle = .CrossDissolve
-        avPlayer.player = player
         viewController = inViewController
-        
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in            
+            self?.avPlayer.player = player
             self?.viewController?.presentViewController(self!.avPlayer, animated: true) {
                 self?.avPlayer.player?.play()
                 self?.updateForPiP()
@@ -62,7 +60,9 @@ class PlayerController: NSObject {
     func updateForPiP()  {
         if let _ = viewController?.presentationController {
             if isInPiP {
-                viewController?.dismissViewControllerAnimated(true, completion: nil)
+                dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                    self?.viewController?.dismissViewControllerAnimated(true, completion: nil)
+                }
             }
         }
     }
@@ -79,7 +79,9 @@ extension PlayerController: AVPlayerViewControllerDelegate {
         if let _ = self.viewController?.presentedViewController {
             
         } else {
-            self.viewController?.presentViewController(playerViewController, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                self?.viewController?.presentViewController(playerViewController, animated: true, completion: nil)
+            }
         }
         
         completionHandler(true)
