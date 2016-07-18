@@ -13,7 +13,7 @@ import AVFoundation
 class PlayerController: NSObject {
     let avPlayer = AVPlayerViewController()
     var isInPiP = false
-    var viewController: UIViewController?
+    weak var viewController: UIViewController?
     
     override init() {
         
@@ -26,7 +26,6 @@ class PlayerController: NSObject {
         
         //注册视频播放器播放完成通知
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(rePlay), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateForPiP), name: AVPlayerItemNewAccessLogEntryNotification, object: nil)
     }
     
     deinit {
@@ -50,6 +49,7 @@ class PlayerController: NSObject {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             self?.viewController?.presentViewController(self!.avPlayer, animated: true) {
                 self?.avPlayer.player?.play()
+                self?.updateForPiP()
             }
         }
     }
