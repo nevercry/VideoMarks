@@ -68,7 +68,6 @@ run: function(arguments) {
                 );
     }
     
-    
     // 解析Youtube
     function youtubeParse() {
         // youtube
@@ -288,6 +287,33 @@ run: function(arguments) {
         }
     }
     
+    // xvideos
+    function xvideosParse() {
+        otherParse();
+        if (videoInfo.url.length == 0) {
+            var html5video = document.getElementById('html5video');
+            var infoScript = html5video.nextElementSibling;
+            var infoArr = infoScript.innerHTML.split(';').filter(function(ele) {
+                                                                 return ele.includes('setVideoTitle') || ele.includes('setVideoUrlHigh') || ele.includes('setThumbUrl')
+                                                                 });
+            
+            for (var i = 0;i < infoArr.length;i++) {
+                var info = infoArr[i];
+                if (info.includes('setVideoTitle')) {
+                    videoInfo.title = info.split("'")[1];
+                }
+                
+                if (info.includes('setVideoUrlHigh')) {
+                    videoInfo.url = info.split("'")[1];
+                }
+                
+                if (info.includes('setThumbUrl')) {
+                    videoInfo.poster = info.split("'")[1];
+                }
+            }
+        }
+    }
+    
     function otherParse() {
         // 其他网站
         var sources = document.getElementsByTagName("source");
@@ -299,7 +325,6 @@ run: function(arguments) {
                 break;
             }
         }
-        
         
         var videos = document.getElementsByTagName('video');
         if (videos.length > 0) {
@@ -354,6 +379,8 @@ run: function(arguments) {
         weiboParse();
     } else if (originURL.includes('tumblr.com')) {
         tumblrParse();
+    } else if (originURL.includes('xvideos.com')) {
+        xvideosParse();
     } else {
         otherParse();
     }

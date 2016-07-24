@@ -15,6 +15,7 @@ class PhotosTVC: UITableViewController {
     var isPhotosCanAccess: Bool = false {
         didSet {
             tableView.tableFooterView?.hidden = isPhotosCanAccess
+            navigationItem.rightBarButtonItem?.enabled = isPhotosCanAccess
         }
     }
    
@@ -40,18 +41,15 @@ class PhotosTVC: UITableViewController {
         super.viewDidLoad()
         
         self.title = "Photos"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addNewAlbum))
         
         let status = PHPhotoLibrary.authorizationStatus()
-        
+
         switch status {
         case .Authorized:
             isPhotosCanAccess = true
         default:
             isPhotosCanAccess = false
-        }
-        
-        if isPhotosCanAccess == true {
-//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addNewAlbum))
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -69,7 +67,25 @@ class PhotosTVC: UITableViewController {
     // MARK: - Actions
     func addNewAlbum(sender: UIBarButtonItem) {
         // 添加新的相册
+        let alertC = UIAlertController(title: NSLocalizedString("New Ablum", comment: "新建相册"), message: nil, preferredStyle: .Alert)
+        alertC.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = NSLocalizedString("Ablum Name", comment: "相册名")
+        }
         
+        alertC.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .Cancel, handler: nil))
+        alertC.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "创建"), style: .Default) { (action) in
+            let textField = alertC.textFields?.first
+            guard let title = textField?.text where !title.isEmpty else { return }
+            
+            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(title)
+                }, completionHandler: { (success, error) in
+                    if !success {
+                        print("error create ablum: \(error)")
+                    }
+            })
+            })
+        presentViewController(alertC, animated: true, completion: nil)
     }
     
     @IBAction func goToSetting(sender: UIButton) {
@@ -116,6 +132,37 @@ class PhotosTVC: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionLocalizedTitles[section]
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        var canEditOrNot = false
+        
+        if indexPath.section == 0 {
+            canEditOrNot = false
+        } else {
+            canEditOrNot = true
+        }
+        
+        return canEditOrNot
+    }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .Delete
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard editingStyle == .Delete && indexPath.section == 1 else { return }
+        
+        let resut = sectionFetchResults![indexPath.section] as! PHFetchResult
+        let collection = resut[indexPath.row] as! PHCollection
+        
+        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+            PHAssetCollectionChangeRequest.deleteAssetCollections([collection])
+        }) { (success, error) in
+            if !success {
+                print("error delete ablum: \(error)")
+            }
+        }
     }
     
     // MARK: - Navigation
