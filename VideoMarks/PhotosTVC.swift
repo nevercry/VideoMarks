@@ -134,6 +134,7 @@ class PhotosTVC: UITableViewController {
         return sectionLocalizedTitles[section]
     }
     
+    /**
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         var canEditOrNot = false
         
@@ -164,6 +165,7 @@ class PhotosTVC: UITableViewController {
             }
         }
     }
+    **/
     
     // MARK: - Navigation
 
@@ -182,7 +184,11 @@ class PhotosTVC: UITableViewController {
             assetGirdVC.assetsFetchResults = fetchResult
         } else if (segue.identifier == VideoMarks.ShowColleciton) {
             guard let collection = fetchResult[indexPath!.row] as? PHAssetCollection else { return }
-            let assetFetchResult = PHAsset.fetchKeyAssetsInAssetCollection(collection, options: nil)
+            let allVideosOptions = PHFetchOptions()
+            allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Video.rawValue)
+            allVideosOptions.includeHiddenAssets = true
+            allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
+            let assetFetchResult = PHAsset.fetchAssetsInAssetCollection(collection, options: allVideosOptions)
              assetGirdVC.assetsFetchResults = assetFetchResult
             assetGirdVC.assetCollection = collection
         }

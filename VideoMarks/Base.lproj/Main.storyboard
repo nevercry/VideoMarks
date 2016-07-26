@@ -284,6 +284,30 @@
                                     <outlet property="imageView" destination="ku2-KD-lSd" id="aq3-Lb-keo"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DownloadViewCell" id="14Z-z6-TlU" customClass="DownloadViewCell" customModule="VideoMarks" customModuleProvider="target">
+                                <rect key="frame" x="87" y="64" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQa-gC-QfQ">
+                                            <rect key="frame" x="19" y="29" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="BQa-gC-QfQ" firstAttribute="centerY" secondItem="14Z-z6-TlU" secondAttribute="centerY" id="hqo-eM-UaY"/>
+                                    <constraint firstItem="BQa-gC-QfQ" firstAttribute="centerX" secondItem="14Z-z6-TlU" secondAttribute="centerX" id="qFR-3C-3ud"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="progressLabel" destination="BQa-gC-QfQ" id="2oP-hV-luv"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
                         <connections>
                             <outlet property="dataSource" destination="q1v-tK-8bR" id="u8Y-9c-UCA"/>

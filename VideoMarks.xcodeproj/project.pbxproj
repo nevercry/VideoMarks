@@ -12,6 +12,9 @@
 		4A07AE721D088C9000935701 /* OpenSafariActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07AE711D088C9000935701 /* OpenSafariActivity.swift */; };
 		4A07AE7A1D0A108000935701 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */; };
 		4A07AE7B1D0A108000935701 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07AE791D0A108000935701 /* Image.swift */; };
+		4A2EB67F1D45FD9700019FAC /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB67E1D45FD9700019FAC /* TaskManager.swift */; };
+		4A2EB6811D45FE3800019FAC /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6801D45FE3800019FAC /* DownloadTask.swift */; };
+		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
 		4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFD9F1D060D6D004C2C64 /* DataController.swift */; };
 		4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */; };
 		4A5CFDA61D07FE14004C2C64 /* Video+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */; };
@@ -93,6 +96,9 @@
 		4A07AE751D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Image+CoreDataProperties.swift"; path = "Models/Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4A07AE791D0A108000935701 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Models/Image.swift; sourceTree = "<group>"; };
+		4A2EB67E1D45FD9700019FAC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		4A2EB6801D45FE3800019FAC /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTask.swift; path = Models/DownloadTask.swift; sourceTree = "<group>"; };
+		4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadViewCell.swift; path = Views/DownloadViewCell.swift; sourceTree = "<group>"; };
 		4A5CFD9F1D060D6D004C2C64 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksTVC.swift; sourceTree = "<group>"; };
 		4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Video+CoreDataProperties.swift"; path = "Models/Video+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 		4A07AE821D0B433900935701 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
 				4AA06C661D37AA6700504AE3 /* PlayerController.swift */,
 				4A5CFD9F1D060D6D004C2C64 /* DataController.swift */,
 				4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */,
@@ -210,6 +217,7 @@
 				4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */,
 				4A5CFDA51D07FE14004C2C64 /* Video.swift */,
 				4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */,
+				4A2EB6801D45FE3800019FAC /* DownloadTask.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				4AA06C621D36F69E00504AE3 /* GirdViewCell.swift */,
+				4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */,
 			);
 			name = CollectionViewCells;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 				4AA06C651D3707C000504AE3 /* UICollectionView+extension.swift in Sources */,
 				4AA06C601D36EFEF00504AE3 /* NSIndexSet+extension.swift in Sources */,
 				4AA06C591D3679D400504AE3 /* VideoMarkCell.swift in Sources */,
+				4A2EB6811D45FE3800019FAC /* DownloadTask.swift in Sources */,
 				4AA06C521D3672D700504AE3 /* UIImage+extension.swift in Sources */,
 				4A07AE721D088C9000935701 /* OpenSafariActivity.swift in Sources */,
 				4A07AE7A1D0A108000935701 /* Image+CoreDataProperties.swift in Sources */,
@@ -523,9 +533,11 @@
 				4A5CFDA91D080D5F004C2C64 /* NSManagedObject+Extension.swift in Sources */,
 				4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */,
 				4A5CFDA71D07FE14004C2C64 /* Video.swift in Sources */,
+				4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */,
 				4AA06C671D37AA6700504AE3 /* PlayerController.swift in Sources */,
 				4AA06C501D366F5000504AE3 /* VideoMarks.swift in Sources */,
 				4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */,
+				4A2EB67F1D45FD9700019FAC /* TaskManager.swift in Sources */,
 				4AD7949D1D0347BD008A1D2D /* VideoMarks.xcdatamodeld in Sources */,
 				4AA06C5E1D36EBFA00504AE3 /* AssetGirdVC.swift in Sources */,
 				4A5CFDA61D07FE14004C2C64 /* Video+CoreDataProperties.swift in Sources */,

@@ -28,5 +28,19 @@ struct VideoMarks {
     
     // MARK: - Segue
     static let ShowAllVideos = "showAllVideos"
-    static let ShowColleciton = "showColleciton"
+    static let ShowColleciton = "showCollection"
+    
+    
+    // 
+    static func documentURL() -> NSURL? {
+        return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first
+    }
+}
+
+
+enum DownloadTaskNotification: String {
+    
+    case Progress = "downloadNotificationProgress"
+    case Finish = "downloadNotificationFinish"
+    
 }
