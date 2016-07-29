@@ -24,7 +24,7 @@ class VideoMarksTVC: UITableViewController {
 
     var dataController: DataController?
     var fetchedResultsController: NSFetchedResultsController!
-    let sectionLocalizedTitles = ["",NSLocalizedString("Web", comment: "")]
+    let sectionLocalizedTitles = ["",NSLocalizedString("Web", comment: "网页")]
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {

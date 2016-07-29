@@ -14,7 +14,7 @@ class DownloadViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        progressLabel.text = NSLocalizedString("Downloading...", comment: "下载中...")
+        progressLabel.text = NSLocalizedString("Downloading", comment: "下载中")
     }
 
 
