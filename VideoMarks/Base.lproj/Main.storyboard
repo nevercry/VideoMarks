@@ -101,15 +101,15 @@
                             <rect key="frame" x="0.0" y="220" width="600" height="85"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无法访问到照片，请在设置中打开权限" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEF-Q9-mEH">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photos access deny" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEF-Q9-mEH">
                                     <rect key="frame" x="8" y="23" width="584" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJV-ml-Hwc">
-                                    <rect key="frame" x="278" y="47" width="45" height="30"/>
-                                    <state key="normal" title="去设置"/>
+                                    <rect key="frame" x="255" y="47" width="91" height="30"/>
+                                    <state key="normal" title="Go to Setting"/>
                                     <connections>
                                         <action selector="goToSetting:" destination="jOV-d5-WYz" eventType="touchUpInside" id="liX-Y8-4DJ"/>
                                     </connections>

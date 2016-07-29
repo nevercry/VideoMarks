@@ -1,6 +1,6 @@
 
 /* Class = "UILabel"; text = "Source Link"; ObjectID = "EZe-CP-5N0"; */
-"EZe-CP-5N0.text" = "Source Link";
+"EZe-CP-5N0.text" = "源リンク";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "KdQ-C3-yAb"; */
 "KdQ-C3-yAb.title" = "Title";
@@ -8,5 +8,23 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "Vou-vB-Dbm"; */
 "Vou-vB-Dbm.text" = "Title";
 
+/* Class = "UILabel"; text = "$"; ObjectID = "a6W-OK-YOX"; */
+"a6W-OK-YOX.text" = "$";
+
+/* Class = "UIButton"; normalTitle = "去设置"; ObjectID = "cJV-ml-Hwc"; */
+"cJV-ml-Hwc.normalTitle" = "設定に行きます";
+
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "g9O-up-kN4"; */
 "g9O-up-kN4.text" = "Subtitle";
+
+/* Class = "UINavigationItem"; title = "Remove Ad"; ObjectID = "t5e-sW-oQu"; */
+"t5e-sW-oQu.title" = "削除します広告";
+
+/* Class = "UILabel"; text = "无法访问到照片，请在设置中打开权限"; ObjectID = "tEF-Q9-mEH"; */
+"tEF-Q9-mEH.text" = "写真へのアクセスを拒否します";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "wrr-DD-jiI"; */
+"wrr-DD-jiI.text" = "Title";
+
+/* Class = "UILabel"; text = "Photo Library"; ObjectID = "yB6-WK-ZuZ"; */
+"yB6-WK-ZuZ.text" = "フォトライブラリー";

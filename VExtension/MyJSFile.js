@@ -345,7 +345,7 @@ run: function(arguments) {
                 for (var i = 0; i < videos.length; i++) {
                     var vd = videos[i];
                     if (vd.src) {
-                        if (vd.src.includes('mp4')) {
+                        if (vd.src.includes('mp4') || vd.getAttribute('type').includes("video/mp4")) {
                             videoInfo.url = vd.src;
                             break;
                         }
@@ -353,8 +353,12 @@ run: function(arguments) {
                 }
             }
             
-            if (videoInfo.url) {
-                videoInfo.title = urlLastComponent(videoInfo.url);
+            if (videoInfo.title.length == 0) {
+                if (videoInfo.url) {
+                    videoInfo.title = urlLastComponent(videoInfo.url);
+                } else {
+                    videoInfo.title = "unKnow title"
+                }
             }
         }
     }
