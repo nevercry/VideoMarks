@@ -8,15 +8,19 @@
 
 import UIKit
 import AVFoundation
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var dataController: DataController!
+    var backgroundSessionCompletionHandler: (() -> Void)?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        GADMobileAds.configureWithApplicationID("ca-app-pub-5747346530004992~4248550061");
         
         dataController = DataController(callback: {
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name:VideoMarks.CoreDataStackCompletion, object: nil))
@@ -51,6 +55,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         dataController.saveContext()
+    }
+    
+    // MARK: - Backgourd Transfer
+    func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
+        backgroundSessionCompletionHandler = completionHandler
     }
 }
 

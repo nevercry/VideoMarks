@@ -27,19 +27,7 @@ class TaskManager: NSObject {
     deinit {
         self.session?.invalidateAndCancel()
     }
-    
-//    func unFinishedTask() -> [DownloadTask] {
-//        return taskList.filter({ (task) -> Bool in
-//            return task.finished == false
-//        })
-//    }
-    
-//    func finishedTask() -> [DownloadTask] {
-//        return taskList.filter({ (task) -> Bool in
-//            return task.finished
-//        })
-//    }
-    
+        
     func newTask(url: String) {
         if let url = NSURL(string: url) {
             let downloadTask = self.session?.downloadTaskWithURL(url)
@@ -97,6 +85,20 @@ extension TaskManager: NSURLSessionDownloadDelegate {
                             "totalBytesExpectedToWrite": NSNumber(longLong: totalBytesExpectedToWrite)]
         
         NSNotificationCenter.defaultCenter().postNotificationName(DownloadTaskNotification.Progress.rawValue, object: progressInfo)
+    }
+}
+
+// MARK: - NSURLSessionDelegate
+extension TaskManager: NSURLSessionDelegate {
+    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            if let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionHandler()
+                })
+            }
+        }
     }
 }
 

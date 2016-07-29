@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import AVKit
 import AVFoundation
+import GoogleMobileAds
+import StoreKit
 
 struct Constant {
     static let appGroupID = "group.nevercry.videoMarks"
@@ -17,12 +19,21 @@ struct Constant {
 
 class VideoMarksTVC: UITableViewController {
     
+    var bannerView: GADBannerView?
+    var removeAdButton: UIButton?
+
     var dataController: DataController?
     var fetchedResultsController: NSFetchedResultsController!
     let sectionLocalizedTitles = ["",NSLocalizedString("Web", comment: "")]
     
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        addGoogleAd()
+        
+        // 验证receipt
+        verifyReceipt()
+        
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         self.clearsSelectionOnViewWillAppear = true
         
@@ -45,7 +56,6 @@ class VideoMarksTVC: UITableViewController {
         // 注册CoreData完成初始化后的通知
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateUI), name: VideoMarks.CoreDataStackCompletion, object: nil)
         
-        
         // Check for force touch feature, and add force touch/previewing capability.
         if traitCollection.forceTouchCapability == .Available {
             /*
@@ -60,7 +70,6 @@ class VideoMarksTVC: UITableViewController {
         }
     }
     
-    
     func refetchResultAndUpdate() {
         do {
             try fetchedResultsController.performFetch()
@@ -74,6 +83,11 @@ class VideoMarksTVC: UITableViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: - Update Unwind
+    @IBAction func unwindToVideoMarksTVC(segue: UIStoryboardSegue) {
+        verifyReceipt()
     }
     
     // MARK: - 更新UI
@@ -122,6 +136,7 @@ class VideoMarksTVC: UITableViewController {
         refetchResultAndUpdate()
     }
     
+    // MARK: - 更新数据
     func refreshData() {
         updateVideoMarksFromExtension()
         self.refreshControl?.endRefreshing()
@@ -161,7 +176,6 @@ class VideoMarksTVC: UITableViewController {
             tableView.reloadData()
         }
     }
-    
     
     func initializeFetchedResultsController() {
         let request = NSFetchRequest(entityName: "Video")
@@ -457,3 +471,354 @@ extension VideoMarksTVC {
     }
 }
 
+extension VideoMarksTVC {
+    // MARK: - 解除广告
+    func removeGoogleAd() {
+        removeAdButton?.removeFromSuperview()
+        removeAdButton?.removeTarget(self, action: #selector(showInAppPurchase), forControlEvents: .TouchUpInside)
+        removeAdButton = nil
+        bannerView?.removeFromSuperview()
+        bannerView = nil
+    }
+    
+    // MARK: － 加载广告 
+    func addGoogleAd() {
+        // 加载广告
+        bannerView = GADBannerView()
+        
+        self.navigationController?.view.addSubview(bannerView!)
+        bannerView!.translatesAutoresizingMaskIntoConstraints = false
+        // 添加约束
+        let constraintBottom = NSLayoutConstraint(item: bannerView!, attribute: .Bottom, relatedBy: .Equal, toItem: self.navigationController?.view, attribute: .Bottom, multiplier: 1, constant: 0)
+        let constraintCenterH = NSLayoutConstraint(item: bannerView!, attribute: .CenterX, relatedBy: .Equal, toItem: self.navigationController?.view, attribute: .CenterX, multiplier: 1, constant: 0)
+        
+        let constraintHeight = NSLayoutConstraint(item: bannerView!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
+        let constraintWidth = NSLayoutConstraint(item: bannerView!, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 320)
+        
+        NSLayoutConstraint.activateConstraints([constraintBottom,constraintCenterH,constraintHeight,constraintWidth])
+        
+        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
+        // TestAd
+        // bannerView!.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        
+        // Production Ad
+        bannerView!.adUnitID = "ca-app-pub-5747346530004992/2632216067"
+        bannerView!.rootViewController = self
+        bannerView!.loadRequest(GADRequest())
+        
+        // 用户能否去广告
+        if IAPHelper.canMakePayments() {
+            // 加载去广告按钮
+            removeAdButton = UIButton(type: .Custom)
+            removeAdButton?.backgroundColor = UIColor.clearColor()
+            bannerView?.addSubview(removeAdButton!)
+            removeAdButton!.translatesAutoresizingMaskIntoConstraints = false
+            // 添加约束
+            let buttonConstraintWidth = NSLayoutConstraint(item: removeAdButton!, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
+            let buttonConstraintHeight = NSLayoutConstraint(item: removeAdButton!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
+            let buttonC_CenterY = NSLayoutConstraint(item: removeAdButton!, attribute: .CenterY, relatedBy: .Equal, toItem: bannerView!, attribute: .CenterY, multiplier: 1, constant: 0)
+            let buttonC_Trailing = NSLayoutConstraint(item: removeAdButton!, attribute: .Trailing, relatedBy: .Equal, toItem: bannerView!, attribute: .Trailing, multiplier: 1, constant: 0)
+            
+            NSLayoutConstraint.activateConstraints([buttonConstraintWidth, buttonConstraintHeight, buttonC_CenterY, buttonC_Trailing])
+            
+            removeAdButton?.setImage(UIImage(named: "ad_close"), forState: .Normal)
+            removeAdButton?.imageEdgeInsets = UIEdgeInsets(top: -26, left: 0, bottom: 0, right: -26)
+            removeAdButton?.addTarget(self, action: #selector(showInAppPurchase), forControlEvents: .TouchUpInside)
+        }
+    }
+    
+    // MARK: - 显示In App Purchase
+    func showInAppPurchase() {
+        print("show In App Purchase")
+        
+        self.performSegueWithIdentifier("showRemoveAdSegue", sender: nil)
+    }
+    
+    // MARK: - 验证Receipt
+    func verifyReceipt(){
+        //Load in the receipt
+        let receiptUrl = NSBundle.mainBundle().appStoreReceiptURL
+        
+        //Check if it's actually there
+        guard NSFileManager.defaultManager().fileExistsAtPath(receiptUrl!.path!) else { return }
+        
+        let receipt: NSData = try! NSData(contentsOfURL:receiptUrl!, options: [])
+        let receiptBio = BIO_new(BIO_s_mem())
+        BIO_write(receiptBio, receipt.bytes, Int32(receipt.length))
+        let receiptPKCS7 = d2i_PKCS7_bio(receiptBio, nil)
+        //Verify receiptPKCS7 is not nil
+        
+        //Read in Apple's Root CA
+        let appleRoot = NSBundle.mainBundle().URLForResource("AppleIncRootCertificate", withExtension: "cer")
+        let caData = NSData(contentsOfURL: appleRoot!)
+        let caBIO = BIO_new(BIO_s_mem())
+        BIO_write(caBIO, caData!.bytes, Int32(caData!.length))
+        let caRootX509 = d2i_X509_bio(caBIO, nil)
+        
+        //Verify the receipt was signed by Apple
+        let caStore = X509_STORE_new()
+        X509_STORE_add_cert(caStore, caRootX509)
+        OpenSSL_add_all_digests()
+        let verifyResult = PKCS7_verify(receiptPKCS7, nil, caStore, nil, nil, 0)
+        
+        if verifyResult != 1 {
+            print("Validation Fails!")
+            return
+        }
+        
+        let octets = pkcs7_d_data(pkcs7_d_sign(receiptPKCS7).memory.contents)
+        var ptr = UnsafePointer<UInt8>(octets.memory.data)
+        let end = ptr.advancedBy(Int(octets.memory.length))
+        var type: Int32 = 0
+        var xclass: Int32 = 0
+        var length = 0
+        
+        ASN1_get_object(&ptr, &length, &type, &xclass, end - ptr)
+        if (type != V_ASN1_SET) {
+            print("failed to read ASN1 from receipt")
+            return
+        }
+        
+        var bundleIdString1: NSString?
+        var bundleVersionString1: NSString?
+        var bundleIdData1: NSData?
+        var hashData1: NSData?
+        var opaqueData1: NSData?
+        // Original Application Version
+        var originalAppVersion: NSString?
+        // ProductID
+        var productID: NSString?
+        
+        while (ptr < end)
+        {
+            var integer: UnsafeMutablePointer<ASN1_INTEGER>
+            
+            // Expecting an attribute sequence
+            ASN1_get_object(&ptr, &length, &type, &xclass, end - ptr)
+            if type != V_ASN1_SEQUENCE {
+                print("ASN1 error: expected an attribute sequence")
+                return
+            }
+            
+            let seq_end = ptr.advancedBy(length)
+            var attr_type = 0
+            
+            // The attribute is an integer
+            ASN1_get_object(&ptr, &length, &type, &xclass, end - ptr)
+            if type != V_ASN1_INTEGER {
+                print("ASN1 error: attribute not an integer")
+                return
+            }
+            
+            integer = c2i_ASN1_INTEGER(nil, &ptr, length)
+            attr_type = ASN1_INTEGER_get(integer)
+            ASN1_INTEGER_free(integer)
+            
+            // The version is an integer
+            ASN1_get_object(&ptr, &length, &type, &xclass, end - ptr)
+            if type != V_ASN1_INTEGER {
+                print("ASN1 error: version not an integer")
+                return
+            }
+            
+            integer = c2i_ASN1_INTEGER(nil, &ptr, length);
+            ASN1_INTEGER_free(integer);
+            
+            // The attribute value is an octet string
+            ASN1_get_object(&ptr, &length, &type, &xclass, end - ptr)
+            if type != V_ASN1_OCTET_STRING {
+                print("ASN1 error: value not an octet string")
+                return
+            }
+            
+            if attr_type == 2 {
+                // Bundle identifier
+                var str_ptr = ptr
+                var str_type: Int32 = 0
+                var str_length = 0
+                var str_xclass: Int32 = 0
+                ASN1_get_object(&str_ptr, &str_length, &str_type, &str_xclass, seq_end - str_ptr)
+                if str_type == V_ASN1_UTF8STRING {
+                    bundleIdString1 = NSString(bytes: str_ptr, length: str_length, encoding: NSUTF8StringEncoding)
+                    bundleIdData1 = NSData(bytes: ptr, length: length)
+                }
+            }
+            else if attr_type == 3 {
+                // Bundle version
+                var str_ptr = ptr
+                var str_type: Int32 = 0
+                var str_length = 0
+                var str_xclass: Int32 = 0
+                ASN1_get_object(&str_ptr, &str_length, &str_type, &str_xclass, seq_end - str_ptr)
+                
+                if str_type == V_ASN1_UTF8STRING {
+                    bundleVersionString1 = NSString(bytes: str_ptr, length: str_length, encoding: NSUTF8StringEncoding)
+                }
+            }
+            else if attr_type == 4 {
+                // Opaque value
+                opaqueData1 = NSData(bytes: ptr, length: length)
+            }
+            else if attr_type == 5 {
+                // Computed GUID (SHA-1 Hash)
+                hashData1 = NSData(bytes: ptr, length: length)
+            } else if attr_type == 17 {
+                //In app receipt
+                let r = NSData(bytes: ptr, length: length)
+                let id = self.getProductIdFromReceipt(r)
+                
+                if id != nil {
+                    productID = id
+                }
+            } else if attr_type == 19{
+                // Original Application Version
+                var str_ptr = ptr
+                var str_type: Int32 = 0
+                var str_length = 0
+                var str_xclass: Int32 = 0
+                ASN1_get_object(&str_ptr, &str_length, &str_type, &str_xclass, seq_end - str_ptr)
+                
+                if str_type == V_ASN1_UTF8STRING {
+                    originalAppVersion = NSString(bytes: str_ptr, length: str_length, encoding: NSUTF8StringEncoding)
+                }
+            }
+            
+            // Move past the value
+            ptr = ptr.advancedBy(length)
+        }
+        
+        //Make sure that expected values from the receipt are actually there
+        if bundleIdString1 == nil {
+            print("No Bundle Id Found")
+            return
+        }
+        if bundleVersionString1 == nil {
+            print("No Bundle Version String Found")
+            return
+        }
+        if opaqueData1 == nil {
+            print("No Opaque Data Found")
+            return
+        }
+        if hashData1 == nil {
+            print("No Hash Value Found")
+            return
+        }
+        if originalAppVersion == nil {
+            print("No originalAppVersion")
+            return
+        }
+        
+        //Verify the bundle id in the receipt matches the app, use hard coded value instead of pulling
+        //info.plist since the plist can be changed by anyone that knows anything
+        if bundleIdString1 != "com.nevercry.VideoMarks" {
+            print("Receipt verification error: Wrong bundle identifier")
+            return
+        }
+        
+        // Retrieve the Device GUID
+        let device = UIDevice.currentDevice()
+        let uuid = device.identifierForVendor
+        let mutableData = NSMutableData(length: 16)
+        uuid!.getUUIDBytes(UnsafeMutablePointer(mutableData!.mutableBytes))
+        
+        // Verify the hash
+        var hash = Array<UInt8>(count: 20, repeatedValue: 0)
+        var ctx = SHA_CTX()
+        SHA1_Init(&ctx)
+        SHA1_Update(&ctx, mutableData!.bytes, mutableData!.length)
+        SHA1_Update(&ctx, opaqueData1!.bytes, opaqueData1!.length)
+        SHA1_Update(&ctx, bundleIdData1!.bytes, bundleIdData1!.length)
+        SHA1_Final(&hash, &ctx)
+        
+        let computedHashData1 = NSData(bytes: &hash, length: 20)
+        if !computedHashData1.isEqualToData(hashData1!)
+        {
+            print("Receipt Hash Did Not Match!")
+            return
+        }
+        
+        print("the app origianl Version is \(originalAppVersion)")
+        
+        if originalAppVersion!.compare("1.3", options: .NumericSearch) == .OrderedDescending {
+            // original bigger than 1.3， 1.3之后的用户 需要验证IAP购买解除广告
+            print("验证IAP")
+            if productID == VideoMarksProducts.RemoveAd {
+                print("解除广告")
+                removeGoogleAd()
+            }
+        } else {
+            // original lower than 1.3 1.3前的版本 默认是购买过的用户
+            print("解除广告")
+            removeGoogleAd()
+        }
+    }
+    
+    func getProductIdFromReceipt(data:NSData) -> String?
+    {
+        var p = UnsafePointer<UInt8>(data.bytes)
+        let dataLength = data.length
+        
+        var type:Int32 = 0
+        var tag:Int32 = 0
+        var length = 0
+        let end = p + dataLength
+        
+        ASN1_get_object(&p, &length, &type, &tag, end - p)
+        if type != V_ASN1_SET {
+            return nil
+        }
+        var integer: UnsafeMutablePointer<ASN1_INTEGER>
+        
+        while p < end
+        {
+            // Expecting an attribute sequence
+            ASN1_get_object(&p, &length, &type, &tag, end - p)
+            if type != V_ASN1_SEQUENCE {
+                print("ASN1 error: expected an attribute sequence")
+            }
+            
+            var attr_type = 0
+            
+            // The attribute is an integer
+            ASN1_get_object(&p, &length, &type, &tag, end - p)
+            if type != V_ASN1_INTEGER {
+                print("ASN1 error: attribute not an integer")
+                return nil
+            }
+            integer = c2i_ASN1_INTEGER(nil, &p, length)
+            attr_type = ASN1_INTEGER_get(integer)
+            ASN1_INTEGER_free(integer)
+            
+            // The version is an integer
+            ASN1_get_object(&p, &length, &type, &tag, end - p)
+            if type != V_ASN1_INTEGER {
+                print("ASN1 error: version not an integer")
+                return nil
+            }
+            integer = c2i_ASN1_INTEGER(nil, &p, length);
+            ASN1_INTEGER_free(integer);
+            
+            // The attribute value is an octet string
+            ASN1_get_object(&p, &length, &type, &tag, end - p)
+            if type != V_ASN1_OCTET_STRING {
+                print("ASN1 error: value not an octet string")
+                return nil
+            }
+            
+            //For Product Id
+            if attr_type == 1702
+            {
+                if type == V_ASN1_OCTET_STRING
+                {
+                    ASN1_get_object(&p, &length, &type, &tag, end - p)
+                    let productId = NSString(bytes: p, length: length, encoding: NSUTF8StringEncoding)
+                    return productId as? String
+                }
+            }
+            
+            p = p.advancedBy(length)
+        }
+        return nil
+    }
+}
