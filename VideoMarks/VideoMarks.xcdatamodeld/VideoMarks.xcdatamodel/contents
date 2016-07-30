@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
     <entity name="Image" representedClassName=".Image" syncable="YES">
-        <attribute name="data" attributeType="Binary" syncable="YES"/>
+        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <relationship name="fromVideo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Video" inverseName="posterImage" inverseEntity="Video" syncable="YES"/>
     </entity>
     <entity name="Video" representedClassName=".Video" syncable="YES">

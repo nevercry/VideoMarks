@@ -134,7 +134,7 @@ class PhotosTVC: UITableViewController {
         return sectionLocalizedTitles[section]
     }
     
-    /**
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         var canEditOrNot = false
         
@@ -165,7 +165,6 @@ class PhotosTVC: UITableViewController {
             }
         }
     }
-    **/
     
     // MARK: - Navigation
 
