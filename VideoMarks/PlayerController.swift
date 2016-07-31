@@ -55,7 +55,6 @@ class PlayerController: NSObject {
     }
     
     func rePlay(note: NSNotification) {
-        print("note object \(note.object)")
         avPlayer.player?.seekToTime(kCMTimeZero)
         avPlayer.player?.play()
     }
