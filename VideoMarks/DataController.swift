@@ -42,7 +42,7 @@ class DataController: NSObject {
                 try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: optionsDict)
                 
                 if let _ = self.completeCallback {
-                    print("core date complete!!!")
+                    //print("core date complete!!!")
                     dispatch_async(dispatch_get_main_queue(), { 
                         self.completeCallback!()
                     })

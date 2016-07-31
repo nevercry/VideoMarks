@@ -29,6 +29,7 @@ class VideoMarksTVC: UITableViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addGoogleAd()
         
         // 验证receipt
@@ -231,7 +232,7 @@ class VideoMarksTVC: UITableViewController {
                     if video.createAt == backUpDate {
                         if let _ = imageData {
                             // 根据16:9 截取图片
-                            let preImage = UIImage(data: imageData!)!
+                            guard let preImage = UIImage(data: imageData!) else { return }
                             let cropImage = preImage.crop16_9()
                             let cropData = UIImageJPEGRepresentation(cropImage, 1)!
                             
@@ -497,7 +498,7 @@ extension VideoMarksTVC {
         
         NSLayoutConstraint.activateConstraints([constraintBottom,constraintCenterH,constraintHeight,constraintWidth])
         
-        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
+        //print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
         // TestAd
         // bannerView!.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         
@@ -738,18 +739,18 @@ extension VideoMarksTVC {
             return
         }
         
-        print("the app origianl Version is \(originalAppVersion)")
+        //print("the app origianl Version is \(originalAppVersion)")
         
         if originalAppVersion!.compare("1.3", options: .NumericSearch) == .OrderedDescending {
             // original bigger than 1.3， 1.3之后的用户 需要验证IAP购买解除广告
-            print("验证IAP")
+            //print("验证IAP")
             if productID == VideoMarksProducts.RemoveAd {
-                print("解除广告")
+                //print("解除广告")
                 removeGoogleAd()
             }
         } else {
             // original lower than 1.3 1.3前的版本 默认是购买过的用户
-            print("解除广告")
+            //print("解除广告")
             removeGoogleAd()
         }
     }
