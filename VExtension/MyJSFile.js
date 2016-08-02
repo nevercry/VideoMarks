@@ -314,6 +314,17 @@ run: function(arguments) {
         }
     }
     
+    // acfun
+    function acfunParse() {
+        var playerFrame = document.getElementById('player');
+        var itemInfo = playerFrame.getAttribute('src').split(';');
+        
+        videoInfo.poster = itemInfo[1].split('=')[1];
+        videoInfo.title = itemInfo[2].split('=')[1];
+        videoInfo.url = playerFrame.contentDocument.getElementsByTagName('video')[0].src
+        videoInfo.duration = playerFrame.contentDocument.getElementsByClassName('totalTime')[0].innerText
+    }
+    
     function otherParse() {
         // 其他网站
         var sources = document.getElementsByTagName("source");
@@ -385,6 +396,8 @@ run: function(arguments) {
         tumblrParse();
     } else if (originURL.includes('xvideos.com')) {
         xvideosParse();
+    } else if (originURL.includes('acfun.tv')) {
+        acfunParse();
     } else {
         otherParse();
     }

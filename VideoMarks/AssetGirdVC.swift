@@ -97,7 +97,7 @@ class AssetGirdVC: UICollectionViewController {
         guard let taskID = note.object as? Int, taskIdx = taskIndex(taskID) else { return }
 
         // 删除对应的任务
-        let removeTask = taskManager.taskList.removeAtIndex(taskIdx)
+        taskManager.taskList.removeAtIndex(taskIdx)
         
         print("now the taskList count is \(taskManager.taskList.count)")
         
@@ -107,10 +107,8 @@ class AssetGirdVC: UICollectionViewController {
         
         guard let documentURL = VideoMarks.documentURL() else { return }
         
-        let fileURL = documentURL.URLByAppendingPathComponent(removeTask.url.lastPathComponent!)
-        
+        let fileURL = documentURL.URLByAppendingPathComponent("tmp.mp4")
 
-        
         PHPhotoLibrary.sharedPhotoLibrary().performChanges({
             if let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(fileURL) {
                 let collectionChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection!)

@@ -44,16 +44,9 @@ extension TaskManager: NSURLSessionDownloadDelegate {
     
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
         
-        var fileName = ""
-        for i in 0 ..< self.taskList.count {
-            if self.taskList[i].taskIdentifier == downloadTask.taskIdentifier {
-                fileName = self.taskList[i].url.lastPathComponent!
-            }
-        }
-        
         if let documentURL = VideoMarks.documentURL() {
             let fileManager = NSFileManager.defaultManager()
-            let destURL = documentURL.URLByAppendingPathComponent(fileName)
+            let destURL = documentURL.URLByAppendingPathComponent("tmp.mp4")
             print("destURL is \(destURL)")
                         
             if fileManager.fileExistsAtPath(destURL.path!) {
