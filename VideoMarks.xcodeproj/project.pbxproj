@@ -54,6 +54,7 @@
 		4AD794CD1D034B4D008A1D2D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD794CC1D034B4D008A1D2D /* ShareViewController.swift */; };
 		4AD794D01D034B4D008A1D2D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD794CE1D034B4D008A1D2D /* MainInterface.storyboard */; };
 		4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AD794CA1D034B4D008A1D2D /* VExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4AEB09FC1D506D1A00545A66 /* product_ids.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AEB09FB1D506D1A00545A66 /* product_ids.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		4AEB09CB1D4BCBD100545A66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CD1D4BCBDA00545A66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CF1D4BCBE300545A66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		4AEB09FB1D506D1A00545A66 /* product_ids.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = product_ids.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +319,7 @@
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
 				4AD7949E1D0347BD008A1D2D /* Assets.xcassets */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
+				4AEB09FB1D506D1A00545A66 /* product_ids.plist */,
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
 				4AD7949B1D0347BD008A1D2D /* VideoMarks.xcdatamodeld */,
 			);
@@ -513,6 +516,7 @@
 				4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */,
 				4AB792661D4887C3007E4D4B /* AppleIncRootCertificate.cer in Resources */,
 				4AA06C5A1D3679D400504AE3 /* VideoMarkCell.xib in Resources */,
+				4AEB09FC1D506D1A00545A66 /* product_ids.plist in Resources */,
 				4AD7949F1D0347BD008A1D2D /* Assets.xcassets in Resources */,
 				4AD7949A1D0347BD008A1D2D /* Main.storyboard in Resources */,
 				4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */,

@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let _ = VideoMarksProducts.store  // 启动后初始化store 监听storekit事件
         
         GADMobileAds.configureWithApplicationID("ca-app-pub-5747346530004992~4248550061");
         

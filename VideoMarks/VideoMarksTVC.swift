@@ -26,11 +26,17 @@ class VideoMarksTVC: UITableViewController {
     var fetchedResultsController: NSFetchedResultsController!
     let sectionLocalizedTitles = ["",NSLocalizedString("Web", comment: "网页")]
     
+    var iAPRequest: SKProductsRequest?
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Product 有效 显示广告
         addGoogleAd()
+        
+        // 验证productID 是否有效
+        validateProductIdentifier()
         
         // 验证receipt
         verifyReceipt()
@@ -482,7 +488,7 @@ extension VideoMarksTVC {
         bannerView = nil
     }
     
-    // MARK: － 加载广告 
+    // MARK: - 加载广告
     func addGoogleAd() {
         // 加载广告
         bannerView = GADBannerView()
@@ -533,6 +539,17 @@ extension VideoMarksTVC {
         print("show In App Purchase")
         
         self.performSegueWithIdentifier("showRemoveAdSegue", sender: nil)
+    }
+    
+    // MARK: - 验证ProductID
+    func validateProductIdentifier() {
+        if let url = NSBundle.mainBundle().URLForResource("product_ids", withExtension: "plist") {
+            if let productIds = NSArray(contentsOfURL: url) as? [String] {
+                iAPRequest = SKProductsRequest(productIdentifiers: Set(productIds))
+                iAPRequest?.delegate = self
+                iAPRequest?.start()
+            }
+        }
     }
     
     // MARK: - 验证Receipt
@@ -750,7 +767,7 @@ extension VideoMarksTVC {
             }
         } else {
             // original lower than 1.3 1.3前的版本 默认是购买过的用户
-            //print("解除广告")
+            print("解除广告 original lower than 1.3 ")
             removeGoogleAd()
         }
     }
@@ -821,5 +838,22 @@ extension VideoMarksTVC {
             p = p.advancedBy(length)
         }
         return nil
+    }
+}
+
+// MARK: -
+extension VideoMarksTVC: SKProductsRequestDelegate {
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+        guard let product = response.products.last else {
+            removeGoogleAd()
+            return
+        }
+        
+        for invaidId in response.invalidProductIdentifiers {
+            if invaidId == product.productIdentifier {
+                removeGoogleAd()
+                return
+            }
+        }
     }
 }

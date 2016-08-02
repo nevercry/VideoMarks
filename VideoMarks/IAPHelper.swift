@@ -124,6 +124,13 @@ extension IAPHelper: SKPaymentTransactionObserver {
     public func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
         print("restore error \(error)")
         NSNotificationCenter.defaultCenter().postNotificationName(IAPHelperFailedTransactionNotification, object: nil)
+        
+        for transaction in queue.transactions {
+            print("transaction is \(transaction)")
+            
+            SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+        }
+        
     }
     
     private func completeTransaction(transaction: SKPaymentTransaction) {
@@ -139,6 +146,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
         SKPaymentQueue.defaultQueue().finishTransaction(transaction)
     }
     
+    
     // Helper: Saves the fact that the product has been purchased and posts a notification.
     private func provideContentForProductIdentifier(productIdentifier: String) {
         NSNotificationCenter.defaultCenter().postNotificationName(IAPHelperProductPurchasedNotification, object: productIdentifier)
@@ -146,10 +154,10 @@ extension IAPHelper: SKPaymentTransactionObserver {
     
     private func failedTransaction(transaction: SKPaymentTransaction) {
         print("failedTransaction...")
-        NSNotificationCenter.defaultCenter().postNotificationName(IAPHelperFailedTransactionNotification, object: nil)
         if let errorcode = transaction.error?.code {
             if errorcode != SKErrorCode.PaymentCancelled.rawValue {
                 print("Transaction error: \(transaction.error!.localizedDescription)")
+                NSNotificationCenter.defaultCenter().postNotificationName(IAPHelperFailedTransactionNotification, object: nil)
             }
         }
         SKPaymentQueue.defaultQueue().finishTransaction(transaction)

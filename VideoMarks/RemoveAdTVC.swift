@@ -23,6 +23,7 @@ class RemoveAdTVC: UITableViewController {
     
     lazy var networkIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.hidesWhenStopped = true
         return indicator
     }()
@@ -33,19 +34,31 @@ class RemoveAdTVC: UITableViewController {
         
         self.title = NSLocalizedString("Remove Ad", comment: "去广告")
         
+        removeAdCell.textLabel?.text = NSLocalizedString("Remove Ad", comment: "去广告")
+        restorePurchaseCell.textLabel?.text = NSLocalizedString("Restore Purchase", comment: "恢复购买")
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
         // 加载商品
         self.tableView.userInteractionEnabled = false
         
         self.networkIndicator.startAnimating()
-        self.networkIndicator.center = tableView.center
-        self.navigationController?.view.addSubview(self.networkIndicator)
+        tableView.addSubview(self.networkIndicator)
+        
+        let consX = NSLayoutConstraint(item: networkIndicator, attribute: .CenterX, relatedBy: .Equal, toItem: tableView, attribute: .CenterX, multiplier: 1.0, constant: 0)
+        let consY = NSLayoutConstraint(item: networkIndicator, attribute: .CenterY, relatedBy: .Equal, toItem: tableView, attribute: .CenterY, multiplier: 1.0, constant: 0)
+        
+        // 添加约束
+        NSLayoutConstraint.activateConstraints([consX,consY])
+        
         
         VideoMarksProducts.store.requestProductsWithCompletionHandler { (sucess, products) in
             self.networkIndicator.stopAnimating()
             if sucess {
-                self.tableView.userInteractionEnabled = true
                 self.removeAdProduct = products.last
-                
                 if self.removeAdProduct != nil {
                     let numformater = NSNumberFormatter()
                     numformater.formatterBehavior = .Behavior10_4
@@ -54,18 +67,21 @@ class RemoveAdTVC: UITableViewController {
                     let formaterString = numformater.stringFromNumber(self.removeAdProduct!.price)
                     self.removeAdCell.detailTextLabel?.text = formaterString
                 }
-            } else {
+            }
+            
+            guard self.removeAdProduct != nil else {
                 let alertController = UIAlertController(title: NSLocalizedString("Can't fetch the product.", comment: "无法获取到商品"), message: nil, preferredStyle: .Alert)
                 alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "确定"), style: .Cancel, handler: { (action) in
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }))
                 
                 self.presentViewController(alertController, animated: true, completion: nil)
+                
+                return
             }
+            
+            self.tableView.userInteractionEnabled = true
         }
-        
-        removeAdCell.textLabel?.text = NSLocalizedString("Remove Ad", comment: "去广告")
-        restorePurchaseCell.textLabel?.text = NSLocalizedString("Restore Purchase", comment: "恢复购买")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -89,26 +105,38 @@ class RemoveAdTVC: UITableViewController {
     
     func failTransaction() {
         self.networkIndicator.stopAnimating()
-        let alertController = UIAlertController(title: NSLocalizedString("Transaction Fail", comment: "交易失败"), message: nil, preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "确定"), style: .Cancel, handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     // MARK: - UITableView Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 0 {
-            // 购买
+            //MARK:  购买
             self.networkIndicator.startAnimating()
+            
+            guard self.removeAdProduct != nil  else { return }
             VideoMarksProducts.store.purchaseProduct(self.removeAdProduct!)
         } else if indexPath.section == 1 {
-            // 恢复购买
+            //MARK:  恢复购买
             self.networkIndicator.startAnimating()
-            VideoMarksProducts.store.restoreCompletedTransactions()
+            let receiptRefreshRequest = SKReceiptRefreshRequest(receiptProperties: nil)
+            receiptRefreshRequest.delegate = self
+            receiptRefreshRequest.start()
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
 
+extension RemoveAdTVC: SKRequestDelegate {
+    
+    func requestDidFinish(request: SKRequest) {
+        self.userDidPurchased()
+    }
+    
+    func request(request: SKRequest, didFailWithError error: NSError) {
+        print("error \(error.localizedDescription)")
+        
+        self.failTransaction()
+    }
+}
