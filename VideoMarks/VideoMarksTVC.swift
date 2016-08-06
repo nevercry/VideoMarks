@@ -756,7 +756,7 @@ extension VideoMarksTVC {
             return
         }
         
-        //print("the app origianl Version is \(originalAppVersion)")
+        print("the app origianl Version is \(originalAppVersion)")
         
         if originalAppVersion!.compare("1.3", options: .NumericSearch) == .OrderedDescending {
             // original bigger than 1.3， 1.3之后的用户 需要验证IAP购买解除广告

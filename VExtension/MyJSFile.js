@@ -321,8 +321,8 @@ run: function(arguments) {
         
         videoInfo.poster = itemInfo[1].split('=')[1];
         videoInfo.title = itemInfo[2].split('=')[1];
-        videoInfo.url = playerFrame.contentDocument.getElementsByTagName('video')[0].src
-        videoInfo.duration = playerFrame.contentDocument.getElementsByClassName('totalTime')[0].innerText
+        videoInfo.url = playerFrame.contentDocument.getElementsByTagName('video')[0].src;
+        videoInfo.duration = playerFrame.contentDocument.getElementsByClassName('totalTime')[0].innerText;
     }
     
     function otherParse() {
