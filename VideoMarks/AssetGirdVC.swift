@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import AVKit
+import QuartzCore
 
 //private let reuseIdentifier = VideoMarks.GirdViewCellID
 private var AssetGirdThumbnailSize: CGSize?
@@ -20,7 +21,19 @@ class AssetGirdVC: UICollectionViewController {
     var previousPreheatRect: CGRect?
     
     var taskManager = TaskManager()
-
+    
+    @IBOutlet var m3u8DownloadStatusView: DownloadStatusView!
+    
+    var tsFileDownloadTask = TSFileDownloadTask(identifier: "TSFileDownload")
+    
+    var exportProgressTimer: NSTimer?
+    
+    lazy var m3u8_session: NSURLSession = {
+        let config = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("m3u8_backgroundSession")
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        return session
+    }()
+    
     override func awakeFromNib() {
         imageManager = PHCachingImageManager()
         resetCachedAssets()
@@ -47,7 +60,6 @@ class AssetGirdVC: UICollectionViewController {
         
         AssetGirdThumbnailSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale )
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -84,11 +96,57 @@ class AssetGirdVC: UICollectionViewController {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "保存"), style: .Default, handler: { [weak self] (action) in
             // 添加下载任务
-            guard let videoUrl = alertController.textFields?.first?.text where videoUrl.isEmpty != true else { return }
-            self?.taskManager.newTask(videoUrl)
-            self?.collectionView?.reloadData()
-        }))
-        
+            guard let videoUrl = alertController.textFields?.first?.text, let vURL = NSURL(string: videoUrl) where videoUrl.isEmpty != true else { return }
+            // 验证URL 是否包含m3u8
+            print("lastComponent is \(vURL.lastPathComponent)")
+            
+            if vURL.lastPathComponent == "m3u8" {
+                self?.show_m3u8_downloadStatusView()
+                
+                let networksession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+                
+                networksession.dataTaskWithRequest(NSURLRequest(URL: vURL), completionHandler: { (data, res, error) in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self?.m3u8DownloadStatusView.progressLabel.text = NSLocalizedString("Parsing", comment: "解析...")
+                    })
+                    
+                    guard (data != nil) else {
+                        print("m3u8 文件解析失败")
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self?.hide_m3u8_downloadStatusView()
+                        })
+                        return
+                    }
+                    
+                    // 判断URL属于那个视频网站
+                    let m3u8Parser = HLSPlayListParser.shareInstance
+                    
+                    var videoFragments: [NSString] // 视频片段地址
+                    if videoUrl.containsString("youku.com") {
+                        print("url 属于youku")
+                        videoFragments = m3u8Parser.youkuParse(data!)
+                    } else {
+                        print("url 未知网站")
+                        videoFragments = m3u8Parser.otherParse(data!)
+                    }
+                    
+                    guard videoFragments.count > 0 else {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self?.hide_m3u8_downloadStatusView()
+                        })
+                        return
+                    }
+                    
+                    // 下载所有视频片段
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self?.downloadAllVideoFragments(videoFragments)
+                    })
+                }).resume()
+            } else {
+                self?.taskManager.newTask(videoUrl)
+                self?.collectionView?.reloadData()
+            }
+            }))
         presentViewController(alertController, animated: true, completion: nil)
     }
     
@@ -105,27 +163,7 @@ class AssetGirdVC: UICollectionViewController {
             self.collectionView?.reloadData()
         }
         
-        guard let documentURL = VideoMarks.documentURL() else { return }
-        
-        let fileURL = documentURL.URLByAppendingPathComponent("tmp.mp4")
-
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-            if let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(fileURL) {
-                let collectionChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection!)
-                collectionChangeRequest?.addAssets([assetChangeRequest.placeholderForCreatedAsset!])
-            }
-        }) { (success, error) in
-            guard success == true else {
-                print("download Video error \(error)")
-                return
-            }
-            
-            do {
-                try NSFileManager.defaultManager().removeItemAtURL(fileURL)
-            } catch {
-                print("error delete")
-            }
-        }
+        saveVideoToPhotos()
     }
     
     func downloading(note: NSNotification) {
@@ -152,7 +190,217 @@ class AssetGirdVC: UICollectionViewController {
         return nil
     }
     
+    // MARK: - Show Download m3u8 
+    func show_m3u8_downloadStatusView() {
+        // 初始化Layout
+        self.collectionView?.userInteractionEnabled = false
+        m3u8DownloadStatusView.layer.cornerRadius = 10
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        
+        self.view.addSubview(m3u8DownloadStatusView)
+        m3u8DownloadStatusView.delegate = self
+        
+        m3u8DownloadStatusView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let constrainCenterX = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .CenterX, relatedBy: .Equal, toItem: self.collectionView, attribute: .CenterX, multiplier: 1, constant: 0)
+        
+        let constrainCenterY = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .CenterY, relatedBy: .Equal, toItem: self.collectionView, attribute: .CenterY, multiplier: 1, constant: 0)
+        
+        let constrainWidth = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 200)
+        let constrainHeigh = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 200)
+        
+        NSLayoutConstraint.activateConstraints([constrainCenterX,constrainCenterY,constrainWidth,constrainHeigh])
+    }
     
+    // MARK: - Hide Download m3u8
+    func hide_m3u8_downloadStatusView() {
+        // 取消下载
+        self.collectionView?.userInteractionEnabled = true
+        self.navigationItem.rightBarButtonItem?.enabled = true
+        print("取消下载")
+        self.m3u8_session.invalidateAndCancel()
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.m3u8DownloadStatusView.alpha = 0
+        }) { (success) in
+            self.m3u8DownloadStatusView.removeFromSuperview()
+            self.m3u8DownloadStatusView.alpha = 1
+        }
+    }
+    
+    // MARK: - 下载所有视频片段
+    func downloadAllVideoFragments(urls: [NSString]) {
+        print("开始下载所有视频片段")
+        tsFileDownloadTask.totalTaskCount = urls.count
+        m3u8DownloadStatusView.progressLabel.text = "\(tsFileDownloadTask.completeTaskCount)/\(tsFileDownloadTask.totalTaskCount)"
+        print("总共有 \(tsFileDownloadTask.totalTaskCount) 个文件需要下载")
+        
+        for url in urls {
+            guard let videoURL = NSURL(string: url as String) else {
+                print("下载地址有误 error")
+                hide_m3u8_downloadStatusView()
+                return
+            }
+            let downloadTask = m3u8_session.downloadTaskWithURL(videoURL)
+            tsFileDownloadTask.subTasks.append(downloadTask)
+        }
+        
+        defer {
+            for task in tsFileDownloadTask.subTasks {
+                task.resume()
+            }
+        }
+    }
+    
+    // MARK: - 合并所有视频片段
+    func combineAllVideoFragment() {
+        print("合并所有视频片段")
+        m3u8DownloadStatusView.progressLabel.text = NSLocalizedString("Processing", comment: "处理中...")
+        guard let documentURL = VideoMarks.documentURL() else { return }
+        
+        let fileManager = NSFileManager.defaultManager()
+        let combineDir = documentURL.URLByAppendingPathComponent("tmpCombine", isDirectory: true)
+        let composition = AVMutableComposition()
+        let videoTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let audioTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: kCMPersistentTrackID_Invalid)
+        
+        var previousTime = kCMTimeZero
+        
+        for i in 0 ..< tsFileDownloadTask.totalTaskCount {
+            let videoURL = combineDir.URLByAppendingPathComponent("\(i).mp4")
+            
+            let asset = AVAsset(URL: videoURL)
+            do {
+                print("加入asset \(videoURL)")
+                
+                // Debug
+                let audios = asset.tracksWithMediaType(AVMediaTypeAudio)
+                let videos = asset.tracksWithMediaType(AVMediaTypeVideo)
+                print("audio tracks is  \(audios) videos is \(videos)")
+                print("tracks is \(asset.tracks)")
+                
+                guard audios.count > 0 && videos.count > 0 else {
+                    print("找不到视频")
+                    self.hide_m3u8_downloadStatusView()
+                    return
+                }
+                
+                
+                try videoTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), ofTrack: asset.tracksWithMediaType(AVMediaTypeVideo)[0], atTime: previousTime)
+                try audioTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), ofTrack: asset.tracksWithMediaType(AVMediaTypeAudio)[0], atTime: previousTime)
+            } catch {
+                print("加入失败  \(error)")
+                self.hide_m3u8_downloadStatusView()
+            }
+            previousTime = CMTimeAdd(previousTime, asset.duration)
+        }
+        
+        // 创建exportor
+        guard let exportor = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetPassthrough) else {
+            print("创建ExportSession 失败")
+            self.hide_m3u8_downloadStatusView()
+            return
+        }
+        
+        let exportURL = documentURL.URLByAppendingPathComponent("tmp.mp4")
+        
+        if fileManager.fileExistsAtPath(exportURL.path!) {
+            do {
+                print("文件已存在 删除文件")
+                try fileManager.removeItemAtURL(exportURL)
+            } catch {
+                print("删除文件失败 \(error)")
+                self.hide_m3u8_downloadStatusView()
+            }
+        }
+        
+        exportor.outputURL = exportURL
+        exportor.outputFileType = AVFileTypeMPEG4
+        
+        exportor.exportAsynchronouslyWithCompletionHandler { 
+            dispatch_async(dispatch_get_main_queue(), {
+                if exportor.status == .Completed {
+                    print("合并成功")
+                    self.clearUpTmpFiles()
+                } else {
+                    print("导出失败")
+                    self.hide_m3u8_downloadStatusView()
+                }
+            })
+        }
+        
+        
+        self.exportProgressTimer = NSTimer(timeInterval: 0.1, target: self, selector: #selector(updateExportProgress), userInfo: exportor, repeats: true)
+        self.exportProgressTimer?.fire()
+        
+    }
+    
+    // MARK: 更新导出进度
+    func updateExportProgress(timer: NSTimer) {
+        if let exporter = timer.userInfo as? AVAssetExportSession {
+            let progress = exporter.progress * 100
+           
+            self.m3u8DownloadStatusView.progressLabel.text = "\(progress)%"
+            
+            if exporter.progress > 0.99 {
+                self.exportProgressTimer?.invalidate()
+            }
+        } else {
+            self.exportProgressTimer?.invalidate()
+        }
+    }
+    
+    // MARK: - 合并后的清理工作
+    func clearUpTmpFiles() {
+        
+        guard let documentURL = VideoMarks.documentURL() else { return }
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
+            let fileManager = NSFileManager.defaultManager()
+            let combineDir = documentURL.URLByAppendingPathComponent("tmpCombine", isDirectory: true)
+            if fileManager.fileExistsAtPath(combineDir.path!) {
+                do {
+                    print("开始删除缓存文件")
+                    try fileManager.removeItemAtURL(combineDir)
+                } catch {
+                    print("删除缓存失败 \(error)")
+                }
+                
+                print("完成清理")
+            }
+        }
+        
+        hide_m3u8_downloadStatusView()
+        
+        // 把视频文件导入到相册
+        saveVideoToPhotos()
+    }
+    
+    // MARK: - 保存视频到相册
+    func saveVideoToPhotos() {
+        print("保存视频到相册")
+        guard let documentURL = VideoMarks.documentURL() else { return }
+        
+        let fileURL = documentURL.URLByAppendingPathComponent("tmp.mp4")
+        
+        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+            if let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(fileURL) {
+                let collectionChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection!)
+                collectionChangeRequest?.addAssets([assetChangeRequest.placeholderForCreatedAsset!])
+            }
+        }) { (success, error) in
+            guard success == true else {
+                print("download Video error \(error)")
+                return
+            }
+            
+            do {
+                try NSFileManager.defaultManager().removeItemAtURL(fileURL)
+            } catch {
+                print("error delete")
+            }
+        }
+    }
     
     // MARK: - Asset Caching
     func resetCachedAssets()  {
@@ -193,7 +441,6 @@ class AssetGirdVC: UICollectionViewController {
             self.previousPreheatRect  = preheatRect
         }
     }
-    
     
     func computeDifferenceBetween(oldRect: CGRect, andNewRect newRect: CGRect, removedHandler: (removedRect: CGRect)-> Void, addedHandler: (addedRect: CGRect) -> Void ) {
         if CGRectIntersectsRect(oldRect, newRect) {
@@ -256,7 +503,6 @@ class AssetGirdVC: UICollectionViewController {
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 2
     }
-
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var numberOfItems: Int
@@ -341,5 +587,128 @@ extension AssetGirdVC: PHPhotoLibraryChangeObserver {
             })
         }
     }
+}
+
+extension AssetGirdVC: DownloadStatusViewDelegate {
+    func cancel() {
+        // 取消下载
+        self.hide_m3u8_downloadStatusView()
+    }
+}
+
+extension AssetGirdVC: NSURLSessionDownloadDelegate {
+    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+        // 完成下载
+        print("完成下载 文件在\(location)")
+        
+        tsFileDownloadTask.completeTaskCount += 1
+        
+        let totalSizeWrite = NSByteCountFormatter.stringFromByteCount(tsFileDownloadTask.totalWrite, countStyle: .Binary)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.m3u8DownloadStatusView.progressLabel.text = "\(self.tsFileDownloadTask.completeTaskCount)/\(self.tsFileDownloadTask.totalTaskCount) \(totalSizeWrite)"
+        }
+        
+        print("已下载 \(tsFileDownloadTask.completeTaskCount) 个")
+        
+        if let documentURL = VideoMarks.documentURL() {
+            let fileManager = NSFileManager.defaultManager()
+            let combineDir = documentURL.URLByAppendingPathComponent("tmpCombine", isDirectory: true)
+            
+            if !fileManager.fileExistsAtPath(combineDir.path!) {
+                do {
+                    print("文件夹不存在 创建文件夹")
+                    try fileManager.createDirectoryAtURL(combineDir, withIntermediateDirectories: false, attributes: nil)
+                } catch {
+                    print("创建文件夹失败 \(error)")
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.hide_m3u8_downloadStatusView()
+                    }
+                }
+            }
+            
+            print("combineDir is \(combineDir)")
+            
+            var indexVideo: Int = -1
+            
+            for (idx,task) in tsFileDownloadTask.subTasks.enumerate() {
+                if task.taskIdentifier == downloadTask.taskIdentifier {
+                    indexVideo = idx
+                    break
+                }
+            }
+            
+            guard indexVideo != -1 else {
+                print("下载任务index 出错")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.hide_m3u8_downloadStatusView()
+                }
+                return
+            }
+            
+            print("the idx is \(indexVideo)")
+            
+            let videoURL = combineDir.URLByAppendingPathComponent("\(indexVideo).mp4")
+            
+            if fileManager.fileExistsAtPath(videoURL.path!) {
+                do {
+                    print("删除已存在 \(videoURL) 的文件")
+                    try fileManager.removeItemAtURL(videoURL)
+                } catch {
+                    print("remove item error \(error)")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.hide_m3u8_downloadStatusView()
+                    }
+                }
+            }
+            
+            do {
+                print("move item to destURL \(videoURL)")
+                try fileManager.moveItemAtURL(location, toURL: videoURL)
+            } catch {
+                print("error download \(error)")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.hide_m3u8_downloadStatusView()
+                }
+            }
+        }
+        
+        
+        if tsFileDownloadTask.completeTaskCount == tsFileDownloadTask.totalTaskCount {
+            print("全部下载完 开始合并文件")
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.combineAllVideoFragment()
+            })
+        }
+    }
     
+    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+        // 恢复下载
+    }
+    
+    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        // 写入
+        tsFileDownloadTask.totalWrite += bytesWritten
+        
+        let totalSizeWrite = NSByteCountFormatter.stringFromByteCount(tsFileDownloadTask.totalWrite, countStyle: .Binary)
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.m3u8DownloadStatusView.progressLabel.text = "\(self.tsFileDownloadTask.completeTaskCount)/\(self.tsFileDownloadTask.totalTaskCount) \(totalSizeWrite)"
+        }
+        
+    }
+}
+
+extension AssetGirdVC: NSURLSessionDelegate {
+    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            if let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionHandler()
+                })
+            }
+        }
+    }
 }

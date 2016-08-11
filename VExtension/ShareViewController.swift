@@ -56,7 +56,6 @@ class ShareViewController: UIViewController {
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.view.transform = CGAffineTransformIdentity
         })
-        
     }
     
     override func viewDidLoad() {
@@ -305,10 +304,8 @@ class ShareViewController: UIViewController {
             return
         }
         
-        // 解析一下是否是优酷的m3u8 文件
-        if (videoInfo["type"] == "m3u8") {
-            parse_m3u8(userAction)
-        } else if (videoInfo["type"] == "xml") {
+        
+        if (videoInfo["type"] == "xml") {
             // 是否为twimg的xml文件
             parseXML(userAction)
         } else if (videoInfo["type"] == "iframe") {
@@ -381,10 +378,7 @@ class ShareViewController: UIViewController {
             return
         }
         
-        // 解析一下是否是优酷的m3u8 文件
-        if (videoInfo["type"] == "m3u8") {
-            parse_m3u8(userAction)
-        } else if (videoInfo["type"] == "xml") {
+        if (videoInfo["type"] == "xml") {
             parseXML(userAction)
         } else if (videoInfo["type"] == "iframe") {
             parse_iframe(userAction)

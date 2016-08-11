@@ -40,6 +40,9 @@
 		4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB7926B1D4B1120007E4D4B /* StoreKit.framework */; };
 		4AB7926E1D4B3BD1007E4D4B /* VideoMarksProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */; };
 		4AB792701D4B3CE8007E4D4B /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */; };
+		4AD4613B1D55AC9600FF7CDA /* DownloadStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */; };
+		4AD4613F1D55EF2A00FF7CDA /* TSFileDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */; };
+		4AD461431D5C588B00FF7CDA /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
 		4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */; };
 		4AD4E2A11D0C1FA00002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2A31D0C1FA00002CE90 /* InfoPlist.strings */; };
@@ -143,6 +146,9 @@
 		4AB7926B1D4B1120007E4D4B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoMarksProducts.swift; path = Models/VideoMarksProducts.swift; sourceTree = "<group>"; };
 		4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadStatusView.swift; sourceTree = "<group>"; };
+		4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSFileDownloadTask.swift; sourceTree = "<group>"; };
+		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLSPlayListParser.swift; sourceTree = "<group>"; };
 		4AD4E2941D0C18770002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4AD4E2961D0C19240002CE90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4AD4E29B1D0C1C220002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -217,6 +223,7 @@
 		4A07AE821D0B433900935701 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */,
 				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
 				4AA06C661D37AA6700504AE3 /* PlayerController.swift */,
 				4A5CFD9F1D060D6D004C2C64 /* DataController.swift */,
@@ -226,6 +233,8 @@
 				4AA06C5D1D36EBFA00504AE3 /* AssetGirdVC.swift */,
 				4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */,
 				4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */,
+				4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */,
+				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -561,9 +570,11 @@
 				4AA06C591D3679D400504AE3 /* VideoMarkCell.swift in Sources */,
 				4A2EB6811D45FE3800019FAC /* DownloadTask.swift in Sources */,
 				4AA06C521D3672D700504AE3 /* UIImage+extension.swift in Sources */,
+				4AD4613B1D55AC9600FF7CDA /* DownloadStatusView.swift in Sources */,
 				4A07AE721D088C9000935701 /* OpenSafariActivity.swift in Sources */,
 				4A07AE7A1D0A108000935701 /* Image+CoreDataProperties.swift in Sources */,
 				4AA06C5C1D368E9C00504AE3 /* PhotosTVC.swift in Sources */,
+				4AD4613F1D55EF2A00FF7CDA /* TSFileDownloadTask.swift in Sources */,
 				4AA06C631D36F69E00504AE3 /* GirdViewCell.swift in Sources */,
 				4A5CFDA91D080D5F004C2C64 /* NSManagedObject+Extension.swift in Sources */,
 				4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */,
@@ -573,6 +584,7 @@
 				4AA06C501D366F5000504AE3 /* VideoMarks.swift in Sources */,
 				4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */,
 				4A2EB67F1D45FD9700019FAC /* TaskManager.swift in Sources */,
+				4AD461431D5C588B00FF7CDA /* HLSPlayListParser.swift in Sources */,
 				4AD7949D1D0347BD008A1D2D /* VideoMarks.xcdatamodeld in Sources */,
 				4AA06C5E1D36EBFA00504AE3 /* AssetGirdVC.swift in Sources */,
 				4A5CFDA61D07FE14004C2C64 /* Video+CoreDataProperties.swift in Sources */,

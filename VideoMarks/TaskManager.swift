@@ -94,6 +94,3 @@ extension TaskManager: NSURLSessionDelegate {
         }
     }
 }
-
-
-
