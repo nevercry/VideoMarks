@@ -297,7 +297,6 @@ class AssetGirdVC: UICollectionViewController {
                     return
                 }
                 
-                
                 try videoTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), ofTrack: asset.tracksWithMediaType(AVMediaTypeVideo)[0], atTime: previousTime)
                 try audioTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), ofTrack: asset.tracksWithMediaType(AVMediaTypeAudio)[0], atTime: previousTime)
             } catch {
