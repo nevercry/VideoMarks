@@ -319,6 +319,38 @@ run: function(arguments) {
         videoInfo.duration = playerFrame.contentDocument.getElementsByClassName('totalTime')[0].innerText;
     }
     
+    // vimeo
+    function vimeoParse() {
+        var player_containers = document.getElementsByClassName('player_container');
+        
+        var current_player_container;
+        for (var i = 0; i < player_containers.length; i++) {
+            var p = player_containers[i];
+            if (isElementInViewport(p)) {
+                current_player_container = p;
+                break;
+            }
+        }
+        
+        // channel ??
+        if (videoInfo.source.includes('channels')) {
+            videoInfo.title = current_player_container.getElementsByTagName('video')[0].title;
+            videoInfo.poster = current_player_container.getElementsByClassName('video')[0].getAttribute('data-thumb');
+            var clipID = document.getElementsByClassName('stats-debug-clip-id')[0].textContent;
+            videoInfo.url = "https://player.vimeo.com/video/" + clipID +"/config";
+        } else {
+            var player_thumb = current_player_container.getElementsByClassName('player_thumb')[0]
+            
+            videoInfo.title =  player_thumb.alt;
+            videoInfo.poster = player_thumb.src;
+            videoInfo.url = current_player_container.getElementsByClassName('player')[0].getAttribute('data-config-url');
+        }
+        
+        videoInfo.duration = current_player_container.getElementsByClassName("mobile-timecode")[0].textContent;
+        
+        videoInfo.type = "vimeo";
+    }
+    
     function otherParse() {
         // 其他网站
         var sources = document.getElementsByTagName("source");
@@ -392,6 +424,8 @@ run: function(arguments) {
         xvideosParse();
     } else if (originURL.includes('acfun.tv')) {
         acfunParse();
+    } else if (originURL.includes('vimeo.com')) {
+        vimeoParse();
     } else {
         otherParse();
     }

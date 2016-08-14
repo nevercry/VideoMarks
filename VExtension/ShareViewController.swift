@@ -108,6 +108,59 @@ class ShareViewController: UIViewController {
         }
     }
     
+    // MARK: - 解析Vimeo视频
+    func parse_vimeo(action: ShareActions) {
+        saveLinkButton.enabled = false
+        copyButton.enabled = false
+        activityStatusView.startAnimating()
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        config.timeoutIntervalForRequest = 10
+        let session = NSURLSession(configuration: config)
+        
+        guard let config_url = videoInfo["url"] else { return }
+        let apiURL = NSURL(string: config_url)
+        
+        session.dataTaskWithRequest(NSURLRequest(URL: apiURL!), completionHandler: { (data, res, error) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.activityStatusView.stopAnimating()
+            })
+            
+            if let jsonData = data {
+                let json = JSON(data: jsonData)
+                if let dicts = json["request"]["files"]["progressive"].array {
+                    
+                    let sortDicts = dicts.sort({ (a, b) -> Bool in
+                        return a["width"].numberValue > b["width"].numberValue
+                    })
+                    
+                    if let bestQualityURL = sortDicts.first?["url"].string {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.videoInfo["url"] = bestQualityURL
+                            self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(bestQualityURL)";
+                            switch action {
+                            case .Copy:
+                                UIPasteboard.generalPasteboard().string = bestQualityURL
+                                self.hideExtensionWithCompletionHandler()
+                            case .Save:
+                                self.startSave()
+                            }
+                        })
+                        
+                        return
+                    }
+                }
+            }
+            
+            let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+            let message = NSLocalizedString("Try again", comment: "请重试")
+            let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .Cancel, handler: {
+                action in
+                self.hideExtensionWithCompletionHandler()
+            })
+            self.showAlert(alertTitle, message: message, actions: [cancelAction])
+        }).resume()
+    }
+    
     // MARK: - 解析腾讯视频
     func parse_qq(action: ShareActions)  {
         saveLinkButton.enabled = false
@@ -379,6 +432,8 @@ class ShareViewController: UIViewController {
             parse_iframe(userAction)
         } else if (videoInfo["type"] == "qq") {
             parse_qq(userAction)
+        } else if (videoInfo["type"] == "vimeo") {
+            parse_vimeo(userAction)
         } else {
             switch userAction {
             case .Copy:
