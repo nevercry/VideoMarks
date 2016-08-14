@@ -9,13 +9,6 @@ run: function(arguments) {
         videoInfo.title = document.title;
     }
     
-    // 验证VideoInfo
-    function checkVideoInfo() {
-        if (videoInfo.url.includes("m3u8")) {
-            videoInfo.type = "m3u8";
-        }
-    }
-    
     // 转换时间
     function seconds2time (seconds) {
         seconds = Math.ceil(seconds);
@@ -233,6 +226,7 @@ run: function(arguments) {
             videoInfo.poster = document.getElementById('share_qq_img').children[0].src;
         }
         
+        videoInfo.type = "qq";
     }
     
     // 秒拍
@@ -401,9 +395,6 @@ run: function(arguments) {
     } else {
         otherParse();
     }
-    
-    // 再检查一遍VideInfo
-    checkVideoInfo();
     
     arguments.completionFunction({"videoInfo":videoInfo});
 },

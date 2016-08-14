@@ -21,6 +21,8 @@ class TSFileDownloadTask {
     
     var totalTaskCount = 0
     
-    var completeTaskCount = 0 
+    var completeTaskCount = 0
+    
+    var isCombineDone = false
 }
 

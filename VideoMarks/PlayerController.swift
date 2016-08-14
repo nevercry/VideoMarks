@@ -43,6 +43,7 @@ class PlayerController: NSObject {
     
     // MARK: - 播放视频
     func playVideo(player: AVPlayer, inViewController: UIViewController) {
+        player.allowsExternalPlayback = true
         player.actionAtItemEnd = .None
         viewController = inViewController
         dispatch_async(dispatch_get_main_queue()) { [weak self] in            

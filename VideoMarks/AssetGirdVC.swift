@@ -24,7 +24,7 @@ class AssetGirdVC: UICollectionViewController {
     
     @IBOutlet var m3u8DownloadStatusView: DownloadStatusView!
     
-    var tsFileDownloadTask = TSFileDownloadTask(identifier: "TSFileDownload")
+    var tsFileDownloadTask: TSFileDownloadTask?
     
     var exportProgressTimer: NSTimer?
     
@@ -41,6 +41,8 @@ class AssetGirdVC: UICollectionViewController {
     }
     
     deinit {
+        // 注销通知
+        
         PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -79,7 +81,7 @@ class AssetGirdVC: UICollectionViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(downloadFinished), name: DownloadTaskNotification.Finish.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(downloading), name: DownloadTaskNotification.Progress.rawValue, object: nil)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -231,9 +233,12 @@ class AssetGirdVC: UICollectionViewController {
     // MARK: - 下载所有视频片段
     func downloadAllVideoFragments(urls: [NSString]) {
         print("开始下载所有视频片段")
-        tsFileDownloadTask.totalTaskCount = urls.count
-        m3u8DownloadStatusView.progressLabel.text = "\(tsFileDownloadTask.completeTaskCount)/\(tsFileDownloadTask.totalTaskCount)"
-        print("总共有 \(tsFileDownloadTask.totalTaskCount) 个文件需要下载")
+        // 初始化task
+        let newDownloadTask = TSFileDownloadTask(identifier: "TSFileDownload")
+        
+        newDownloadTask.totalTaskCount = urls.count
+        m3u8DownloadStatusView.progressLabel.text = "\(newDownloadTask.completeTaskCount)/\(newDownloadTask.totalTaskCount)"
+        print("总共有 \(newDownloadTask.totalTaskCount) 个文件需要下载")
         
         for url in urls {
             guard let videoURL = NSURL(string: url as String) else {
@@ -242,13 +247,15 @@ class AssetGirdVC: UICollectionViewController {
                 return
             }
             let downloadTask = m3u8_session.downloadTaskWithURL(videoURL)
-            tsFileDownloadTask.subTasks.append(downloadTask)
+            newDownloadTask.subTasks.append(downloadTask)
         }
         
         defer {
-            for task in tsFileDownloadTask.subTasks {
+            for task in newDownloadTask.subTasks {
                 task.resume()
             }
+            
+            tsFileDownloadTask = newDownloadTask
         }
     }
     
@@ -266,7 +273,12 @@ class AssetGirdVC: UICollectionViewController {
         
         var previousTime = kCMTimeZero
         
-        for i in 0 ..< tsFileDownloadTask.totalTaskCount {
+        guard let tsTask = tsFileDownloadTask else {
+            print("tsFileDownloadTask is nil")
+            return
+        }
+    
+        for i in 0 ..< tsTask.totalTaskCount {
             let videoURL = combineDir.URLByAppendingPathComponent("\(i).mp4")
             
             let asset = AVAsset(URL: videoURL)
@@ -321,6 +333,8 @@ class AssetGirdVC: UICollectionViewController {
             dispatch_async(dispatch_get_main_queue(), {
                 if exportor.status == .Completed {
                     print("合并成功")
+                    // MARK: 标记合并成功
+                    tsTask.isCombineDone = true
                     self.clearUpTmpFiles()
                 } else {
                     print("导出失败")
@@ -329,10 +343,8 @@ class AssetGirdVC: UICollectionViewController {
             })
         }
         
-        
         self.exportProgressTimer = NSTimer(timeInterval: 0.1, target: self, selector: #selector(updateExportProgress), userInfo: exportor, repeats: true)
         self.exportProgressTimer?.fire()
-        
     }
     
     // MARK: 更新导出进度
@@ -399,7 +411,17 @@ class AssetGirdVC: UICollectionViewController {
             } catch {
                 print("error delete")
             }
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.finishTSDownloadTask()
+            })
         }
+    }
+    
+    // MARK: - 完成下载TSFile的任务
+    func finishTSDownloadTask() {
+        tsFileDownloadTask = nil
+        print("清楚下载任务")
     }
     
     // MARK: - Asset Caching
@@ -499,7 +521,6 @@ class AssetGirdVC: UICollectionViewController {
     */
 
     // MARK: UICollectionViewDataSource
-
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 2
     }
@@ -601,14 +622,19 @@ extension AssetGirdVC: NSURLSessionDownloadDelegate {
         // 完成下载
         print("完成下载 文件在\(location)")
         
-        tsFileDownloadTask.completeTaskCount += 1
-        
-        let totalSizeWrite = NSByteCountFormatter.stringFromByteCount(tsFileDownloadTask.totalWrite, countStyle: .Binary)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.m3u8DownloadStatusView.progressLabel.text = "\(self.tsFileDownloadTask.completeTaskCount)/\(self.tsFileDownloadTask.totalTaskCount) \(totalSizeWrite)"
+        guard let tsTask = tsFileDownloadTask else {
+            print("tsFileDownloadTas 为nil")
+            return
         }
         
-        print("已下载 \(tsFileDownloadTask.completeTaskCount) 个")
+        tsTask.completeTaskCount += 1
+        
+        let totalSizeWrite = NSByteCountFormatter.stringFromByteCount(tsTask.totalWrite, countStyle: .Binary)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.m3u8DownloadStatusView.progressLabel.text = "\(tsTask.completeTaskCount)/\(tsTask.totalTaskCount) \(totalSizeWrite)"
+        }
+        
+        print("已下载 \(tsTask.completeTaskCount) 个")
         
         if let documentURL = VideoMarks.documentURL() {
             let fileManager = NSFileManager.defaultManager()
@@ -631,7 +657,7 @@ extension AssetGirdVC: NSURLSessionDownloadDelegate {
             
             var indexVideo: Int = -1
             
-            for (idx,task) in tsFileDownloadTask.subTasks.enumerate() {
+            for (idx,task) in tsTask.subTasks.enumerate() {
                 if task.taskIdentifier == downloadTask.taskIdentifier {
                     indexVideo = idx
                     break
@@ -673,11 +699,9 @@ extension AssetGirdVC: NSURLSessionDownloadDelegate {
             }
         }
         
-        
-        if tsFileDownloadTask.completeTaskCount == tsFileDownloadTask.totalTaskCount {
+        if tsTask.completeTaskCount == tsTask.totalTaskCount {
             print("全部下载完 开始合并文件")
-            
-            dispatch_async(dispatch_get_main_queue(), { 
+            dispatch_async(dispatch_get_main_queue(), {
                 self.combineAllVideoFragment()
             })
         }
@@ -689,12 +713,18 @@ extension AssetGirdVC: NSURLSessionDownloadDelegate {
     
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         // 写入
-        tsFileDownloadTask.totalWrite += bytesWritten
         
-        let totalSizeWrite = NSByteCountFormatter.stringFromByteCount(tsFileDownloadTask.totalWrite, countStyle: .Binary)
+        guard let task = tsFileDownloadTask else {
+            print("tsFileDownloadTas 为nil")
+            return
+        }
+        
+        task.totalWrite += bytesWritten
+        
+        let totalSizeWrite = NSByteCountFormatter.stringFromByteCount(task.totalWrite, countStyle: .Binary)
         
         dispatch_async(dispatch_get_main_queue()) { 
-            self.m3u8DownloadStatusView.progressLabel.text = "\(self.tsFileDownloadTask.completeTaskCount)/\(self.tsFileDownloadTask.totalTaskCount) \(totalSizeWrite)"
+            self.m3u8DownloadStatusView.progressLabel.text = "\(task.completeTaskCount)/\(task.totalTaskCount) \(totalSizeWrite)"
         }
         
     }

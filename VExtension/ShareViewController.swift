@@ -108,8 +108,8 @@ class ShareViewController: UIViewController {
         }
     }
     
-    // MARK: - 解析m3u8
-    func parse_m3u8(action: ShareActions)  {
+    // MARK: - 解析腾讯视频
+    func parse_qq(action: ShareActions)  {
         saveLinkButton.enabled = false
         copyButton.enabled = false
         activityStatusView.startAnimating()
@@ -117,8 +117,15 @@ class ShareViewController: UIViewController {
         config.timeoutIntervalForRequest = 10
         let session = NSURLSession(configuration: config)
         
-        let videoURL = NSURL(string: videoInfo["url"]!)
-        session.dataTaskWithRequest(NSURLRequest(URL: videoURL!), completionHandler: { (data, res, error) in
+        guard let source = videoInfo["source"] where source.componentsSeparatedByString("vid=").count > 1 else { return }
+        
+        let vid = source.componentsSeparatedByString("vid=")[1]
+        print("vid is \(vid)")
+        
+        let api = "http://h5vv.video.qq.com/getinfo?otype=json&platform=10901&vid=\(vid)"
+        let apiURL = NSURL(string: api)
+        
+        session.dataTaskWithRequest(NSURLRequest(URL: apiURL!), completionHandler: { (data, res, error) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.activityStatusView.stopAnimating()
             })
@@ -135,35 +142,27 @@ class ShareViewController: UIViewController {
             }
             
             let dataInfo = String(data: data!, encoding: NSUTF8StringEncoding)
+            
             let scaner = NSScanner(string: dataInfo!)
-            scaner.scanUpToString("http", intoString: nil)
-            var firstUrl:NSString?
-            scaner.scanUpToString(".ts", intoString: &firstUrl)
-            // 备用地址
-            scaner.scanUpToString("keyframe=1", intoString: nil)
-            // 移到关键帧
-            scaner.scanUpToString("http", intoString: nil)
-            var video_url:NSString?
-            scaner.scanUpToString(".ts", intoString: &video_url)
+            scaner.scanUpToString("fvkey", intoString: nil)
+            scaner.scanString("fvkey\":\"", intoString: nil)
+            var fvkey:NSString?
+            scaner.scanUpToString("\"", intoString: &fvkey)
             
-            print("videoURL is \(video_url)")
+            print("fvkey is \(fvkey)")
             
-            if video_url == nil {
-                video_url = firstUrl
-            }
+            guard let video_url = self.videoInfo["url"] else { return }
             
-            guard (video_url != nil) && video_url!.hasSuffix("mp4") else {
-                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "确认"), style: .Cancel, handler: nil)
-                self.showAlert(NSLocalizedString("Parse Failed", comment: "地址解析失败"), message: nil, actions: [cancelAction])
-                return
-            }
+            let video_firstPart = video_url.componentsSeparatedByString("?")[0]
+            
+            let parsedURL = "\(video_firstPart)?vkey=\(fvkey!)"
             
             dispatch_async(dispatch_get_main_queue(), {
-                self.videoInfo["url"] = video_url! as String
-                self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(video_url!)";
+                self.videoInfo["url"] = parsedURL
+                self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(parsedURL)";
                 switch action {
                 case .Copy:
-                    UIPasteboard.generalPasteboard().string = video_url! as String
+                    UIPasteboard.generalPasteboard().string = parsedURL
                     self.hideExtensionWithCompletionHandler()
                 case .Save:
                     self.startSave()
@@ -304,16 +303,7 @@ class ShareViewController: UIViewController {
             return
         }
         
-        
-        if (videoInfo["type"] == "xml") {
-            // 是否为twimg的xml文件
-            parseXML(userAction)
-        } else if (videoInfo["type"] == "iframe") {
-            // 是否为twimg的xml文件
-            parse_iframe(userAction)
-        } else {
-             startSave()
-        }
+        parse(userAction)
     }
     
     func startSave() {
@@ -378,13 +368,25 @@ class ShareViewController: UIViewController {
             return
         }
         
+        parse(userAction)
+    }
+    
+    // MARK: - 解析动作
+    func parse(userAction: ShareActions) {
         if (videoInfo["type"] == "xml") {
             parseXML(userAction)
         } else if (videoInfo["type"] == "iframe") {
             parse_iframe(userAction)
+        } else if (videoInfo["type"] == "qq") {
+            parse_qq(userAction)
         } else {
-            UIPasteboard.generalPasteboard().string = videoInfo["url"]
-            self.hideExtensionWithCompletionHandler()
+            switch userAction {
+            case .Copy:
+                UIPasteboard.generalPasteboard().string = videoInfo["url"]
+                self.hideExtensionWithCompletionHandler()
+            case .Save:
+                startSave()
+            }
         }
     }
     
@@ -405,7 +407,6 @@ class ShareViewController: UIViewController {
         }
     }
 }
-
 
 extension ShareViewController: NSXMLParserDelegate {
     func parser(parser: NSXMLParser, foundCDATA CDATABlock: NSData) {
