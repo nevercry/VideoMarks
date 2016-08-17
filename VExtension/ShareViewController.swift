@@ -170,9 +170,17 @@ class ShareViewController: UIViewController {
         config.timeoutIntervalForRequest = 10
         let session = NSURLSession(configuration: config)
         
-        guard let source = videoInfo["source"] where source.componentsSeparatedByString("vid=").count > 1 else { return }
+        let vidURL = videoInfo["url"]!
+        let video_id_Range = vidURL.rangeOfString("video_id=")!
         
-        let vid = source.componentsSeparatedByString("vid=")[1]
+        let nextRange = video_id_Range.endIndex..<vidURL.characters.endIndex
+        
+        let endOfvidRange = videoInfo["url"]!.rangeOfString("&", options: .LiteralSearch, range: nextRange)!
+        
+        let vidRange = video_id_Range.endIndex..<endOfvidRange.startIndex
+        
+        let vid = vidURL.substringWithRange(vidRange)
+        
         print("vid is \(vid)")
         
         let api = "http://h5vv.video.qq.com/getinfo?otype=json&platform=10901&vid=\(vid)"
@@ -183,44 +191,63 @@ class ShareViewController: UIViewController {
                 self.activityStatusView.stopAnimating()
             })
             
-            guard (data != nil) else {
-                let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
-                let message = NSLocalizedString("Try again", comment: "请重试")
-                let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .Cancel, handler: {
-                    action in
-                    self.hideExtensionWithCompletionHandler()
-                })
-                self.showAlert(alertTitle, message: message, actions: [cancelAction])
-                return
+            if let networkData = data {
+                
+                let dataInfo = String(data: networkData, encoding: NSUTF8StringEncoding)
+                let scaner = NSScanner(string: dataInfo!)
+                scaner.scanUpToString("{", intoString: nil)
+                var jsonString:NSString?
+                scaner.scanUpToString("};", intoString: &jsonString)
+                jsonString = jsonString?.stringByAppendingString("}")
+                
+                let json = JSON.parse(jsonString as! String)
+                
+                print("json \(json)")
+                
+                if let url = json["vl"]["vi"][0]["ul"]["ui"][0]["url"].string, let fvKey = json["vl"]["vi"][0]["fvkey"].string {
+                    
+                    var end_part:String
+                    if let mp4 = json["vl"]["vi"][0]["cl"]["ci"].array {
+                        end_part = mp4[0]["keyid"].string!.stringByReplacingOccurrencesOfString(".10", withString: ".p") + ".mp4"
+                    } else {
+                        end_part = json["vl"]["vi"][0]["fn"].string!
+                    }
+                    
+                    let parsedURL = "\(url)/\(end_part)?vkey=\(fvKey)"
+                    
+                    print("parsedURL \(parsedURL)")
+                    
+                    let td = json["vl"]["vi"][0]["td"].string!
+                    let duration = Int(Double(td)!)
+                    
+                    print("url \(url) endPart \(end_part) ")
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.videoInfo["duration"] = self.seconds2time(duration)
+                        self.videoInfo["url"] = parsedURL
+                        
+                        self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(parsedURL)";
+                        switch action {
+                        case .Copy:
+                            UIPasteboard.generalPasteboard().string = parsedURL
+                            self.hideExtensionWithCompletionHandler()
+                        case .Save:
+                            self.startSave()
+                        }
+                    })
+                    
+                    return
+                }
             }
             
-            let dataInfo = String(data: data!, encoding: NSUTF8StringEncoding)
-            
-            let scaner = NSScanner(string: dataInfo!)
-            scaner.scanUpToString("fvkey", intoString: nil)
-            scaner.scanString("fvkey\":\"", intoString: nil)
-            var fvkey:NSString?
-            scaner.scanUpToString("\"", intoString: &fvkey)
-            
-            print("fvkey is \(fvkey)")
-            
-            guard let video_url = self.videoInfo["url"] else { return }
-            
-            let video_firstPart = video_url.componentsSeparatedByString("?")[0]
-            
-            let parsedURL = "\(video_firstPart)?vkey=\(fvkey!)"
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                self.videoInfo["url"] = parsedURL
-                self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(parsedURL)";
-                switch action {
-                case .Copy:
-                    UIPasteboard.generalPasteboard().string = parsedURL
-                    self.hideExtensionWithCompletionHandler()
-                case .Save:
-                    self.startSave()
-                }
+            let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+            let message = NSLocalizedString("Try again", comment: "请重试")
+            let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .Cancel, handler: {
+                action in
+                self.hideExtensionWithCompletionHandler()
             })
+            self.showAlert(alertTitle, message: message, actions: [cancelAction])
+            
         }).resume()
     }
     

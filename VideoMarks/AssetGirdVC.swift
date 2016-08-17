@@ -26,8 +26,6 @@ class AssetGirdVC: UICollectionViewController {
     
     var tsFileDownloadTask: TSFileDownloadTask?
     
-    var exportProgressTimer: NSTimer?
-    
     lazy var m3u8_session: NSURLSession = {
         let config = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("m3u8_backgroundSession")
         let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
@@ -341,25 +339,8 @@ class AssetGirdVC: UICollectionViewController {
                 }
             })
         }
-        
-        self.exportProgressTimer = NSTimer(timeInterval: 0.1, target: self, selector: #selector(updateExportProgress), userInfo: exportor, repeats: true)
-        self.exportProgressTimer?.fire()
     }
     
-    // MARK: 更新导出进度
-    func updateExportProgress(timer: NSTimer) {
-        if let exporter = timer.userInfo as? AVAssetExportSession {
-            let progress = exporter.progress * 100
-           
-            self.m3u8DownloadStatusView.progressLabel.text = "\(progress)%"
-            
-            if exporter.progress > 0.99 {
-                self.exportProgressTimer?.invalidate()
-            }
-        } else {
-            self.exportProgressTimer?.invalidate()
-        }
-    }
     
     // MARK: - 合并后的清理工作
     func clearUpTmpFiles() {

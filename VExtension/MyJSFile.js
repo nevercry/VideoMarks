@@ -209,7 +209,12 @@ run: function(arguments) {
         } else {
             videoInfo.title = document.getElementsByClassName('video_title')[0].textContent;
         }
-        videoInfo.url = document.getElementsByTagName('video')[0].src;
+        
+        if (videoInfo.source.includes('m.v.qq')) {
+            videoInfo.url = document.querySelector('a[class=tvp_app_btn]').getAttribute('data-url'); // iPhone
+        } else {
+            videoInfo.url = document.querySelector('a[class=tvp_open_btn_a]').getAttribute('data-openurl');
+        }
         
         var tvp_time_panel_total = document.getElementsByClassName('tvp_time_panel_total')[0];
         if (tvp_time_panel_total) {
@@ -223,7 +228,7 @@ run: function(arguments) {
         if (meta) {
             videoInfo.poster = meta.content;
         } else {
-            videoInfo.poster = document.getElementById('share_qq_img').children[0].src;
+            videoInfo.poster = "https:" + document.getElementsByClassName('tvp_poster_img')[0].getAttribute('data-pic');
         }
         
         videoInfo.type = "qq";
