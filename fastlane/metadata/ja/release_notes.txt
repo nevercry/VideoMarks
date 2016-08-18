@@ -1,0 +1,4 @@
+1. Add Vimeo support.
+2. Add Youku whole video parsing.
+3. Add QQ support.
+4. Bug fix.
