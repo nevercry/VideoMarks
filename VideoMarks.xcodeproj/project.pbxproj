@@ -108,7 +108,7 @@
 		4A07AE751D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Image+CoreDataProperties.swift"; path = "Models/Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4A07AE791D0A108000935701 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Models/Image.swift; sourceTree = "<group>"; };
-		4A2EB67E1D45FD9700019FAC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		4A2EB67E1D45FD9700019FAC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskManager.swift; path = Models/TaskManager.swift; sourceTree = "<group>"; };
 		4A2EB6801D45FE3800019FAC /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTask.swift; path = Models/DownloadTask.swift; sourceTree = "<group>"; };
 		4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadViewCell.swift; path = Views/DownloadViewCell.swift; sourceTree = "<group>"; };
 		4A2EB6861D47675800019FAC /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ../GoogleMobileAds.framework; sourceTree = "<group>"; };
@@ -147,11 +147,11 @@
 		4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveAdTVC.swift; sourceTree = "<group>"; };
 		4AB7926B1D4B1120007E4D4B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoMarksProducts.swift; path = Models/VideoMarksProducts.swift; sourceTree = "<group>"; };
-		4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAPHelper.swift; path = Models/IAPHelper.swift; sourceTree = "<group>"; };
 		4ACC00AE1D610E240046D32D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadStatusView.swift; sourceTree = "<group>"; };
-		4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSFileDownloadTask.swift; sourceTree = "<group>"; };
-		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLSPlayListParser.swift; sourceTree = "<group>"; };
+		4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadStatusView.swift; path = Views/DownloadStatusView.swift; sourceTree = "<group>"; };
+		4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TSFileDownloadTask.swift; path = Models/TSFileDownloadTask.swift; sourceTree = "<group>"; };
+		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HLSPlayListParser.swift; path = Models/HLSPlayListParser.swift; sourceTree = "<group>"; };
 		4AD4E2941D0C18770002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4AD4E2961D0C19240002CE90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4AD4E29B1D0C1C220002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -226,18 +226,13 @@
 		4A07AE821D0B433900935701 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */,
-				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
-				4AA06C661D37AA6700504AE3 /* PlayerController.swift */,
-				4A5CFD9F1D060D6D004C2C64 /* DataController.swift */,
 				4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */,
 				4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */,
+				4AA06C661D37AA6700504AE3 /* PlayerController.swift */,
+				4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */,
+				4A5CFD9F1D060D6D004C2C64 /* DataController.swift */,
 				4AA06C5B1D368E9C00504AE3 /* PhotosTVC.swift */,
 				4AA06C5D1D36EBFA00504AE3 /* AssetGirdVC.swift */,
-				4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */,
-				4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */,
-				4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */,
-				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -252,7 +247,11 @@
 				4A5CFDA51D07FE14004C2C64 /* Video.swift */,
 				4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */,
 				4A2EB6801D45FE3800019FAC /* DownloadTask.swift */,
+				4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */,
 				4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */,
+				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
+				4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */,
+				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -281,6 +280,7 @@
 			children = (
 				4AA06C611D36F67000504AE3 /* CollectionViewCells */,
 				4AA06C4D1D33BF1000504AE3 /* TableViewCells */,
+				4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
