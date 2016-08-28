@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 import UIKit
-
+import AVFoundation
 
 class Video: NSManagedObject {
     
@@ -189,4 +189,41 @@ class Video: NSManagedObject {
         
         return titleHeight + linkHeight + dateHeight + druationHeight 
     }
+}
+
+extension Video {
+    var player: AVPlayer {
+        let url = NSURL(string: self.url)
+        return AVPlayer(URL: url!)
+    }
+    
+    func previewImageData(atInterval interval: Int) -> NSData? {
+        print("Taking pic at \(interval) second")
+        let videoURL = NSURL(string: self.url)!
+        let asset = AVURLAsset(URL: videoURL)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        
+        var time = asset.duration
+        //If possible - take not the first frame (it could be completely black or white on camara's videos)
+        let tmpTime = CMTimeMakeWithSeconds(Float64(interval), 100)
+        time.value = min(time.value, tmpTime.value)
+        
+        do {
+            let img = try assetImgGenerate.copyCGImageAtTime(time, actualTime: nil)
+            let frameImg = UIImage(CGImage: img)
+            let compressImage = frameImg.clipAndCompress(64.0/44.0, compressionQuality: 1.0)
+            let newImageSize = CGSizeMake(320, 220)
+            UIGraphicsBeginImageContextWithOptions(newImageSize, false, 0.0)
+            compressImage.drawInRect(CGRectMake(0, 0, newImageSize.width, newImageSize.height))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return UIImageJPEGRepresentation(newImage, 1.0)
+        } catch {
+            /* error handling here */
+            print("获取视频截图失败")
+        }
+        return nil
+    }
+    
 }

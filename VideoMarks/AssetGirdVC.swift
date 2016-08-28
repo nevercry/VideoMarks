@@ -260,6 +260,9 @@ class AssetGirdVC: UICollectionViewController {
     // MARK: - 合并所有视频片段
     func combineAllVideoFragment() {
         print("合并所有视频片段")
+        
+        self.backgroundUpdateTask = beginBackgroundUpdateTask()
+        
         m3u8DownloadStatusView.progressLabel.text = NSLocalizedString("Processing", comment: "处理中...")
         guard let documentURL = VideoMarks.documentURL() else { return }
         
@@ -339,6 +342,8 @@ class AssetGirdVC: UICollectionViewController {
                 }
             })
         }
+        
+        endBackgroundUpdateTask()
     }
     
     
@@ -402,6 +407,20 @@ class AssetGirdVC: UICollectionViewController {
     func finishTSDownloadTask() {
         tsFileDownloadTask = nil
         print("清楚下载任务")
+    }
+    
+    // MARK: - 后台任务
+    var backgroundUpdateTask = UIBackgroundTaskInvalid
+    
+    func beginBackgroundUpdateTask() -> UIBackgroundTaskIdentifier {
+        return UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
+            self.endBackgroundUpdateTask()
+        })
+    }
+    
+    func endBackgroundUpdateTask() {
+        UIApplication.sharedApplication().endBackgroundTask(self.backgroundUpdateTask)
+        self.backgroundUpdateTask = UIBackgroundTaskInvalid
     }
     
     // MARK: - Asset Caching
