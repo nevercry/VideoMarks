@@ -28,6 +28,8 @@ class VideoMarksTVC: UITableViewController {
     
     var iAPRequest: SKProductsRequest?
     
+    var memCache = NSCache()
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,7 @@ class VideoMarksTVC: UITableViewController {
         
         // 注册CoreData完成初始化后的通知
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateUI), name: VideoMarks.CoreDataStackCompletion, object: nil)
-        
+                
         // Check for force touch feature, and add force touch/previewing capability.
         if traitCollection.forceTouchCapability == .Available {
             /*
@@ -197,60 +199,7 @@ class VideoMarksTVC: UITableViewController {
     func configureCell(cell: VideoMarkCell, indexPath: NSIndexPath) {
         let video = fetchedResultsController.fetchedObjects![indexPath.row] as! Video
         // Populate cell from the NSManagedObject instance
-        
-        cell.title.text = video.title
-        cell.createDate.text = video.createDateDescription(dateStyle: .ShortStyle, timeStyle: .NoStyle)
-        
-        let noAttdurationStr = video.durationDescription()
-        let durationAttriStr = NSMutableAttributedString(string: noAttdurationStr)
-        
-        if let expTimeInterval = video.expireTimeInterval() {
-            let expStr = video.expireAttributeDescription()
-            if video.isVideoInvalid(expTimeInterval) {
-                // 过期
-                durationAttriStr.appendAttributedString(expStr!)
-            } else {
-                durationAttriStr.mutableString.appendString("        ")
-                durationAttriStr.appendAttributedString(expStr!)
-            }
-        }
-        
-        cell.duration.attributedText = durationAttriStr
-        
-        if let imageData = video.posterImage?.data {
-            let resizeImage = UIImage(data: imageData)
-            cell.poster.image = UIImage.resize(resizeImage!, newSize: VideoMarks.PosterImageSize)
-        } else {
-            let tmpImg = UIImage.alphaSafariIcon(44, scale: Float(UIScreen.mainScreen().scale))
-            cell.poster.image = UIImage.resize(tmpImg, newSize: VideoMarks.PosterImageSize)
-            
-            let backUpDate = video.createAt
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { [weak self] in
-                var imageData: NSData?
-                if video.poster.isEmpty {
-                    let videoUrl = NSURL(string: video.url)!
-                    imageData = self?.getPreviewImageDataForVideoAtURL(videoUrl, atInterval: 1)
-                } else {
-                    let posterURL = NSURL(string: video.poster)!
-                    imageData = NSData(contentsOfURL: posterURL)
-                }
-                dispatch_async(dispatch_get_main_queue(), {[weak self] in
-                    if video.createAt == backUpDate {
-                        if let _ = imageData {
-                            // 根据16:9 截取图片
-                            guard let preImage = UIImage(data: imageData!) else { return }
-                            let cropImage = preImage.crop16_9()
-                            let cropData = UIImageJPEGRepresentation(cropImage, 1)!
-                            
-                            let image = Image(data: cropData, context: (self?.dataController!.managedObjectContext)!)
-                            image.fromVideo = video
-                            self?.dataController?.saveContext()
-                        }
-                    }
-                })
-            }
-        }
-        cell.poster.contentMode = .ScaleAspectFill
+        cell.configFor(video: video)
     }
     
     // MARK: - Table view data source and Delegate
@@ -308,9 +257,7 @@ class VideoMarksTVC: UITableViewController {
             let video = fetchedResultsController.fetchedObjects![indexPath.row] as! Video
             
             if !editing {
-                let url = NSURL(string: video.url)
-                let player = AVPlayer(URL: url!)
-                PlayerController.sharedInstance.playVideo(player, inViewController: self)
+                PlayerController.sharedInstance.playVideo(video.player, inViewController: self)
             } else {
                 performSegueWithIdentifier("Show Video Detail", sender: video)
             }
@@ -446,38 +393,6 @@ extension VideoMarksTVC: UIViewControllerPreviewingDelegate {
     }
 }
 
-// MARK: - Gen Image thumbnail
-extension VideoMarksTVC {
-    // MARK: - 获取视频缩略图
-    func getPreviewImageDataForVideoAtURL(videoURL: NSURL, atInterval: Int) -> NSData? {
-        print("Taking pic at \(atInterval) second")
-        let asset = AVURLAsset(URL: videoURL)
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        
-        var time = asset.duration
-        //If possible - take not the first frame (it could be completely black or white on camara's videos)
-        let tmpTime = CMTimeMakeWithSeconds(Float64(atInterval), 100)
-        time.value = min(time.value, tmpTime.value)
-        
-        do {
-            let img = try assetImgGenerate.copyCGImageAtTime(time, actualTime: nil)
-            let frameImg = UIImage(CGImage: img)
-            let compressImage = frameImg.clipAndCompress(64.0/44.0, compressionQuality: 1.0)
-            let newImageSize = CGSizeMake(320, 220)
-            UIGraphicsBeginImageContextWithOptions(newImageSize, false, 0.0)
-            compressImage.drawInRect(CGRectMake(0, 0, newImageSize.width, newImageSize.height))
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return UIImageJPEGRepresentation(newImage, 1.0)
-        } catch {
-            /* error handling here */
-            print("获取视频截图失败")
-        }
-        return nil
-    }
-}
-
 extension VideoMarksTVC {
     // MARK: - 解除广告
     func removeGoogleAd() {
@@ -514,24 +429,22 @@ extension VideoMarksTVC {
         bannerView!.loadRequest(GADRequest())
         
         // 用户能否去广告
-        if IAPHelper.canMakePayments() {
-            // 加载去广告按钮
-            removeAdButton = UIButton(type: .Custom)
-            removeAdButton?.backgroundColor = UIColor.clearColor()
-            bannerView?.addSubview(removeAdButton!)
-            removeAdButton!.translatesAutoresizingMaskIntoConstraints = false
-            // 添加约束
-            let buttonConstraintWidth = NSLayoutConstraint(item: removeAdButton!, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
-            let buttonConstraintHeight = NSLayoutConstraint(item: removeAdButton!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
-            let buttonC_CenterY = NSLayoutConstraint(item: removeAdButton!, attribute: .CenterY, relatedBy: .Equal, toItem: bannerView!, attribute: .CenterY, multiplier: 1, constant: 0)
-            let buttonC_Trailing = NSLayoutConstraint(item: removeAdButton!, attribute: .Trailing, relatedBy: .Equal, toItem: bannerView!, attribute: .Trailing, multiplier: 1, constant: 0)
-            
-            NSLayoutConstraint.activateConstraints([buttonConstraintWidth, buttonConstraintHeight, buttonC_CenterY, buttonC_Trailing])
-            
-            removeAdButton?.setImage(UIImage(named: "ad_close"), forState: .Normal)
-            removeAdButton?.imageEdgeInsets = UIEdgeInsets(top: -26, left: 0, bottom: 0, right: -26)
-            removeAdButton?.addTarget(self, action: #selector(showInAppPurchase), forControlEvents: .TouchUpInside)
-        }
+        // 加载去广告按钮
+        removeAdButton = UIButton(type: .Custom)
+        removeAdButton?.backgroundColor = UIColor.clearColor()
+        bannerView?.addSubview(removeAdButton!)
+        removeAdButton!.translatesAutoresizingMaskIntoConstraints = false
+        // 添加约束
+        let buttonConstraintWidth = NSLayoutConstraint(item: removeAdButton!, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
+        let buttonConstraintHeight = NSLayoutConstraint(item: removeAdButton!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
+        let buttonC_CenterY = NSLayoutConstraint(item: removeAdButton!, attribute: .CenterY, relatedBy: .Equal, toItem: bannerView!, attribute: .CenterY, multiplier: 1, constant: 0)
+        let buttonC_Trailing = NSLayoutConstraint(item: removeAdButton!, attribute: .Trailing, relatedBy: .Equal, toItem: bannerView!, attribute: .Trailing, multiplier: 1, constant: 0)
+        
+        NSLayoutConstraint.activateConstraints([buttonConstraintWidth, buttonConstraintHeight, buttonC_CenterY, buttonC_Trailing])
+        
+        removeAdButton?.setImage(UIImage(named: "ad_close"), forState: .Normal)
+        removeAdButton?.imageEdgeInsets = UIEdgeInsets(top: -26, left: 0, bottom: 0, right: -26)
+        removeAdButton?.addTarget(self, action: #selector(showInAppPurchase), forControlEvents: .TouchUpInside)
     }
     
     // MARK: - 显示In App Purchase
@@ -572,10 +485,13 @@ extension VideoMarksTVC {
         let caBIO = BIO_new(BIO_s_mem())
         BIO_write(caBIO, caData!.bytes, Int32(caData!.length))
         let caRootX509 = d2i_X509_bio(caBIO, nil)
+        BIO_vfree(caBIO)
         
         //Verify the receipt was signed by Apple
         let caStore = X509_STORE_new()
         X509_STORE_add_cert(caStore, caRootX509)
+        X509_free(caRootX509)
+        
         OpenSSL_add_all_digests()
         let verifyResult = PKCS7_verify(receiptPKCS7, nil, caStore, nil, nil, 0)
         
@@ -584,7 +500,10 @@ extension VideoMarksTVC {
             return
         }
         
+        X509_STORE_free(caStore)
+        
         let octets = pkcs7_d_data(pkcs7_d_sign(receiptPKCS7).memory.contents)
+        
         var ptr = UnsafePointer<UInt8>(octets.memory.data)
         let end = ptr.advancedBy(Int(octets.memory.length))
         var type: Int32 = 0
@@ -769,6 +688,11 @@ extension VideoMarksTVC {
             // original lower than 1.3 1.3前的版本 默认是购买过的用户
             print("解除广告 original lower than 1.3 ")
             removeGoogleAd()
+        }
+        
+        defer {
+            BIO_vfree(receiptBio)
+            PKCS7_free(receiptPKCS7)
         }
     }
     

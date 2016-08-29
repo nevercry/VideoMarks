@@ -17,8 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var dataController: DataController!
     var backgroundSessionCompletionHandler: (() -> Void)?
     
-    var backgroundTaskIdentifier = UIBackgroundTaskInvalid
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         let _ = VideoMarksProducts.store  // 启动后初始化store 监听storekit事件
@@ -43,13 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
-        backgroundTaskIdentifier = application.beginBackgroundTaskWithExpirationHandler({ 
-            application.endBackgroundTask(self.backgroundTaskIdentifier)
-            
-        })
-        
-        
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

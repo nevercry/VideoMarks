@@ -291,8 +291,16 @@ run: function(arguments) {
         otherParse();
         if (videoInfo.url.length == 0) {
             var html5video = document.getElementById('html5video');
-            var infoScript = html5video.nextElementSibling;
-            var infoArr = infoScript.innerHTML.split(';').filter(function(ele) {
+            var sibling = html5video.nextElementSibling;
+            
+            while (sibling.nextElementSibling) {
+                if (sibling.text &&sibling.text.length > 0) break;
+                
+                sibling = sibling.nextElementSibling;
+            }
+            
+            
+            var infoArr = sibling.innerHTML.split(';').filter(function(ele) {
                                                                  return ele.includes('setVideoTitle') || ele.includes('setVideoUrlHigh') || ele.includes('setThumbUrl')
                                                                  });
             
@@ -387,9 +395,17 @@ run: function(arguments) {
                 for (var i = 0; i < videos.length; i++) {
                     var vd = videos[i];
                     if (vd.src) {
-                        if (vd.src.includes('mp4') || vd.getAttribute('type').includes("video/mp4")) {
+                        if (vd.src.includes('mp4')) {
                             videoInfo.url = vd.src;
                             break;
+                        }
+                        
+                        var vd_type = vd.getAttribute('type');
+                        if (vd_type) {
+                            if (vd_type.includes("video/mp4")) {
+                                videoInfo.url = vd.src;
+                                break;
+                            }
                         }
                     }
                 }
