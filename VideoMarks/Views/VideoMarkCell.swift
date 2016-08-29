@@ -48,9 +48,18 @@ extension VideoMarkCell {
         
         duration.attributedText = durationAttriStr
         
-        if let imageData = video.posterImage?.data {
-            let resizeImage = UIImage(data: imageData)
-            poster.image = resizeImage
+        // 查看缓存里有无图片数据
+        let memCache = MemoryCache.shareInstance
+        
+        if let imageData = memCache.objectForKey(video.poster) as? NSData {
+            let image = UIImage(data: imageData)
+            poster.image = image
+        } else if let imageData = video.posterImage?.data {
+            let image = UIImage(data: imageData)
+            poster.image = image
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { 
+                memCache.setObject(imageData, forKey: video.poster)
+            })
         } else {
             let tmpImg = UIImage.alphaSafariIcon(44, scale: Float(UIScreen.mainScreen().scale))
             poster.image = UIImage.resize(tmpImg, newSize: VideoMarks.PosterImageSize)
@@ -80,11 +89,16 @@ extension VideoMarkCell {
                             } catch {
                                 fatalError("Failure to save context: \(error)")
                             }
+                            
+                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { 
+                                memCache.setObject(cropData, forKey: video.poster)
+                            })
                         }
                     }
                 })
             }
         }
+        
         poster.contentMode = .ScaleAspectFill
     }
 }

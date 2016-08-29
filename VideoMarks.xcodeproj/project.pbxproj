@@ -59,6 +59,7 @@
 		4AD794CD1D034B4D008A1D2D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD794CC1D034B4D008A1D2D /* ShareViewController.swift */; };
 		4AD794D01D034B4D008A1D2D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD794CE1D034B4D008A1D2D /* MainInterface.storyboard */; };
 		4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AD794CA1D034B4D008A1D2D /* VExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4AD7CC3F1D726D0E00985E53 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD7CC3E1D726D0E00985E53 /* MemoryCache.swift */; };
 		4AEB09FC1D506D1A00545A66 /* product_ids.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AEB09FB1D506D1A00545A66 /* product_ids.plist */; };
 /* End PBXBuildFile section */
 
@@ -179,6 +180,7 @@
 		4AD794CF1D034B4D008A1D2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		4AD794D11D034B4D008A1D2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AD794D91D034B58008A1D2D /* VExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = VExtension.entitlements; sourceTree = "<group>"; };
+		4AD7CC3E1D726D0E00985E53 /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryCache.swift; path = Models/MemoryCache.swift; sourceTree = "<group>"; };
 		4AE707DD1D4883160064ACEE /* VideoMarks-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VideoMarks-Bridging-Header.h"; sourceTree = "<group>"; };
 		4AEB09CB1D4BCBD100545A66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CD1D4BCBDA00545A66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		4A5CFDA31D07FDCB004C2C64 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4AD7CC3E1D726D0E00985E53 /* MemoryCache.swift */,
 				4A07AE711D088C9000935701 /* OpenSafariActivity.swift */,
 				4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */,
 				4A07AE791D0A108000935701 /* Image.swift */,
@@ -593,6 +596,7 @@
 				4AD7949D1D0347BD008A1D2D /* VideoMarks.xcdatamodeld in Sources */,
 				4AA06C5E1D36EBFA00504AE3 /* AssetGirdVC.swift in Sources */,
 				4A5CFDA61D07FE14004C2C64 /* Video+CoreDataProperties.swift in Sources */,
+				4AD7CC3F1D726D0E00985E53 /* MemoryCache.swift in Sources */,
 				4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */,
 				4AB792701D4B3CE8007E4D4B /* IAPHelper.swift in Sources */,
 				4AB7926A1D4A8BB9007E4D4B /* RemoveAdTVC.swift in Sources */,

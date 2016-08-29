@@ -28,6 +28,8 @@ class VideoMarksTVC: UITableViewController {
     
     var iAPRequest: SKProductsRequest?
     
+    var memCache = NSCache()
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,7 @@ class VideoMarksTVC: UITableViewController {
         
         // 注册CoreData完成初始化后的通知
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateUI), name: VideoMarks.CoreDataStackCompletion, object: nil)
-        
+                
         // Check for force touch feature, and add force touch/previewing capability.
         if traitCollection.forceTouchCapability == .Available {
             /*
