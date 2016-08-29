@@ -26,7 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dataController = DataController(callback: {
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name:VideoMarks.CoreDataStackCompletion, object: nil))
         })
-        let naviC = window?.rootViewController as! UINavigationController
+        
+        let tabC = window?.rootViewController as! UITabBarController
+        
+        let naviC = tabC.viewControllers!.first as! UINavigationController
         
         let rootViewController = naviC.viewControllers.first! as! VideoMarksTVC
         rootViewController.dataController = dataController

@@ -20,7 +20,6 @@ struct VideoMarks {
     
     //MARK: - CellIdentifier
     static let VideoMarkCellID = "VideoMarkCell"
-    static let PhotosCellID = "PhotosCell"
 //    static let GirdViewCellID = "GirdViewCell"
     
     static let AllVideoCell = "AllVideoCell"

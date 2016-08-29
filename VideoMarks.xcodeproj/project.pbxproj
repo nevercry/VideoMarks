@@ -22,6 +22,8 @@
 		4A5CFDA61D07FE14004C2C64 /* Video+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */; };
 		4A5CFDA71D07FE14004C2C64 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA51D07FE14004C2C64 /* Video.swift */; };
 		4A5CFDA91D080D5F004C2C64 /* NSManagedObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */; };
+		4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */; };
+		4A600D8C1D7476CD007BC9DB /* TabOneScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */; };
 		4A75616B1D056C6A00D76EBA /* MyJSFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 4A75616A1D056C6A00D76EBA /* MyJSFile.js */; };
 		4AA06C501D366F5000504AE3 /* VideoMarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C4F1D366F5000504AE3 /* VideoMarks.swift */; };
 		4AA06C521D3672D700504AE3 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C511D3672D700504AE3 /* UIImage+extension.swift */; };
@@ -119,6 +121,8 @@
 		4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Video+CoreDataProperties.swift"; path = "Models/Video+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4A5CFDA51D07FE14004C2C64 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Video.swift; path = Models/Video.swift; sourceTree = "<group>"; };
 		4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSManagedObject+Extension.swift"; path = "Models/NSManagedObject+Extension.swift"; sourceTree = "<group>"; };
+		4A5FF03C1D747BE1002D156A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabTwoScenes.storyboard; sourceTree = "<group>"; };
+		4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TabOneScenes.storyboard; sourceTree = "<group>"; };
 		4A75616A1D056C6A00D76EBA /* MyJSFile.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MyJSFile.js; sourceTree = "<group>"; };
 		4A8777221D22637500BB92C5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		4A8777231D22637500BB92C5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainInterface.strings"; sourceTree = "<group>"; };
@@ -333,6 +337,8 @@
 				4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */,
 				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
+				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
+				4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */,
 				4AD7949E1D0347BD008A1D2D /* Assets.xcassets */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
 				4AEB09FB1D506D1A00545A66 /* product_ids.plist */,
@@ -534,8 +540,10 @@
 				4AA06C5A1D3679D400504AE3 /* VideoMarkCell.xib in Resources */,
 				4AEB09FC1D506D1A00545A66 /* product_ids.plist in Resources */,
 				4AD7949F1D0347BD008A1D2D /* Assets.xcassets in Resources */,
+				4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */,
 				4AD7949A1D0347BD008A1D2D /* Main.storyboard in Resources */,
 				4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */,
+				4A600D8C1D7476CD007BC9DB /* TabOneScenes.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +660,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A5FF03C1D747BE1002D156A /* Base */,
+			);
+			name = TabTwoScenes.storyboard;
+			sourceTree = "<group>";
+		};
 		4AD4E2951D0C18770002CE90 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

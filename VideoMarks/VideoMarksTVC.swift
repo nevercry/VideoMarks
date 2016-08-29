@@ -24,7 +24,6 @@ class VideoMarksTVC: UITableViewController {
 
     var dataController: DataController?
     var fetchedResultsController: NSFetchedResultsController!
-    let sectionLocalizedTitles = ["",NSLocalizedString("Web", comment: "网页")]
     
     var iAPRequest: SKProductsRequest?
     
@@ -206,82 +205,55 @@ class VideoMarksTVC: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var heightForRow: CGFloat
-        if (indexPath.section == 0) {
-            heightForRow = 44
-        } else {
-            heightForRow = VideoMarks.VideoMarkCellRowHeight
-        }
+        
+        heightForRow = VideoMarks.VideoMarkCellRowHeight
         
         return heightForRow
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return sectionLocalizedTitles.count
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numberOfRows: Int
-        if section == 0 {
-            numberOfRows = 1
-        } else {
-            numberOfRows = fetchedResultsController.fetchedObjects?.count ?? 0
-        }
+        
+        numberOfRows = fetchedResultsController.fetchedObjects?.count ?? 0
         
         return numberOfRows
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionLocalizedTitles[section]
-    }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         
-        if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier(VideoMarks.PhotosCellID, forIndexPath: indexPath)
-            cell.textLabel?.text = NSLocalizedString("Photos Library", comment: "照片")
-            cell.textLabel?.textAlignment = .Center
-        } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(VideoMarks.VideoMarkCellID, forIndexPath: indexPath)
-            // Set up the cell
-            configureCell(cell as! VideoMarkCell, indexPath: indexPath)
-        }
+        cell = tableView.dequeueReusableCellWithIdentifier(VideoMarks.VideoMarkCellID, forIndexPath: indexPath)
+        // Set up the cell
+        configureCell(cell as! VideoMarkCell, indexPath: indexPath)
+        
         
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
-            // 进入手机相册
+        let video = fetchedResultsController.fetchedObjects![indexPath.row] as! Video
+        
+        if !editing {
+            PlayerController.sharedInstance.playVideo(video.player, inViewController: self)
         } else {
-            let video = fetchedResultsController.fetchedObjects![indexPath.row] as! Video
-            
-            if !editing {
-                PlayerController.sharedInstance.playVideo(video.player, inViewController: self)
-            } else {
-                performSegueWithIdentifier("Show Video Detail", sender: video)
-            }
+            performSegueWithIdentifier("Show Video Detail", sender: video)
         }
     }
     
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        var canEditForRow: Bool
-        if indexPath.section == 0 {
-            canEditForRow = false
-        } else {
-            canEditForRow = true
-        }
         
-        return canEditForRow
+        return true
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        if indexPath.section == 0 {
-            return nil
-        }
-            
+       
         let deleteAction = UITableViewRowAction.init(style: UITableViewRowActionStyle.Destructive, title: NSLocalizedString("Delete", comment: "删除")) { (action, indexPath) in
             let videoMark = self.fetchedResultsController.fetchedObjects![indexPath.row] as! Video
             self.dataController?.managedObjectContext.deleteObject(videoMark)
