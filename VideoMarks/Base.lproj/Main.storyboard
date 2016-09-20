@@ -13,6 +13,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.90588235294117647" green="0.14366013175729433" blue="0.31127761952424826" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="YX1-KV-6ja" kind="relationship" relationship="viewControllers" id="QeR-l9-JNb"/>
@@ -27,7 +33,7 @@
         <scene sceneID="wZi-bl-0fN">
             <objects>
                 <viewControllerPlaceholder storyboardName="TabOneScenes" referencedIdentifier="FirstTabScenes" id="YX1-KV-6ja" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="2Zu-xV-y8K"/>
+                    <tabBarItem key="tabBarItem" title="Web" image="icon_bookmark" id="2Zu-xV-y8K"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T5R-w7-8eL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -37,12 +43,16 @@
         <scene sceneID="4y6-sf-gFz">
             <objects>
                 <viewControllerPlaceholder storyboardName="TabTwoScenes" referencedIdentifier="SecondTabScenes" id="6jl-XH-VCM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Ype-Zn-y5f"/>
+                    <tabBarItem key="tabBarItem" title="Videos" image="icon_photos" id="Ype-Zn-y5f"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txs-vW-frt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1568.5" y="904"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_bookmark" width="30" height="30"/>
+        <image name="icon_photos" width="30" height="30"/>
+    </resources>
     <color key="tintColor" red="0.98431372549999996" green="0.1843137255" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
 </document>

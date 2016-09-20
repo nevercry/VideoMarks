@@ -18,7 +18,7 @@ class DownloadStatusView: UIView {
     
     @IBOutlet weak var progressLabel: UILabel!
     
-    @IBAction func cancelDownload(sender: UIButton) {
+    @IBAction func cancelDownload(_ sender: UIButton) {
         delegate?.cancel()
     }
 }

@@ -19,12 +19,12 @@ extension NSManagedObject {
         //   FooBar.Engine
         //   Engine
         let name = NSStringFromClass(self)
-        return name.componentsSeparatedByString(".").last!
+        return name.components(separatedBy: ".").last!
     }
     
     convenience init(managedObjectContext: NSManagedObjectContext) {
-        let entityName = self.dynamicType.entityName()
-        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: managedObjectContext)!
-        self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
+        let entityName = type(of: self).entityName()
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: managedObjectContext)!
+        self.init(entity: entity, insertInto: managedObjectContext)
     }
 }

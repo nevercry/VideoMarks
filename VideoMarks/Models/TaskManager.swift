@@ -10,7 +10,7 @@ import UIKit
 import Photos
 
 class TaskManager: NSObject {
-    private var session: NSURLSession?
+    fileprivate var session: Foundation.URLSession?
     
     var taskList:[DownloadTask] = [DownloadTask]()
     
@@ -19,8 +19,8 @@ class TaskManager: NSObject {
     override init() {
         super.init()
         
-        let config = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("downloadSession")
-        self.session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        let config = URLSessionConfiguration.background(withIdentifier: "downloadSession")
+        self.session = Foundation.URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
         self.taskList = [DownloadTask]()
     }
     
@@ -28,9 +28,9 @@ class TaskManager: NSObject {
         self.session?.invalidateAndCancel()
     }
         
-    func newTask(url: String) {
-        if let url = NSURL(string: url) {
-            let downloadTask = self.session?.downloadTaskWithURL(url)
+    func newTask(_ url: String) {
+        if let url = URL(string: url) {
+            let downloadTask = self.session?.downloadTask(with: url)
             downloadTask?.resume()
             
             let task = DownloadTask(url: url, taskIdentifier: downloadTask!.taskIdentifier)
@@ -40,54 +40,55 @@ class TaskManager: NSObject {
     }
 }
 
-extension TaskManager: NSURLSessionDownloadDelegate {
+extension TaskManager: URLSessionDownloadDelegate {
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
-        if let documentURL = VideoMarks.documentURL() {
-            let fileManager = NSFileManager.defaultManager()
-            let destURL = documentURL.URLByAppendingPathComponent("tmp.mp4")
+        if let documentURL = VideoMarksConstants.documentURL() {
+            let fileManager = FileManager.default
+            let destURL = documentURL.appendingPathComponent("tmp.mp4")
+
             print("destURL is \(destURL)")
                         
-            if fileManager.fileExistsAtPath(destURL.path!) {
+            if fileManager.fileExists(atPath: destURL.path) {
                 do {
-                    try fileManager.removeItemAtURL(destURL)
+                    try fileManager.removeItem(at: destURL)
                 } catch {
                     print("remove item error \(error)")
                 }
             }
             
             do {
-                try fileManager.moveItemAtURL(location, toURL: destURL)
+                try fileManager.moveItem(at: location, to: destURL)
                 print("move item to destURL \(destURL)")
             } catch {
                 print("error download \(error)")
             }
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName(DownloadTaskNotification.Finish.rawValue, object: downloadTask.taskIdentifier)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: DownloadTaskNotification.Finish.rawValue), object: downloadTask.taskIdentifier)
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
         
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         let progressInfo = ["taskIdentifier": downloadTask.taskIdentifier,
-                            "totalBytesWritten": NSNumber(longLong: totalBytesWritten),
-                            "totalBytesExpectedToWrite": NSNumber(longLong: totalBytesExpectedToWrite)]
+                            "totalBytesWritten": NSNumber(value: totalBytesWritten as Int64),
+                            "totalBytesExpectedToWrite": NSNumber(value: totalBytesExpectedToWrite as Int64)] as [String : Any]
         
-        NSNotificationCenter.defaultCenter().postNotificationName(DownloadTaskNotification.Progress.rawValue, object: progressInfo)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: DownloadTaskNotification.Progress.rawValue), object: progressInfo)
     }
 }
 
 // MARK: - NSURLSessionDelegate
-extension TaskManager: NSURLSessionDelegate {
-    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+extension TaskManager: URLSessionDelegate {
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             if let completionHandler = appDelegate.backgroundSessionCompletionHandler {
                 appDelegate.backgroundSessionCompletionHandler = nil
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     completionHandler()
                 })
             }

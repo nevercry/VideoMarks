@@ -7,12 +7,32 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 extension UICollectionView {
-    func indexPathsForElementsIn(rect: CGRect) -> [NSIndexPath] {
-        let alllayoutAttributes = self.collectionViewLayout.layoutAttributesForElementsInRect(rect)
+    func indexPathsForElementsIn(_ rect: CGRect) -> [IndexPath] {
+        let alllayoutAttributes = self.collectionViewLayout.layoutAttributesForElements(in: rect)
         guard alllayoutAttributes?.count > 0 else { return [] }
-        var indexPaths: [NSIndexPath] = []
+        var indexPaths: [IndexPath] = []
         alllayoutAttributes?.forEach({ (layoutAttributes) in
             indexPaths.append(layoutAttributes.indexPath)
         })

@@ -14,50 +14,56 @@ class PhotosTVC: UITableViewController {
     let sectionLocalizedTitles = ["",NSLocalizedString("Albums", comment: "")]
     var isPhotosCanAccess: Bool = false {
         didSet {
-            tableView.tableFooterView?.hidden = isPhotosCanAccess
-            navigationItem.rightBarButtonItem?.enabled = isPhotosCanAccess
+            tableView.tableFooterView?.isHidden = isPhotosCanAccess
+            navigationItem.rightBarButtonItem?.isEnabled = isPhotosCanAccess
         }
     }
    
-    override func awakeFromNib() {
-        PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
-        
-        let allVideosOptions = PHFetchOptions()
-        allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Video.rawValue)
-        allVideosOptions.includeHiddenAssets = true
-        allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
-        let allVideos = PHAsset.fetchAssetsWithOptions(allVideosOptions)
-        
-        let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollectionsWithOptions(nil)
-        
-        self.sectionFetchResults = [allVideos,topLevelUserCollections]
-    }
-    
-    deinit {
-        PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
-    }
+    // MARK: View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Photos"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addNewAlbum))
+        self.navigationItem.title = NSLocalizedString("Videos", comment: "视频")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewAlbum))
         
-        let status = PHPhotoLibrary.authorizationStatus()
-
-        switch status {
-        case .Authorized:
-            isPhotosCanAccess = true
-        default:
-            isPhotosCanAccess = false
-        }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.clearsSelectionOnViewWillAppear = false
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        /* When the table view is about to appear the first time it’s loaded, the table-view controller reloads the table view’s data.  https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableViewController_Class/
+        */
+        if self.sectionFetchResults == nil {
+            // 在界面显示时弹提示
+            let status = PHPhotoLibrary.authorizationStatus()
+            switch status {
+            case .authorized:
+                isPhotosCanAccess = true
+            default:
+                isPhotosCanAccess = false
+            }
+            
+            PHPhotoLibrary.shared().register(self)
+            
+            let allVideosOptions = PHFetchOptions()
+            allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.video.rawValue)
+            allVideosOptions.includeHiddenAssets = true
+            allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
+            let allVideos = PHAsset.fetchAssets(with: allVideosOptions)
+            
+            let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollections(with: nil)
+            
+            self.sectionFetchResults = [allVideos,topLevelUserCollections]
+        }        
+    }
+    
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
+    }
+    
+    // MARK: Memery Warning
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -65,80 +71,112 @@ class PhotosTVC: UITableViewController {
     }
     
     // MARK: - Actions
-    func addNewAlbum(sender: UIBarButtonItem) {
+    func addNewAlbum(_ sender: UIBarButtonItem) {
         // 添加新的相册
-        let alertC = UIAlertController(title: NSLocalizedString("New Ablum", comment: "新建相册"), message: nil, preferredStyle: .Alert)
-        alertC.addTextFieldWithConfigurationHandler { (textField) in
+        let alertC = UIAlertController(title: NSLocalizedString("New Ablum", comment: "新建相册"), message: nil, preferredStyle: .alert)
+        alertC.addTextField { (textField) in
             textField.placeholder = NSLocalizedString("Ablum Name", comment: "相册名")
         }
         
-        alertC.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .Cancel, handler: nil))
-        alertC.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "创建"), style: .Default) { (action) in
+        alertC.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .cancel, handler: nil))
+        alertC.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "创建"), style: .default) { (action) in
             let textField = alertC.textFields?.first
-            guard let title = textField?.text where !title.isEmpty else { return }
+            guard let title = textField?.text , !title.isEmpty else { return }
             
-            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(title)
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: title)
                 }, completionHandler: { (success, error) in
                     if !success {
                         print("error create ablum: \(error)")
                     }
             })
             })
-        presentViewController(alertC, animated: true, completion: nil)
+        present(alertC, animated: true, completion: nil)
     }
     
-    @IBAction func goToSetting(sender: UIButton) {
-        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+    @IBAction func goToSetting(_ sender: UIButton) {
+        UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
     
-    // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        guard let assetGirdVC = segue.destination as? AssetGirdVC,let cell = sender as? UITableViewCell else { return }
+        
+        assetGirdVC.title = cell.textLabel?.text
+        
+        let indexPath = self.tableView.indexPath(for: cell)
+        let fetchResult = self.sectionFetchResults![indexPath!.section]
+        
+        if (segue.identifier == VideoMarksConstants.ShowAllVideos) {
+            assetGirdVC.assetsFetchResults = fetchResult as? PHFetchResult<AnyObject>
+        } else if (segue.identifier == VideoMarksConstants.ShowColleciton) {
+            let collection = fetchResult[indexPath?.row]
+            
+            guard ((collection as? PHAssetCollection) != nil) else { return }
+            
+            let allVideosOptions = PHFetchOptions()
+            allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.video.rawValue)
+            allVideosOptions.includeHiddenAssets = true
+            allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
+            let assetFetchResult = PHAsset.fetchAssets(in: collection as! PHAssetCollection, options: allVideosOptions)
+            assetGirdVC.assetsFetchResults = assetFetchResult as? PHFetchResult<AnyObject>
+            assetGirdVC.assetCollection = collection as! PHAssetCollection?
+        }
+    }
+}
+
+// MARK: - Table view data source
+
+extension PhotosTVC {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return sectionLocalizedTitles.count
     }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numOfRows: Int
         
         if section == 0 {
             numOfRows = isPhotosCanAccess ? 1 : 0
         } else {
-            let results = sectionFetchResults![section] as! PHFetchResult
+            let results = sectionFetchResults![section]
             numOfRows = results.count
         }
         
         return numOfRows
     }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         
-        if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier(VideoMarks.AllVideoCell, forIndexPath: indexPath)
+        if (indexPath as NSIndexPath).section == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: VideoMarksConstants.AllVideoCell, for: indexPath)
             cell.textLabel?.text = NSLocalizedString("All Videos", comment: "")
         } else {
-            let resut = sectionFetchResults![indexPath.section] as! PHFetchResult
-            let collection = resut[indexPath.row] as! PHCollection
-            
-            cell = tableView.dequeueReusableCellWithIdentifier(VideoMarks.CollectionCell, forIndexPath: indexPath)
+            let resut = sectionFetchResults![indexPath.section] 
+            let collection = resut[indexPath.row] as PHCollection
+            cell = tableView.dequeueReusableCell(withIdentifier: VideoMarksConstants.CollectionCell, for: indexPath)
             cell.textLabel?.text = collection.localizedTitle
         }
-
+        
         // Configure the cell...
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionLocalizedTitles[section]
     }
     
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         var canEditOrNot = false
         
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             canEditOrNot = false
         } else {
             canEditOrNot = true
@@ -147,18 +185,19 @@ class PhotosTVC: UITableViewController {
         return canEditOrNot
     }
     
-    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Delete
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        guard editingStyle == .Delete && indexPath.section == 1 else { return }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete && (indexPath as NSIndexPath).section == 1 else { return }
         
-        let resut = sectionFetchResults![indexPath.section] as! PHFetchResult
-        let collection = resut[indexPath.row] as! PHCollection
+        let resut = sectionFetchResults![indexPath.section]
+        let collection = resut[indexPath.row] as PHCollection
+        let assets = NSArray(object: collection)
         
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-            PHAssetCollectionChangeRequest.deleteAssetCollections([collection])
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetCollectionChangeRequest.deleteAssetCollections(assets)
         }) { (success, error) in
             if !success {
                 print("error delete ablum: \(error)")
@@ -166,48 +205,27 @@ class PhotosTVC: UITableViewController {
         }
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        guard let assetGirdVC = segue.destinationViewController as? AssetGirdVC,cell = sender as? UITableViewCell else { return }
+    func configure(_ cell: UITableViewCell, indexPath: IndexPath) {
         
-        assetGirdVC.title = cell.textLabel?.text
-        
-        let indexPath = self.tableView.indexPathForCell(cell)
-        let fetchResult = self.sectionFetchResults![indexPath!.section] as! PHFetchResult
-        
-        if (segue.identifier == VideoMarks.ShowAllVideos) {
-            assetGirdVC.assetsFetchResults = fetchResult
-        } else if (segue.identifier == VideoMarks.ShowColleciton) {
-            guard let collection = fetchResult[indexPath!.row] as? PHAssetCollection else { return }
-            let allVideosOptions = PHFetchOptions()
-            allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Video.rawValue)
-            allVideosOptions.includeHiddenAssets = true
-            allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
-            let assetFetchResult = PHAsset.fetchAssetsInAssetCollection(collection, options: allVideosOptions)
-             assetGirdVC.assetsFetchResults = assetFetchResult
-            assetGirdVC.assetCollection = collection
-        }
     }
+    
 }
+
 
 extension PhotosTVC: PHPhotoLibraryChangeObserver {
     
-    func photoLibraryDidChange(changeInstance: PHChange) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        DispatchQueue.main.async { [weak self] in
             var reloadRequired = false
-            self?.sectionFetchResults =  self?.sectionFetchResults?.map({ (result) -> PHFetchResult in
-                let fetchResult = result as! PHFetchResult
-                if let changeDetail = changeInstance.changeDetailsForFetchResult(fetchResult) {
+            self?.sectionFetchResults =  self?.sectionFetchResults?.map({ (result) -> PHFetchResult<AnyObject> in
+                let fetchResult = result 
+                if let changeDetail = changeInstance.changeDetails(for: fetchResult as! PHFetchResult<PHObject>) {
                     reloadRequired = true
-                    return changeDetail.fetchResultAfterChanges
+                    return changeDetail.fetchResultAfterChanges as! PHFetchResult<AnyObject>
                 } else {
                     return result as! PHFetchResult
                 }
-            })
+            }) as [AnyObject]?
             
             if (reloadRequired) {
                 self?.isPhotosCanAccess = true

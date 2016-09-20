@@ -13,22 +13,21 @@ class VideoDetailTVC: UITableViewController {
     var video: Video?
     
     // MARK: Preview actions
-    override func previewActionItems() -> [UIPreviewActionItem] {
-        let openInSafariAction = UIPreviewAction(title: NSLocalizedString("Open in Safari", comment: "在Safari中打开"), style: .Default) {
+    override var previewActionItems : [UIPreviewActionItem] {
+        let openInSafariAction = UIPreviewAction(title: NSLocalizedString("Open in Safari", comment: "在Safari中打开"), style: .default) {
             previewAction, viewController in
             
             guard let detailViewController = viewController as? VideoDetailTVC else { return }
             
-            let videoUrl = NSURL(string: detailViewController.video!.url)
+            let videoUrl = URL(string: detailViewController.video!.url)
             
-            UIApplication.sharedApplication().openURL(videoUrl!)
+            UIApplication.shared.openURL(videoUrl!)
         }
         
-        let copyVideoLinkAction = UIPreviewAction(title: NSLocalizedString("Copy Link", comment: "复制链接"), style: .Default) { (action, viewController) in
+        let copyVideoLinkAction = UIPreviewAction(title: NSLocalizedString("Copy Link", comment: "复制链接"), style: .default) { (action, viewController) in
             guard let videDetailTVC = viewController as? VideoDetailTVC else { return }
-            UIPasteboard.generalPasteboard().string = videDetailTVC.video?.url
+            UIPasteboard.general.string = videDetailTVC.video?.url
         }
-        
         
         return [copyVideoLinkAction,openInSafariAction,]
     }
@@ -37,51 +36,57 @@ class VideoDetailTVC: UITableViewController {
         super.viewDidLoad()
         self.title = NSLocalizedString("Video Detail", comment: "影片信息")
         self.clearsSelectionOnViewWillAppear = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.backBarButtonItem?.title = "返回"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let title = self.navigationItem.backBarButtonItem?.title
         
-        if let exp = video?.expireTimeInterval() {
-            if video!.isVideoInvalid(exp) {
-                self.navigationItem.rightBarButtonItem?.enabled = false
-            }
-        }
+        print(title)
     }
     
    // MARK:-  分享
-    @IBAction func shareAction(sender: UIBarButtonItem) {
-        let url = NSURL(string: video!.url)!
+    @IBAction func shareAction(_ sender: UIBarButtonItem) {
+        let url = URL(string: video!.url)!
         let actVC = UIActivityViewController.init(activityItems: [url], applicationActivities: [OpenSafariActivity()])
-        actVC.modalPresentationStyle = .Popover
+        actVC.modalPresentationStyle = .popover
         
         if let presenter = actVC.popoverPresentationController {
             presenter.barButtonItem = sender
         }
-        presentViewController(actVC, animated: true, completion: nil)
+        present(actVC, animated: true, completion: nil)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var numOfRow = 1
         
-        if video?.source.lowercaseString != "unknow" {
+        if video?.source.lowercased() != "unknow" {
             numOfRow = 2
         }
         
         return numOfRow
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Video Detail Cell", forIndexPath: indexPath) as! VideoDetailCell
+        if (indexPath as NSIndexPath).row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Video Detail Cell", for: indexPath) as! VideoDetailCell
             cell.textView.attributedText = video?.attributeDescriptionForTextView()
             return cell
-        } else if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Source Link Cell", forIndexPath: indexPath)
+        } else if (indexPath as NSIndexPath).row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Source Link Cell", for: indexPath)
             cell.textLabel?.text = NSLocalizedString("Source Link", comment: "源链接")
             return cell
         } else {
@@ -89,10 +94,10 @@ class VideoDetailTVC: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat
         
-        switch indexPath.row {
+        switch (indexPath as NSIndexPath).row {
         case 0:
             height = video!.heightForTableView(tableView.bounds.width - 16)
         case 1:
@@ -104,32 +109,32 @@ class VideoDetailTVC: UITableViewController {
         return height
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath.row == 1) {
-            let alertC = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            alertC.modalPresentationStyle = .Popover
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .Cancel, handler: {
+        if ((indexPath as NSIndexPath).row == 1) {
+            let alertC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alertC.modalPresentationStyle = .popover
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .cancel, handler: {
                 _ in
                 
             })
-            let openSafariAction = UIAlertAction(title: NSLocalizedString("Open in Safari", comment: "在Safari中打开"), style: .Default, handler: { (action) in
-                let sourceURL = NSURL(string: self.video!.source)
-                UIApplication.sharedApplication().openURL(sourceURL!)
+            let openSafariAction = UIAlertAction(title: NSLocalizedString("Open in Safari", comment: "在Safari中打开"), style: .default, handler: { (action) in
+                let sourceURL = URL(string: self.video!.source)
+                UIApplication.shared.openURL(sourceURL!)
             })
             
             alertC.addAction(cancelAction)
             alertC.addAction(openSafariAction)
             
             if let presenter = alertC.popoverPresentationController {
-                presenter.sourceView = tableView.cellForRowAtIndexPath(indexPath)?.textLabel
-                presenter.sourceRect = CGRectMake(0, 44, 44, 0)
-                presenter.permittedArrowDirections = .Up
+                presenter.sourceView = tableView.cellForRow(at: indexPath)?.textLabel
+                presenter.sourceRect = CGRect(x: 0, y: 44, width: 44, height: 0)
+                presenter.permittedArrowDirections = .up
             }
             
-            presentViewController(alertC, animated: true, completion: nil)
+            present(alertC, animated: true, completion: nil)
             
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            tableView.deselectRow(at: indexPath, animated: false)
         }
     }
 }

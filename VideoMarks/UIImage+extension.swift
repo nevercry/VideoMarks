@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage {
     // 创建Safari 视图
-    class func alphaSafariIcon(width: Float, scale: Float) -> UIImage {
+    class func alphaSafariIcon(_ width: Float, scale: Float) -> UIImage {
         let halfWidth = width / 2.0
         let triangleTipToCircleGap = ceilf(0.012 * width)
         let triangleBaseHalfWidth = ceilf(0.125 * width) / 2.0
@@ -20,7 +20,7 @@ extension UIImage {
         let tickMarkWidth = 1.0 / scale
         let tickMarkHalfWidth = tickMarkWidth / 2.0
         
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(CGFloat(width), CGFloat(width)), false, CGFloat(scale));
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: CGFloat(width), height: CGFloat(width)), false, CGFloat(scale));
         let context = UIGraphicsGetCurrentContext()
         
         // Outer circle with gradient fill
@@ -30,59 +30,59 @@ extension UIImage {
         
         
         let baseSpace = CGColorSpaceCreateDeviceRGB()
-        let gradient = CGGradientCreateWithColorComponents(baseSpace, colors, nil, 2)
-        CGContextSaveGState(context)
-        CGContextAddEllipseInRect(context, CGRectMake(0, 0, CGFloat(width), CGFloat(width)))
-        CGContextClip(context)
-        CGContextDrawLinearGradient(context, gradient, CGPointMake(CGFloat(halfWidth), 0), CGPointMake(CGFloat(halfWidth), CGFloat(width)), .DrawsBeforeStartLocation)
-        CGContextRestoreGState(context)
+        let gradient = CGGradient(colorSpace: baseSpace, colorComponents: colors, locations: nil, count: 2)
+        context!.saveGState()
+        context!.addEllipse(in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(width)))
+        context!.clip()
+        context!.drawLinearGradient(gradient!, start: CGPoint(x: CGFloat(halfWidth), y: 0), end: CGPoint(x: CGFloat(halfWidth), y: CGFloat(width)), options: .drawsBeforeStartLocation)
+        context!.restoreGState()
         
         // Tick lines around the circle
         UIColor(white: 0.0, alpha: 0.5).setStroke()
         let numTickLines = 72
         for i in 0 ..< numTickLines {
-            CGContextSaveGState(context);
-            CGContextSetBlendMode(context, .Clear);
-            CGContextTranslateCTM(context, CGFloat(halfWidth), CGFloat(halfWidth));
-            CGContextRotateCTM(context, CGFloat(2 * Float(M_PI) * ( Float(i) / Float(numTickLines))));
-            CGContextTranslateCTM(context, -CGFloat(halfWidth), -CGFloat(halfWidth));
+            context!.saveGState();
+            context!.setBlendMode(.clear);
+            context!.translateBy(x: CGFloat(halfWidth), y: CGFloat(halfWidth));
+            context!.rotate(by: CGFloat(2 * Float(M_PI) * ( Float(i) / Float(numTickLines))));
+            context!.translateBy(x: -CGFloat(halfWidth), y: -CGFloat(halfWidth));
             
             let tickLine = UIBezierPath()
-            tickLine.moveToPoint(CGPointMake(CGFloat(halfWidth - tickMarkHalfWidth), CGFloat(tickMarkToCircleGap)))
-            tickLine.addLineToPoint(CGPointMake(CGFloat(halfWidth - tickMarkHalfWidth), CGFloat(tickMarkToCircleGap + (i % 2 == 1 ? tickMarkLengthShort : tickMarkLengthLong))))
+            tickLine.move(to: CGPoint(x: CGFloat(halfWidth - tickMarkHalfWidth), y: CGFloat(tickMarkToCircleGap)))
+            tickLine.addLine(to: CGPoint(x: CGFloat(halfWidth - tickMarkHalfWidth), y: CGFloat(tickMarkToCircleGap + (i % 2 == 1 ? tickMarkLengthShort : tickMarkLengthLong))))
             tickLine.lineWidth = CGFloat(tickMarkWidth)
             tickLine.stroke()
-            CGContextRestoreGState(context)
+            context!.restoreGState()
         }
         
         // "Needle" triangles
-        CGContextSaveGState(context);
+        context!.saveGState();
         
-        CGContextTranslateCTM(context, CGFloat(halfWidth), CGFloat(halfWidth))
-        CGContextRotateCTM(context, CGFloat(M_PI + M_PI_4));
-        CGContextTranslateCTM(context, -CGFloat(halfWidth), -CGFloat(halfWidth))
-        UIColor.blackColor().setFill()
+        context!.translateBy(x: CGFloat(halfWidth), y: CGFloat(halfWidth))
+        context!.rotate(by: CGFloat(M_PI + M_PI_4));
+        context!.translateBy(x: -CGFloat(halfWidth), y: -CGFloat(halfWidth))
+        UIColor.black.setFill()
         let topTriangle = UIBezierPath()
-        topTriangle.moveToPoint(CGPointMake(CGFloat(halfWidth), CGFloat(triangleTipToCircleGap)))
-        topTriangle.addLineToPoint(CGPointMake(CGFloat(halfWidth - triangleBaseHalfWidth), CGFloat(halfWidth)))
-        topTriangle.addLineToPoint(CGPointMake(CGFloat(halfWidth + triangleBaseHalfWidth), CGFloat(halfWidth)))
-        topTriangle.closePath()
-        CGContextSetBlendMode(context, .Clear)
+        topTriangle.move(to: CGPoint(x: CGFloat(halfWidth), y: CGFloat(triangleTipToCircleGap)))
+        topTriangle.addLine(to: CGPoint(x: CGFloat(halfWidth - triangleBaseHalfWidth), y: CGFloat(halfWidth)))
+        topTriangle.addLine(to: CGPoint(x: CGFloat(halfWidth + triangleBaseHalfWidth), y: CGFloat(halfWidth)))
+        topTriangle.close()
+        context!.setBlendMode(.clear)
         topTriangle.fill()
         
         let bottomTriangle = UIBezierPath()
-        bottomTriangle.moveToPoint(CGPointMake(CGFloat(halfWidth), CGFloat(width - triangleTipToCircleGap)))
-        bottomTriangle.addLineToPoint(CGPointMake(CGFloat(halfWidth - triangleBaseHalfWidth), CGFloat(halfWidth)))
-        bottomTriangle.addLineToPoint(CGPointMake(CGFloat(halfWidth + triangleBaseHalfWidth), CGFloat(halfWidth)))
-        bottomTriangle.closePath()
-        CGContextSetBlendMode(context, .Normal);
+        bottomTriangle.move(to: CGPoint(x: CGFloat(halfWidth), y: CGFloat(width - triangleTipToCircleGap)))
+        bottomTriangle.addLine(to: CGPoint(x: CGFloat(halfWidth - triangleBaseHalfWidth), y: CGFloat(halfWidth)))
+        bottomTriangle.addLine(to: CGPoint(x: CGFloat(halfWidth + triangleBaseHalfWidth), y: CGFloat(halfWidth)))
+        bottomTriangle.close()
+        context!.setBlendMode(.normal);
         bottomTriangle.fill()
         
-        CGContextRestoreGState(context);
+        context!.restoreGState();
         
         let finalImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        return finalImage;
+        return finalImage!;
     }
     
     // MARK: - 根据宽高比截取图片中心并压缩
@@ -95,7 +95,7 @@ extension UIImage {
      
      - returns: 截取压缩之后的图片
      */
-    func clipAndCompress(ratio: CGFloat, compressionQuality: CGFloat) -> UIImage {
+    func clipAndCompress(_ ratio: CGFloat, compressionQuality: CGFloat) -> UIImage {
         
         let height = self.size.height
         let width = self.size.width
@@ -123,14 +123,14 @@ extension UIImage {
             imageDrawOrgin_Y = 0
         }
         
-        let clipImageSize = CGSizeMake(clipImageWidth, clipImageHeight)
+        let clipImageSize = CGSize(width: clipImageWidth, height: clipImageHeight)
         UIGraphicsBeginImageContextWithOptions(clipImageSize, false, 0.0)
         
-        self.drawAtPoint(CGPointMake(imageDrawOrgin_X, imageDrawOrgin_Y))
+        self.draw(at: CGPoint(x: imageDrawOrgin_X, y: imageDrawOrgin_Y))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        let comressImage = UIImage(data: UIImageJPEGRepresentation(newImage, compressionQuality)!)
+        let comressImage = UIImage(data: UIImageJPEGRepresentation(newImage!, compressionQuality)!)
         return comressImage!
     }
     
@@ -147,21 +147,21 @@ extension UIImage {
         // 开始截取图片
         let clipImageSize = CGSize(width: width, height: cropHeight)
         UIGraphicsBeginImageContextWithOptions(clipImageSize, false, 0.0)
-        self.drawAtPoint(CGPointMake(0, -orginY))
+        self.draw(at: CGPoint(x: 0, y: -orginY))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return newImage
+        return newImage!
     }
     
     
-    class func resize(image: UIImage, newSize: CGSize) -> UIImage {
+    class func resize(_ image: UIImage, newSize: CGSize) -> UIImage {
         //UIGraphicsBeginImageContext(newSize);
         // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
         // Pass 1.0 to force exact pixel size.
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        return newImage;
+        return newImage!;
     }
 }

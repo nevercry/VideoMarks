@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gQX-jM-VAd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gQX-jM-VAd">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -196,11 +196,11 @@
             </objects>
             <point key="canvasLocation" x="1262" y="437"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Videos-->
         <scene sceneID="esw-Eg-7YC">
             <objects>
                 <navigationController storyboardIdentifier="SecondTabScenes" automaticallyAdjustsScrollViewInsets="NO" id="gQX-jM-VAd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="l8k-HK-ZkK"/>
+                    <tabBarItem key="tabBarItem" title="Videos" image="icon_photos" id="l8k-HK-ZkK"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics">
                         <color key="tintColor" red="0.98431372549999996" green="0.1843137255" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -208,6 +208,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tck-6k-c0k">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.98431372549019602" green="0.20784313725490194" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -221,10 +224,11 @@
     </scenes>
     <resources>
         <image name="ad_close" width="15" height="15"/>
+        <image name="icon_photos" width="30" height="30"/>
         <image name="icon_playvideo" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="f3u-WL-ymZ"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.98431372549999996" green="0.1843137255" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" red="0.98431372549019602" green="0.20784313725490194" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
 </document>

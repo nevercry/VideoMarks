@@ -19,7 +19,7 @@ class VideoMarkCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -28,52 +28,37 @@ class VideoMarkCell: UITableViewCell {
 }
 
 extension VideoMarkCell {
-    func configFor(video video: Video) {
+    func configFor(video: Video) {
         title.text = video.title
-        createDate.text = video.createDateDescription(dateStyle: .ShortStyle, timeStyle: .NoStyle)
-        
-        let noAttdurationStr = video.durationDescription()
-        let durationAttriStr = NSMutableAttributedString(string: noAttdurationStr)
-        
-        if let expTimeInterval = video.expireTimeInterval() {
-            let expStr = video.expireAttributeDescription()
-            if video.isVideoInvalid(expTimeInterval) {
-                // 过期
-                durationAttriStr.appendAttributedString(expStr!)
-            } else {
-                durationAttriStr.mutableString.appendString("        ")
-                durationAttriStr.appendAttributedString(expStr!)
-            }
-        }
-        
-        duration.attributedText = durationAttriStr
+        createDate.text = video.createDateDescription(.short, timeStyle: .none)
+        duration.text = video.durationDescription
         
         // 查看缓存里有无图片数据
         let memCache = MemoryCache.shareInstance
         
-        if let imageData = memCache.objectForKey(video.poster) as? NSData {
+        if let imageData = memCache.object(forKey: video.poster as AnyObject) as? Data {
             let image = UIImage(data: imageData)
             poster.image = image
         } else if let imageData = video.posterImage?.data {
-            let image = UIImage(data: imageData)
+            let image = UIImage(data: imageData as Data)
             poster.image = image
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { 
-                memCache.setObject(imageData, forKey: video.poster)
+            DispatchQueue.global(qos: .background).async(execute: {
+                memCache.setObject(imageData as AnyObject, forKey: video.poster as AnyObject)
             })
         } else {
-            let tmpImg = UIImage.alphaSafariIcon(44, scale: Float(UIScreen.mainScreen().scale))
-            poster.image = UIImage.resize(tmpImg, newSize: VideoMarks.PosterImageSize)
+            let placeholder_image = UIImage(named: "image_placeholder")
+            poster.image = placeholder_image
             
             let backUpDate = video.createAt
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                var imageData: NSData?
+            DispatchQueue.global(qos: .background).async {
+                var imageData: Data?
                 if video.poster.isEmpty {
-                    imageData = video.previewImageData(atInterval: 1)
+                    imageData = video.previewImageData(atInterval: 1) as Data?
                 } else {
-                    let posterURL = NSURL(string: video.poster)!
-                    imageData = NSData(contentsOfURL: posterURL)
+                    let posterURL = URL(string: video.poster)!
+                    imageData = try? Data(contentsOf: posterURL)
                 }
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if video.createAt == backUpDate {
                         if let _ = imageData {
                             // 根据16:9 截取图片
@@ -90,8 +75,8 @@ extension VideoMarkCell {
                                 fatalError("Failure to save context: \(error)")
                             }
                             
-                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { 
-                                memCache.setObject(cropData, forKey: video.poster)
+                            DispatchQueue.global(qos: .background).async(execute: {
+                                memCache.setObject(cropData as AnyObject, forKey: video.poster as AnyObject)
                             })
                         }
                     }
@@ -99,6 +84,6 @@ extension VideoMarkCell {
             }
         }
         
-        poster.contentMode = .ScaleAspectFill
+        poster.contentMode = .scaleAspectFill
     }
 }

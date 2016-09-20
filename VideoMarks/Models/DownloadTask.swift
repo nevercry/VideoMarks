@@ -10,10 +10,10 @@ import UIKit
 import Photos
 
 struct DownloadTask {
-    var url: NSURL
+    var url: URL
     var taskIdentifier: Int
     
-    init(url: NSURL, taskIdentifier: Int) {
+    init(url: URL, taskIdentifier: Int) {
         self.url = url
         self.taskIdentifier = taskIdentifier
     }

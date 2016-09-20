@@ -14,11 +14,11 @@ import CoreData
 
 extension Image {
 
-    @NSManaged var data: NSData
+    @NSManaged var data: Data
     @NSManaged var fromVideo: Video?
     
     
-    convenience init(data: NSData,
+    convenience init(data: Data,
                      context: NSManagedObjectContext) {
         self.init(managedObjectContext: context)
         self.data = data

@@ -14,7 +14,7 @@ import CoreData
 
 extension Video {
 
-    @NSManaged var createAt: NSDate
+    @NSManaged var createAt: Date
     @NSManaged var isFavorite: NSNumber
     @NSManaged var title: String?
     @NSManaged var url: String
@@ -28,8 +28,8 @@ extension Video {
                      title: String?,
                      poster: String,
                      duration: String,
-                     isFavorite: NSNumber = NSNumber(bool: false),
-                     createAt: NSDate = NSDate(), context: NSManagedObjectContext) {
+                     isFavorite: NSNumber = NSNumber(value: false as Bool),
+                     createAt: Date = Date(), context: NSManagedObjectContext) {
         self.init(managedObjectContext: context)
         self.url = url
         self.source = source
@@ -43,11 +43,11 @@ extension Video {
     convenience init(videoInfo: [String: String], context: NSManagedObjectContext) {
         let url = videoInfo["url"]!
         var tmpTitle = videoInfo["title"] // 希望截取的标题不要换行。
-        tmpTitle = tmpTitle?.stringByReplacingOccurrencesOfString("\n", withString: "")
-        tmpTitle = tmpTitle?.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        tmpTitle = tmpTitle?.replacingOccurrences(of: "\n", with: "")
+        tmpTitle = tmpTitle?.trimmingCharacters(in: CharacterSet.newlines)
         let title = tmpTitle
         var duration = videoInfo["duration"]!
-        duration = duration.stringByReplacingOccurrencesOfString("时长: ", withString: "")
+        duration = duration.replacingOccurrences(of: "时长: ", with: "")
         let poster = videoInfo["poster"]!
         let source = videoInfo["source"]!
         self.init(url: url,

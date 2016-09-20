@@ -15,7 +15,7 @@ class TSFileDownloadTask {
     }
 
     var identifier: String
-    var subTasks:[NSURLSessionDownloadTask] = []
+    var subTasks:[URLSessionDownloadTask] = []
     
     var totalWrite: Int64 = 0
     
