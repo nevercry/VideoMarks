@@ -110,23 +110,21 @@ class PhotosTVC: UITableViewController {
         
         assetGirdVC.title = cell.textLabel?.text
         
-        let indexPath = self.tableView.indexPath(for: cell)
-        let fetchResult = self.sectionFetchResults![indexPath!.section]
+        let indexPath = self.tableView.indexPath(for: cell)!
+        let fetchResult = self.sectionFetchResults![indexPath.section]
         
         if (segue.identifier == VideoMarksConstants.ShowAllVideos) {
             assetGirdVC.assetsFetchResults = fetchResult as? PHFetchResult<AnyObject>
         } else if (segue.identifier == VideoMarksConstants.ShowColleciton) {
-            let collection = fetchResult[indexPath?.row]
-            
-            guard ((collection as? PHAssetCollection) != nil) else { return }
+            let collection = fetchResult[indexPath.row] as PHAssetCollection
             
             let allVideosOptions = PHFetchOptions()
-            allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.video.rawValue)
+            allVideosOptions.predicate = NSPredicate(format: "mediaType = %i", PHAssetMediaType.video.rawValue)
             allVideosOptions.includeHiddenAssets = true
             allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
-            let assetFetchResult = PHAsset.fetchAssets(in: collection as! PHAssetCollection, options: allVideosOptions)
+            let assetFetchResult = PHAsset.fetchAssets(in: collection , options: allVideosOptions)
             assetGirdVC.assetsFetchResults = assetFetchResult as? PHFetchResult<AnyObject>
-            assetGirdVC.assetCollection = collection as! PHAssetCollection?
+            assetGirdVC.assetCollection = collection
         }
     }
 }
