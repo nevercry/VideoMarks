@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import SwiftyJSON
 
 struct Constant {
     static let appGroupID = "group.nevercry.videoMarks"
@@ -203,7 +204,7 @@ class ShareViewController: UIViewController {
                 scaner.scanUpTo("};", into: &jsonString)
                 jsonString = jsonString?.appending("}") as NSString?
                 
-                let json = JSON.parse(string: jsonString as! String)
+                let json = JSON.parse(jsonString as! String)
                 
                 print("json \(json)")
                 
