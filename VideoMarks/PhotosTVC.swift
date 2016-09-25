@@ -20,13 +20,10 @@ class PhotosTVC: UITableViewController {
     }
    
     // MARK: View Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationItem.title = NSLocalizedString("Videos", comment: "视频")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewAlbum))
-        
         self.clearsSelectionOnViewWillAppear = false
     }
     
@@ -46,15 +43,12 @@ class PhotosTVC: UITableViewController {
             }
             
             PHPhotoLibrary.shared().register(self)
-            
             let allVideosOptions = PHFetchOptions()
             allVideosOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.video.rawValue)
             allVideosOptions.includeHiddenAssets = true
             allVideosOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate",ascending: true)]
             let allVideos = PHAsset.fetchAssets(with: allVideosOptions)
-            
             let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollections(with: nil)
-            
             self.sectionFetchResults = [allVideos,topLevelUserCollections]
         }        
     }
@@ -90,7 +84,7 @@ class PhotosTVC: UITableViewController {
                         print("error create ablum: \(error)")
                     }
             })
-            })
+        })
         present(alertC, animated: true, completion: nil)
     }
     
@@ -98,11 +92,8 @@ class PhotosTVC: UITableViewController {
         UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
     
-
-    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -130,7 +121,6 @@ class PhotosTVC: UITableViewController {
 }
 
 // MARK: - Table view data source
-
 extension PhotosTVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sectionLocalizedTitles.count
@@ -203,15 +193,12 @@ extension PhotosTVC {
         }
     }
     
-    func configure(_ cell: UITableViewCell, indexPath: IndexPath) {
-        
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }
 
-
 extension PhotosTVC: PHPhotoLibraryChangeObserver {
-    
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async { [weak self] in
             var reloadRequired = false

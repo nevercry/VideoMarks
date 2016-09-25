@@ -14,17 +14,13 @@ class VideoDetailTVC: UITableViewController {
     
     // MARK: Preview actions
     override var previewActionItems : [UIPreviewActionItem] {
-        let openInSafariAction = UIPreviewAction(title: NSLocalizedString("Open in Safari", comment: "在Safari中打开"), style: .default) {
-            previewAction, viewController in
-            
+        let openInSafariAction = UIPreviewAction(title: NSLocalizedString("Open in Safari", comment: "在Safari中打开"), style: .default) { (_, viewController) in
             guard let detailViewController = viewController as? VideoDetailTVC else { return }
-            
             let videoUrl = URL(string: detailViewController.video!.url)
-            
             UIApplication.shared.openURL(videoUrl!)
         }
         
-        let copyVideoLinkAction = UIPreviewAction(title: NSLocalizedString("Copy Link", comment: "复制链接"), style: .default) { (action, viewController) in
+        let copyVideoLinkAction = UIPreviewAction(title: NSLocalizedString("Copy Link", comment: "复制链接"), style: .default) { (_, viewController) in
             guard let videDetailTVC = viewController as? VideoDetailTVC else { return }
             UIPasteboard.general.string = videDetailTVC.video?.url
         }
@@ -45,9 +41,6 @@ class VideoDetailTVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let title = self.navigationItem.backBarButtonItem?.title
-        
-        print(title)
     }
     
    // MARK:-  分享
@@ -69,18 +62,14 @@ class VideoDetailTVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         var numOfRow = 1
-        
         if video?.source.lowercased() != "unknow" {
             numOfRow = 2
         }
-        
         return numOfRow
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        
         if (indexPath as NSIndexPath).row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Video Detail Cell", for: indexPath) as! VideoDetailCell
             cell.textView.attributedText = video?.attributeDescriptionForTextView()
@@ -96,7 +85,6 @@ class VideoDetailTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat
-        
         switch (indexPath as NSIndexPath).row {
         case 0:
             height = video!.heightForTableView(tableView.bounds.width - 16)
@@ -110,7 +98,6 @@ class VideoDetailTVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if ((indexPath as NSIndexPath).row == 1) {
             let alertC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alertC.modalPresentationStyle = .popover

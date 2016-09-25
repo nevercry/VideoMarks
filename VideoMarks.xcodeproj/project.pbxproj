@@ -43,11 +43,7 @@
 		4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */; };
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
 		4AB792661D4887C3007E4D4B /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */; };
-		4AB7926A1D4A8BB9007E4D4B /* RemoveAdTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */; };
 		4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB7926B1D4B1120007E4D4B /* StoreKit.framework */; };
-		4AB7926E1D4B3BD1007E4D4B /* VideoMarksProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */; };
-		4AB792701D4B3CE8007E4D4B /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */; };
-		4AD4613B1D55AC9600FF7CDA /* DownloadStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */; };
 		4AD4613F1D55EF2A00FF7CDA /* TSFileDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */; };
 		4AD461431D5C588B00FF7CDA /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
@@ -64,7 +60,6 @@
 		4AD794D01D034B4D008A1D2D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD794CE1D034B4D008A1D2D /* MainInterface.storyboard */; };
 		4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AD794CA1D034B4D008A1D2D /* VExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4AD7CC3F1D726D0E00985E53 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD7CC3E1D726D0E00985E53 /* MemoryCache.swift */; };
-		4AEB09FC1D506D1A00545A66 /* product_ids.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AEB09FB1D506D1A00545A66 /* product_ids.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,11 +150,7 @@
 		4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailTVC.swift; sourceTree = "<group>"; };
 		4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoDetailCell.swift; path = Views/VideoDetailCell.swift; sourceTree = "<group>"; };
 		4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
-		4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveAdTVC.swift; sourceTree = "<group>"; };
 		4AB7926B1D4B1120007E4D4B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoMarksProducts.swift; path = Models/VideoMarksProducts.swift; sourceTree = "<group>"; };
-		4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAPHelper.swift; path = Models/IAPHelper.swift; sourceTree = "<group>"; };
-		4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadStatusView.swift; path = Views/DownloadStatusView.swift; sourceTree = "<group>"; };
 		4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TSFileDownloadTask.swift; path = Models/TSFileDownloadTask.swift; sourceTree = "<group>"; };
 		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HLSPlayListParser.swift; path = Models/HLSPlayListParser.swift; sourceTree = "<group>"; };
 		4AD4E2941D0C18770002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -193,7 +184,6 @@
 		4AEB09CB1D4BCBD100545A66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CD1D4BCBDA00545A66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CF1D4BCBE300545A66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		4AEB09FB1D506D1A00545A66 /* product_ids.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = product_ids.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,7 +234,6 @@
 				4A68B1431D7BD646001CC266 /* ArrayDataSource.swift */,
 				4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */,
 				4AA06C661D37AA6700504AE3 /* PlayerController.swift */,
-				4AB792691D4A8BB9007E4D4B /* RemoveAdTVC.swift */,
 				4A5CFD9F1D060D6D004C2C64 /* DataController.swift */,
 				4AA06C5B1D368E9C00504AE3 /* PhotosTVC.swift */,
 				4AA06C5D1D36EBFA00504AE3 /* AssetGirdVC.swift */,
@@ -278,9 +267,7 @@
 				4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */,
 				4A2EB6801D45FE3800019FAC /* DownloadTask.swift */,
 				4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */,
-				4AB7926D1D4B3BD1007E4D4B /* VideoMarksProducts.swift */,
 				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
-				4AB7926F1D4B3CE8007E4D4B /* IAPHelper.swift */,
 				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 			);
 			name = Models;
@@ -317,7 +304,6 @@
 			children = (
 				4AA06C611D36F67000504AE3 /* CollectionViewCells */,
 				4AA06C4D1D33BF1000504AE3 /* TableViewCells */,
-				4AD4613A1D55AC9600FF7CDA /* DownloadStatusView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -365,7 +351,6 @@
 				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
-				4AEB09FB1D506D1A00545A66 /* product_ids.plist */,
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
 				4A68B13F1D79A718001CC266 /* Assets.xcassets */,
 				4AD7949B1D0347BD008A1D2D /* VideoMarks.xcdatamodeld */,
@@ -570,7 +555,6 @@
 				4AB792661D4887C3007E4D4B /* AppleIncRootCertificate.cer in Resources */,
 				4AA06C5A1D3679D400504AE3 /* VideoMarkCell.xib in Resources */,
 				4A68B1401D79A718001CC266 /* Assets.xcassets in Resources */,
-				4AEB09FC1D506D1A00545A66 /* product_ids.plist in Resources */,
 				4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */,
 				4AD7949A1D0347BD008A1D2D /* Main.storyboard in Resources */,
 				4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */,
@@ -645,11 +629,9 @@
 			files = (
 				4AA06C651D3707C000504AE3 /* UICollectionView+extension.swift in Sources */,
 				4AA06C601D36EFEF00504AE3 /* NSIndexSet+extension.swift in Sources */,
-				4AB7926E1D4B3BD1007E4D4B /* VideoMarksProducts.swift in Sources */,
 				4AA06C591D3679D400504AE3 /* VideoMarkCell.swift in Sources */,
 				4A2EB6811D45FE3800019FAC /* DownloadTask.swift in Sources */,
 				4AA06C521D3672D700504AE3 /* UIImage+extension.swift in Sources */,
-				4AD4613B1D55AC9600FF7CDA /* DownloadStatusView.swift in Sources */,
 				4A07AE721D088C9000935701 /* OpenSafariActivity.swift in Sources */,
 				4A07AE7A1D0A108000935701 /* Image+CoreDataProperties.swift in Sources */,
 				4AA06C5C1D368E9C00504AE3 /* PhotosTVC.swift in Sources */,
@@ -670,8 +652,6 @@
 				4AD7CC3F1D726D0E00985E53 /* MemoryCache.swift in Sources */,
 				4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */,
 				4A68B1441D7BD646001CC266 /* ArrayDataSource.swift in Sources */,
-				4AB792701D4B3CE8007E4D4B /* IAPHelper.swift in Sources */,
-				4AB7926A1D4A8BB9007E4D4B /* RemoveAdTVC.swift in Sources */,
 				4A07AE7B1D0A108000935701 /* Image.swift in Sources */,
 				4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */,
 				4AD794951D0347BD008A1D2D /* AppDelegate.swift in Sources */,

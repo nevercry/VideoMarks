@@ -56,7 +56,6 @@ class VideoMarksTVC: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(coreDataStackComplete), name: NSNotification.Name(rawValue: VideoMarksConstants.CoreDataStackCompletion), object: nil)
     }
     
-    
     /**
      CoreStack 完成初始化
      */

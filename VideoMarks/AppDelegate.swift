@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let _ = VideoMarksProducts.store  // 启动后初始化store 监听storekit事件
-        
+                
         dataController = DataController(callback: {
             NotificationCenter.default.post(Notification(name: NSNotification.Name(VideoMarksConstants.CoreDataStackCompletion)))
         })

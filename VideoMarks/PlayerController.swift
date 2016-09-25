@@ -26,7 +26,6 @@ class PlayerController: NSObject {
         
         //注册视频播放器播放完成通知
         NotificationCenter.default.addObserver(self, selector: #selector(rePlay), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updatePlayer), name: NSNotification.Name.AVAudioSessionInterruption, object: nil)
     }
     

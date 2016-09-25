@@ -19,16 +19,12 @@ class AssetGirdVC: UICollectionViewController {
     var assetCollection: PHAssetCollection?
     var imageManager: PHCachingImageManager?
     var previousPreheatRect: CGRect?
-    
     var taskManager = TaskManager()
-    
-    @IBOutlet var m3u8DownloadStatusView: DownloadStatusView!
-    
     var tsFileDownloadTask: TSFileDownloadTask?
     
-    lazy var m3u8_session: Foundation.URLSession = {
+    lazy var m3u8_session: URLSession = {
         let config = URLSessionConfiguration.background(withIdentifier: "m3u8_backgroundSession")
-        let session = Foundation.URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
         return session
     }()
     
@@ -40,32 +36,25 @@ class AssetGirdVC: UICollectionViewController {
     
     deinit {
         // 注销通知
-        
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
-        
         NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         let scale = UIScreen.main.scale
         let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
-        
-        // 去设备最小尺寸来显示Cell 考虑横屏时的情况
+        // 设备最小尺寸来显示Cell 考虑横屏时的情况
         let minWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         let itemWidth = minWidth / 4
         flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         let cellSize = flowLayout.itemSize
-        
-        AssetGirdThumbnailSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale )
+        AssetGirdThumbnailSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         self.updateCachedAssets()
-        
         if let _ = assetCollection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo))
             taskManager.collection = assetCollection!
@@ -74,7 +63,6 @@ class AssetGirdVC: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // 注册通知
         NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: NSNotification.Name(rawValue: DownloadTaskNotification.Finish.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: NSNotification.Name(rawValue: DownloadTaskNotification.Progress.rawValue), object: nil)
@@ -99,22 +87,13 @@ class AssetGirdVC: UICollectionViewController {
             guard let videoUrl = alertController.textFields?.first?.text, let vURL = URL(string: videoUrl) , videoUrl.isEmpty != true else { return }
             // 验证URL 是否包含m3u8
             print("lastComponent is \(vURL.lastPathComponent)")
-            
             if vURL.lastPathComponent == "m3u8" {
-                self?.show_m3u8_downloadStatusView()
-                
-                let networksession = Foundation.URLSession(configuration: URLSessionConfiguration.default)
-                
+                let networksession = URLSession(configuration: URLSessionConfiguration.default)
                 networksession.dataTask(with: URLRequest(url: vURL), completionHandler: { (data, res, error) in
-                    DispatchQueue.main.async(execute: {
-                        self?.m3u8DownloadStatusView.progressLabel.text = NSLocalizedString("Parsing", comment: "解析...")
-                    })
+                    print("解析...")
                     
                     guard (data != nil) else {
                         print("m3u8 文件解析失败")
-                        DispatchQueue.main.async(execute: {
-                            self?.hide_m3u8_downloadStatusView()
-                        })
                         return
                     }
                     
@@ -126,14 +105,11 @@ class AssetGirdVC: UICollectionViewController {
                         print("url 属于youku")
                         videoFragments = m3u8Parser.youkuParse(data!)
                     } else {
-                        print("url 未知网站")
-                        videoFragments = m3u8Parser.otherParse(data!)
+                        print("url 未知网站 暂不支持")
+                        return
                     }
                     
                     guard videoFragments.count > 0 else {
-                        DispatchQueue.main.async(execute: {
-                            self?.hide_m3u8_downloadStatusView()
-                        })
                         return
                     }
                     
@@ -190,44 +166,6 @@ class AssetGirdVC: UICollectionViewController {
         return nil
     }
     
-    // MARK: - Show Download m3u8 
-    func show_m3u8_downloadStatusView() {
-        // 初始化Layout
-        self.collectionView?.isUserInteractionEnabled = false
-        m3u8DownloadStatusView.layer.cornerRadius = 10
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
-        
-        self.view.addSubview(m3u8DownloadStatusView)
-        m3u8DownloadStatusView.delegate = self
-        
-        m3u8DownloadStatusView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let constrainCenterX = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .centerX, relatedBy: .equal, toItem: self.collectionView, attribute: .centerX, multiplier: 1, constant: 0)
-        
-        let constrainCenterY = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .centerY, relatedBy: .equal, toItem: self.collectionView, attribute: .centerY, multiplier: 1, constant: 0)
-        
-        let constrainWidth = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200)
-        let constrainHeigh = NSLayoutConstraint(item: m3u8DownloadStatusView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200)
-        
-        NSLayoutConstraint.activate([constrainCenterX,constrainCenterY,constrainWidth,constrainHeigh])
-    }
-    
-    // MARK: - Hide Download m3u8
-    func hide_m3u8_downloadStatusView() {
-        // 取消下载
-        self.collectionView?.isUserInteractionEnabled = true
-        self.navigationItem.rightBarButtonItem?.isEnabled = true
-        print("取消下载")
-        self.m3u8_session.invalidateAndCancel()
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.m3u8DownloadStatusView.alpha = 0
-        }, completion: { (success) in
-            self.m3u8DownloadStatusView.removeFromSuperview()
-            self.m3u8DownloadStatusView.alpha = 1
-        }) 
-    }
-    
     // MARK: - 下载所有视频片段
     func downloadAllVideoFragments(_ urls: [NSString]) {
         print("开始下载所有视频片段")
@@ -235,13 +173,11 @@ class AssetGirdVC: UICollectionViewController {
         let newDownloadTask = TSFileDownloadTask(identifier: "TSFileDownload")
         
         newDownloadTask.totalTaskCount = urls.count
-        m3u8DownloadStatusView.progressLabel.text = "\(newDownloadTask.completeTaskCount)/\(newDownloadTask.totalTaskCount)"
         print("总共有 \(newDownloadTask.totalTaskCount) 个文件需要下载")
         
         for url in urls {
             guard let videoURL = URL(string: url as String) else {
                 print("下载地址有误 error")
-                hide_m3u8_downloadStatusView()
                 return
             }
             let downloadTask = m3u8_session.downloadTask(with: videoURL)
@@ -260,12 +196,8 @@ class AssetGirdVC: UICollectionViewController {
     // MARK: - 合并所有视频片段
     func combineAllVideoFragment() {
         print("合并所有视频片段")
-        
         self.backgroundUpdateTask = beginBackgroundUpdateTask()
-        
-        m3u8DownloadStatusView.progressLabel.text = NSLocalizedString("Processing", comment: "处理中...")
         guard let documentURL = VideoMarksConstants.documentURL() else { return }
-        
         let fileManager = FileManager.default
         let combineDir = documentURL.appendingPathComponent("tmpCombine", isDirectory: true);
         let composition = AVMutableComposition()
@@ -294,7 +226,6 @@ class AssetGirdVC: UICollectionViewController {
                 
                 guard audios.count > 0 && videos.count > 0 else {
                     print("找不到视频")
-                    self.hide_m3u8_downloadStatusView()
                     return
                 }
                 
@@ -302,7 +233,6 @@ class AssetGirdVC: UICollectionViewController {
                 try audioTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaTypeAudio)[0], at: previousTime)
             } catch {
                 print("加入失败  \(error)")
-                self.hide_m3u8_downloadStatusView()
             }
             previousTime = CMTimeAdd(previousTime, asset.duration)
         }
@@ -310,7 +240,6 @@ class AssetGirdVC: UICollectionViewController {
         // 创建exportor
         guard let exportor = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetPassthrough) else {
             print("创建ExportSession 失败")
-            self.hide_m3u8_downloadStatusView()
             return
         }
         let exportURL = documentURL.appendingPathComponent("tmp.mp4")
@@ -320,10 +249,8 @@ class AssetGirdVC: UICollectionViewController {
                 try fileManager.removeItem(at: exportURL)
             } catch {
                 print("删除文件失败 \(error)")
-                self.hide_m3u8_downloadStatusView()
             }
         }
-        
         exportor.outputURL = exportURL
         exportor.outputFileType = AVFileTypeMPEG4
         
@@ -336,7 +263,6 @@ class AssetGirdVC: UICollectionViewController {
                     self.clearUpTmpFiles()
                 } else {
                     print("导出失败")
-                    self.hide_m3u8_downloadStatusView()
                 }
             })
         }
@@ -347,7 +273,6 @@ class AssetGirdVC: UICollectionViewController {
     
     // MARK: - 合并后的清理工作
     func clearUpTmpFiles() {
-        
         guard let documentURL = VideoMarksConstants.documentURL() else { return }
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
@@ -365,9 +290,6 @@ class AssetGirdVC: UICollectionViewController {
                 print("完成清理")
             }
         }
-        
-        hide_m3u8_downloadStatusView()
-        
         // 把视频文件导入到相册
         saveVideoToPhotos()
     }
@@ -432,16 +354,13 @@ class AssetGirdVC: UICollectionViewController {
     
     func updateCachedAssets() {
         let isVisible = self.isViewLoaded && self.view.window != nil
-        
         guard isVisible else {
             return
         }
         
         var preheatRect = self.collectionView?.bounds
         let preHeight = preheatRect!.height
-        
         preheatRect = preheatRect!.insetBy(dx: 0.0, dy: -0.5 * preHeight)
-        
         let delta = abs(preheatRect!.midY - self.previousPreheatRect!.midY)
         if delta > self.collectionView!.bounds.height / 3.0 {
             var addedIndexPaths: [IndexPath] = []
@@ -453,13 +372,10 @@ class AssetGirdVC: UICollectionViewController {
                     let indexPaths = self.collectionView!.indexPathsForElementsIn(addedRect)
                     addedIndexPaths.append(contentsOf: indexPaths)
             })
-            
             let assetsToStartCaching = self.assetsAt(addedIndexPaths)
             let assetsToStopCaching = self.assetsAt(removedIndexPaths)
-            
             self.imageManager?.stopCachingImages(for: assetsToStopCaching, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil)
             self.imageManager?.startCachingImages(for: assetsToStartCaching, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil)
-            
             self.previousPreheatRect  = preheatRect
         }
     }
@@ -506,25 +422,17 @@ class AssetGirdVC: UICollectionViewController {
                 assets.append(asset)
             }
         }
-        
         return assets
     }
+}
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource and Delegate
+extension AssetGirdVC {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var numberOfItems: Int
         if section == 0 {
@@ -535,16 +443,14 @@ class AssetGirdVC: UICollectionViewController {
         
         return numberOfItems
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var collectionViewCell: UICollectionViewCell
         
         if (indexPath as NSIndexPath).section == 0 {
             let asset = self.assetsFetchResults![(indexPath as NSIndexPath).item] as! PHAsset
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GirdViewCell", for: indexPath) as! GirdViewCell
             cell.representedAssetIdentifier = asset.localIdentifier
-            
             self.imageManager?.requestImage(for: asset, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil, resultHandler: { (image, info) in
                 if cell.representedAssetIdentifier == asset.localIdentifier {
                     cell.thumbnail = image
@@ -554,17 +460,11 @@ class AssetGirdVC: UICollectionViewController {
             collectionViewCell = cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DownloadViewCell", for: indexPath) as! DownloadViewCell
-            
             // 设置DownloadCell...
             collectionViewCell = cell
         }
-        
-        // Configure the cell
-    
         return collectionViewCell
     }
-
-    // MARK: UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath as NSIndexPath).section == 0 {
@@ -611,68 +511,40 @@ extension AssetGirdVC: PHPhotoLibraryChangeObserver {
     }
 }
 
-extension AssetGirdVC: DownloadStatusViewDelegate {
-    func cancel() {
-        // 取消下载
-        self.hide_m3u8_downloadStatusView()
-    }
-}
-
 extension AssetGirdVC: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         // 完成下载
         print("完成下载 文件在\(location)")
-        
         guard let tsTask = tsFileDownloadTask else {
             print("tsFileDownloadTas 为nil")
             return
         }
-        
         tsTask.completeTaskCount += 1
-        
-        let totalSizeWrite = ByteCountFormatter.string(fromByteCount: tsTask.totalWrite, countStyle: .binary)
-        DispatchQueue.main.async {
-            self.m3u8DownloadStatusView.progressLabel.text = "\(tsTask.completeTaskCount)/\(tsTask.totalTaskCount) \(totalSizeWrite)"
-        }
-        
         print("已下载 \(tsTask.completeTaskCount) 个")
-        
         if let documentURL = VideoMarksConstants.documentURL() {
             let fileManager = FileManager.default
             let combineDir = documentURL.appendingPathComponent("tmpCombine", isDirectory: true)
-        
             if !fileManager.fileExists(atPath: combineDir.path) {
                 do {
                     print("文件夹不存在 创建文件夹")
                     try fileManager.createDirectory(at: combineDir, withIntermediateDirectories: false, attributes: nil)
                 } catch {
                     print("创建文件夹失败 \(error)")
-                    
-                    DispatchQueue.main.async {
-                        self.hide_m3u8_downloadStatusView()
-                    }
                 }
             }
             
             print("combineDir is \(combineDir)")
-            
             var indexVideo: Int = -1
-            
             for (idx,task) in tsTask.subTasks.enumerated() {
                 if task.taskIdentifier == downloadTask.taskIdentifier {
                     indexVideo = idx
                     break
                 }
             }
-            
             guard indexVideo != -1 else {
                 print("下载任务index 出错")
-                DispatchQueue.main.async {
-                    self.hide_m3u8_downloadStatusView()
-                }
                 return
             }
-            
             print("the idx is \(indexVideo)")
             let videoURL = combineDir.appendingPathComponent("\(indexVideo).mp4")
             
@@ -682,51 +554,21 @@ extension AssetGirdVC: URLSessionDownloadDelegate {
                     try fileManager.removeItem(at: videoURL)
                 } catch {
                     print("remove item error \(error)")
-                    DispatchQueue.main.async {
-                        self.hide_m3u8_downloadStatusView()
-                    }
                 }
             }
-            
             do {
                 print("move item to destURL \(videoURL)")
                 try fileManager.moveItem(at: location, to: videoURL)
             } catch {
                 print("error download \(error)")
-                DispatchQueue.main.async {
-                    self.hide_m3u8_downloadStatusView()
-                }
             }
         }
-        
         if tsTask.completeTaskCount == tsTask.totalTaskCount {
             print("全部下载完 开始合并文件")
             DispatchQueue.main.async(execute: {
                 self.combineAllVideoFragment()
             })
         }
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
-        // 恢复下载
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        // 写入
-        
-        guard let task = tsFileDownloadTask else {
-            print("tsFileDownloadTas 为nil")
-            return
-        }
-        
-        task.totalWrite += bytesWritten
-        
-        let totalSizeWrite = ByteCountFormatter.string(fromByteCount: task.totalWrite, countStyle: .binary)
-        
-        DispatchQueue.main.async { 
-            self.m3u8DownloadStatusView.progressLabel.text = "\(task.completeTaskCount)/\(task.totalTaskCount) \(totalSizeWrite)"
-        }
-        
     }
 }
 

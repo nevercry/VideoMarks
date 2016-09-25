@@ -59,29 +59,4 @@ class HLSPlayListParser {
         
         return videoFragments
     }
-    
-    func otherParse(_ data: Data) -> [NSString] {
-        print("其他网站解析")
-        
-        let dataInfo = String(data: data, encoding: String.Encoding.utf8)
-        let scanner = Scanner(string: dataInfo!)
-        
-        var videoFragments: [NSString] = []
-        var previousURL: NSString?
-        while !scanner.isAtEnd {
-            scanner.scanUpTo("http", into: nil)
-            var videoFragmentURL: NSString?
-            scanner.scanUpTo(".ts", into: &videoFragmentURL)
-            guard let _ = videoFragmentURL else { break }
-            
-            if previousURL == nil || !previousURL!.isEqual(to: videoFragmentURL as! String) {
-                videoFragments.append(videoFragmentURL!)
-                previousURL = videoFragmentURL!
-            }
-        }
-        
-        print("the videoFragments is \(videoFragments)")
-        
-        return videoFragments        
-    }
 }
