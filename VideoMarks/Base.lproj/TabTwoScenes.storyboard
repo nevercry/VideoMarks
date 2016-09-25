@@ -73,7 +73,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BYH-MX-JCX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="525" y="437"/>
+            <point key="canvasLocation" x="196" y="437"/>
         </scene>
         <!--Asset GirdVC-->
         <scene sceneID="wgv-w2-UGN">
@@ -144,7 +144,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ig4-jf-QuN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1262" y="437"/>
+            <point key="canvasLocation" x="672" y="437"/>
         </scene>
         <!--Videos-->
         <scene sceneID="esw-Eg-7YC">
