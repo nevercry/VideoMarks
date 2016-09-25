@@ -36,6 +36,8 @@ struct VideoMarksConstants {
     static func documentURL() -> URL? {
         return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
     }
+    
+    static let appGroupID = "group.nevercry.videoMarks"
 }
 
 

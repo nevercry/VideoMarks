@@ -12,56 +12,50 @@ import AVKit
 import AVFoundation
 import StoreKit
 
-struct Constant {
-    static let appGroupID = "group.nevercry.videoMarks"
-}
-
 class VideoMarksTVC: UITableViewController {
     
     var dataController: DataController?
     var fetchedResultsController: NSFetchedResultsController<Video>!
-    
-    var iAPRequest: SKProductsRequest?
-    
     var memCache = NSCache<NSString,NSString>()
     
     // MARK:  View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-        self.clearsSelectionOnViewWillAppear = true
-        
-        self.navigationItem.title = NSLocalizedString("Video Marks", comment: "影签")
-        self.navigationItem.rightBarButtonItem = editButtonItem
-        
-        self.tableView.allowsSelectionDuringEditing = true
-        self.tableView.estimatedRowHeight = 70
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        self.tableView.register(UINib(nibName: "VideoMarkCell", bundle: nil), forCellReuseIdentifier: VideoMarksConstants.VideoMarkCellID)
-        
-        if let _ = dataController {
-            initializeFetchedResultsController()
-        } else {
-            fatalError("Error no dataController ")
-        }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        // 注册CoreData完成初始化后的通知
-        NotificationCenter.default.addObserver(self, selector: #selector(coreDataStackComplete), name: NSNotification.Name(rawValue: VideoMarksConstants.CoreDataStackCompletion), object: nil)
-                
-        // Check for force touch feature, and add force touch/previewing capability.
-        if traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: view)
-        }
+        self.setupViews()
+        self.registerNotification()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // MARK: -
+    func setupViews() {
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        self.clearsSelectionOnViewWillAppear = true
+        self.navigationItem.title = NSLocalizedString("Video Marks", comment: "影签")
+        self.navigationItem.rightBarButtonItem = editButtonItem
+        self.tableView.allowsSelectionDuringEditing = true
+        self.tableView.estimatedRowHeight = 70
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        self.tableView.register(UINib(nibName: "VideoMarkCell", bundle: nil), forCellReuseIdentifier: VideoMarksConstants.VideoMarkCellID)
+        if let _ = dataController {
+            initializeFetchedResultsController()
+        } else {
+            fatalError("Error no dataController ")
+        }
+        // Check for force touch feature, and add force touch/previewing capability.
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: view)
+        }
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        // 注册CoreData完成初始化后的通知
+        NotificationCenter.default.addObserver(self, selector: #selector(coreDataStackComplete), name: NSNotification.Name(rawValue: VideoMarksConstants.CoreDataStackCompletion), object: nil)
+    }
+    
     
     /**
      CoreStack 完成初始化
@@ -111,27 +105,11 @@ class VideoMarksTVC: UITableViewController {
         self.setEditing(!isEditing, animated: true)
     }
     
-    // MARK:-  清除数据
-//    func startClearData() {
-//        let fetchRequest = NSFetchRequest(entityName: "Video")
-//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-//        
-//        do {
-//            try dataController?.managedObjectContext.executeRequest(deleteRequest)
-//        } catch {
-//            print("delete all data error ")
-//        }
-//        
-//        dataController?.saveContext()
-//        
-//        refetchResultAndUpdate()
-//    }
-    
     /**
      从Group UserDefault 里提取保存的VideoMarks数据
      */
     func updateVideoMarksFromExtension() {
-        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
+        let groupDefaults = UserDefaults.init(suiteName: VideoMarksConstants.appGroupID)!
         
         if let savedMarksData = groupDefaults.object(forKey: "savedMarks") as? Data {
             if let savedMarks = try! JSONSerialization.jsonObject(with: savedMarksData, options: .allowFragments) as? NSArray {
@@ -174,13 +152,8 @@ class VideoMarksTVC: UITableViewController {
 // MARK: - Table view data source and Delegate
 
 extension VideoMarksTVC {
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var heightForRow: CGFloat
-        
-        heightForRow = VideoMarksConstants.VideoMarkCellRowHeight
-        
-        return heightForRow
+        return VideoMarksConstants.VideoMarkCellRowHeight
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -192,18 +165,14 @@ extension VideoMarksTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoMarksConstants.VideoMarkCellID, for: indexPath)
-        
         // Set up the cell
         configureCell(cell as! VideoMarkCell, indexPath: indexPath)
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let video = fetchedResultsController.fetchedObjects![(indexPath as NSIndexPath).row] 
-        
         if !isEditing {
             PlayerController.sharedInstance.playVideo(video.player, inViewController: self)
         } else {
@@ -211,14 +180,11 @@ extension VideoMarksTVC {
         }
     }
     
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
         let deleteAction = UITableViewRowAction.init(style: .destructive, title: NSLocalizedString("Delete", comment: "删除")) { (action, indexPath) in
             let videoMark = self.fetchedResultsController.fetchedObjects![(indexPath as NSIndexPath).row] 
             self.dataController?.managedObjectContext.delete(videoMark)
@@ -230,16 +196,13 @@ extension VideoMarksTVC {
             let url = URL(string: videoMark.url)!
             let actVC = UIActivityViewController.init(activityItems: [url], applicationActivities: [OpenSafariActivity()])
             actVC.modalPresentationStyle = .popover
-            
             if let presenter = actVC.popoverPresentationController {
                 presenter.sourceView = tableView.cellForRow(at: indexPath)
                 presenter.sourceRect = CGRect(x: tableView.bounds.width, y: 0, width: 0, height: 44)
             }
-            
             self.present(actVC, animated: true, completion: nil)
         }
         shareAction.backgroundColor = UIColor.gray
-        
         return [deleteAction,shareAction]
     }
     
@@ -266,29 +229,17 @@ extension VideoMarksTVC: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
-        var fixNewIndexPath: IndexPath?
-        var fixIndexPath: IndexPath?
-        
-        if let _ = indexPath {
-            fixIndexPath = IndexPath(row: (indexPath! as NSIndexPath).row, section: (indexPath! as NSIndexPath).section)
-        }
-        
-        if let _ = newIndexPath {
-            fixNewIndexPath = IndexPath(row: (newIndexPath! as NSIndexPath).row, section: (newIndexPath! as NSIndexPath).section)
-        }
-        
         switch type {
         case .insert:
-            tableView.insertRows(at: [fixNewIndexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
         case .delete:
-            tableView.deleteRows(at: [fixIndexPath!], with: .fade)
+            tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
-            guard let updateIndex = fixIndexPath, let updateCell = self.tableView.cellForRow(at: updateIndex) as? VideoMarkCell else { return }
+            guard let updateIndex = indexPath, let updateCell = self.tableView.cellForRow(at: updateIndex) as? VideoMarkCell else { return }
             configureCell(updateCell, indexPath: updateIndex)
         case .move:
-            tableView.deleteRows(at: [fixIndexPath!], with: .fade)
-            tableView.insertRows(at: [fixIndexPath!], with: .fade)
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
         }
     }
     
@@ -299,13 +250,11 @@ extension VideoMarksTVC: NSFetchedResultsControllerDelegate {
 
 // MARK: - 3D Touch
 extension VideoMarksTVC: UIViewControllerPreviewingDelegate {
-    
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         self.navigationController?.show(viewControllerToCommit, sender: nil)
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-
         guard let indexPath = tableView.indexPathForRow(at: location),
             let cell = tableView.cellForRow(at: indexPath),
             let video = fetchedResultsController.fetchedObjects?[(indexPath as NSIndexPath).row],
