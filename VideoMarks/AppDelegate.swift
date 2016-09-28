@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
                 
         dataController = DataController(callback: {
-            NotificationCenter.default.post(Notification(name: NSNotification.Name(VideoMarksConstants.CoreDataStackCompletion)))
+            NotificationCenter.default.post(Notification(name: VideoMarksConstants.CoreDataStackCompletion))
         })
         
         let tabC = window?.rootViewController as! UITabBarController

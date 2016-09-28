@@ -44,7 +44,6 @@
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
 		4AB792661D4887C3007E4D4B /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */; };
 		4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB7926B1D4B1120007E4D4B /* StoreKit.framework */; };
-		4AD4613F1D55EF2A00FF7CDA /* TSFileDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */; };
 		4AD461431D5C588B00FF7CDA /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
 		4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */; };
@@ -151,7 +150,6 @@
 		4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoDetailCell.swift; path = Views/VideoDetailCell.swift; sourceTree = "<group>"; };
 		4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
 		4AB7926B1D4B1120007E4D4B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TSFileDownloadTask.swift; path = Models/TSFileDownloadTask.swift; sourceTree = "<group>"; };
 		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HLSPlayListParser.swift; path = Models/HLSPlayListParser.swift; sourceTree = "<group>"; };
 		4AD4E2941D0C18770002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4AD4E2961D0C19240002CE90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 				4A5CFDA51D07FE14004C2C64 /* Video.swift */,
 				4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */,
 				4A2EB6801D45FE3800019FAC /* DownloadTask.swift */,
-				4AD4613E1D55EF2A00FF7CDA /* TSFileDownloadTask.swift */,
 				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
 				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 			);
@@ -635,7 +632,6 @@
 				4A07AE721D088C9000935701 /* OpenSafariActivity.swift in Sources */,
 				4A07AE7A1D0A108000935701 /* Image+CoreDataProperties.swift in Sources */,
 				4AA06C5C1D368E9C00504AE3 /* PhotosTVC.swift in Sources */,
-				4AD4613F1D55EF2A00FF7CDA /* TSFileDownloadTask.swift in Sources */,
 				4AA06C631D36F69E00504AE3 /* GirdViewCell.swift in Sources */,
 				4A5CFDA91D080D5F004C2C64 /* NSManagedObject+Extension.swift in Sources */,
 				4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */,

@@ -10,7 +10,10 @@ import UIKit
 
 struct VideoMarksConstants {
     //MARK: - 通知
-    static let CoreDataStackCompletion = "CoreDataStackCompletion"
+    static let CoreDataStackCompletion = NSNotification.Name("CoreDataStackCompletion")
+    static let DownloadTaskProgress = NSNotification.Name("DownloadTaskProgress")
+    static let DownloadTaskFinish = NSNotification.Name("DownloadTaskFinish")
+    static let DownloadTaskStart = NSNotification.Name("DownloadTaskStart")
     
     //MARK: - 尺寸
     static let DetailPosterImageSize = CGSize(width: 240, height: 135)
@@ -39,12 +42,3 @@ struct VideoMarksConstants {
     
     static let appGroupID = "group.nevercry.videoMarks"
 }
-
-
-enum DownloadTaskNotification: String {
-    
-    case Progress = "downloadNotificationProgress"
-    case Finish = "downloadNotificationFinish"
-    
-}
-

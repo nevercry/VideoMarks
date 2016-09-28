@@ -53,7 +53,7 @@ class VideoMarksTVC: UITableViewController {
     func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         // 注册CoreData完成初始化后的通知
-        NotificationCenter.default.addObserver(self, selector: #selector(coreDataStackComplete), name: NSNotification.Name(rawValue: VideoMarksConstants.CoreDataStackCompletion), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(coreDataStackComplete), name: VideoMarksConstants.CoreDataStackCompletion, object: nil)
     }
     
     /**

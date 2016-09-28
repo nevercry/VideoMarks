@@ -19,19 +19,10 @@ class AssetGirdVC: UICollectionViewController {
     var assetCollection: PHAssetCollection?
     var imageManager: PHCachingImageManager?
     var previousPreheatRect: CGRect?
-    var taskManager = TaskManager()
-    var tsFileDownloadTask: TSFileDownloadTask?
-    
-    lazy var m3u8_session: URLSession = {
-        let config = URLSessionConfiguration.background(withIdentifier: "m3u8_backgroundSession")
-        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
-        return session
-    }()
-    
+    var taskManager = TaskManager.sharedInstance
+
     override func awakeFromNib() {
-        imageManager = PHCachingImageManager()
-        resetCachedAssets()
-        PHPhotoLibrary.shared().register(self)
+        self.setupViews()
     }
     
     deinit {
@@ -40,8 +31,19 @@ class AssetGirdVC: UICollectionViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupAssetGirdThumbnailSize()
+        self.setupController()
+    }
+    
+    func setupViews() {
+        imageManager = PHCachingImageManager()
+        resetCachedAssets()
+        PHPhotoLibrary.shared().register(self)
+    }
+    
+    func setupAssetGirdThumbnailSize() {
         let scale = UIScreen.main.scale
         let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
         // 设备最小尺寸来显示Cell 考虑横屏时的情况
@@ -52,28 +54,18 @@ class AssetGirdVC: UICollectionViewController {
         AssetGirdThumbnailSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func setupController() {
         self.updateCachedAssets()
         if let _ = assetCollection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo))
-            taskManager.collection = assetCollection!
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         // 注册通知
-        NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: NSNotification.Name(rawValue: DownloadTaskNotification.Finish.rawValue), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: NSNotification.Name(rawValue: DownloadTaskNotification.Progress.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: VideoMarksConstants.DownloadTaskFinish, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: VideoMarksConstants.DownloadTaskProgress, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startDownloading), name: VideoMarksConstants.DownloadTaskStart, object: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: Actions
+    // MARK: - Actions
     func addVideo(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: NSLocalizedString("Enter the URL for the video you want to save.", comment: "输入你想要保存的视频地址"), message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField) in
@@ -85,265 +77,89 @@ class AssetGirdVC: UICollectionViewController {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "保存"), style: .default, handler: { [weak self] (action) in
             // 添加下载任务
             guard let videoUrl = alertController.textFields?.first?.text, let vURL = URL(string: videoUrl) , videoUrl.isEmpty != true else { return }
-            // 验证URL 是否包含m3u8
-            print("lastComponent is \(vURL.lastPathComponent)")
-            if vURL.lastPathComponent == "m3u8" {
-                let networksession = URLSession(configuration: URLSessionConfiguration.default)
-                networksession.dataTask(with: URLRequest(url: vURL), completionHandler: { (data, res, error) in
-                    print("解析...")
-                    
-                    guard (data != nil) else {
-                        print("m3u8 文件解析失败")
-                        return
-                    }
-                    
-                    // 判断URL属于那个视频网站
-                    let m3u8Parser = HLSPlayListParser.shareInstance
-                    
-                    var videoFragments: [NSString] // 视频片段地址
-                    if videoUrl.contains("youku.com") {
-                        print("url 属于youku")
-                        videoFragments = m3u8Parser.youkuParse(data!)
-                    } else {
-                        print("url 未知网站 暂不支持")
-                        return
-                    }
-                    
-                    guard videoFragments.count > 0 else {
-                        return
-                    }
-                    
-                    // 下载所有视频片段
-                    DispatchQueue.main.async(execute: {
-                        self?.downloadAllVideoFragments(videoFragments)
-                    })
-                }).resume()
-            } else {
-                self?.taskManager.newTask(videoUrl)
-                self?.collectionView?.reloadData()
-            }
+            self?.taskManager.addNewTask(vURL, collectionId: self!.assetCollection!.localIdentifier)
             }))
         present(alertController, animated: true, completion: nil)
     }
     
-    func downloadFinished(_ note: Notification) {
-        // 下载完成
-        guard let taskID = note.object as? Int, let taskIdx = taskIndex(taskID) else { return }
-
-        // 删除对应的任务
-        taskManager.taskList.remove(at: taskIdx)
-        
-        print("now the taskList count is \(taskManager.taskList.count)")
-        
-        DispatchQueue.main.async { 
+    func startDownloading(_ note: Notification) {
+        DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
-        
-        saveVideoToPhotos()
+    }
+    
+    func downloadFinished(_ note: Notification) {
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
+        }
     }
     
     func downloading(_ note: Notification) {
         // 下载中
         if let progressInfo: [String: AnyObject] = note.object as? [String: AnyObject] {
-            guard let taskID = progressInfo["taskIdentifier"] as? Int,
-            let totalBytesWritten = progressInfo["totalBytesWritten"] as? NSNumber,
-                let totalBytesExpectedToWrite = progressInfo["totalBytesExpectedToWrite"] as? NSNumber else { return }
+            guard let task = progressInfo["task"] as? DownloadTask else { return }
+           
             // 获得对应的Cell
-            if let taskIdx = taskIndex(taskID) {
+            if let taskIdx = self.taskManager.taskList.index(of: task) {
                 if let cell = collectionView?.cellForItem(at: IndexPath(item: taskIdx, section: 1)) as? DownloadViewCell {
-                    cell.progressLabel.text = "\(totalBytesWritten.intValue * 100 / totalBytesExpectedToWrite.intValue)%"
+                    cell.progressLabel.text = "\(Int(task.progress.fractionCompleted * 100)) %"
                 }
             }
         }
     }
-    
-    func taskIndex(_ taskID: Int) -> Int? {
-        for (index, task) in taskManager.taskList.enumerated() {
-            if task.taskIdentifier == taskID {
-                return index
-            }
-        }
-        return nil
-    }
-    
-    // MARK: - 下载所有视频片段
-    func downloadAllVideoFragments(_ urls: [NSString]) {
-        print("开始下载所有视频片段")
-        // 初始化task
-        let newDownloadTask = TSFileDownloadTask(identifier: "TSFileDownload")
-        
-        newDownloadTask.totalTaskCount = urls.count
-        print("总共有 \(newDownloadTask.totalTaskCount) 个文件需要下载")
-        
-        for url in urls {
-            guard let videoURL = URL(string: url as String) else {
-                print("下载地址有误 error")
-                return
-            }
-            let downloadTask = m3u8_session.downloadTask(with: videoURL)
-            newDownloadTask.subTasks.append(downloadTask)
-        }
-        
-        defer {
-            for task in newDownloadTask.subTasks {
-                task.resume()
-            }
-            
-            tsFileDownloadTask = newDownloadTask
-        }
-    }
-    
-    // MARK: - 合并所有视频片段
-    func combineAllVideoFragment() {
-        print("合并所有视频片段")
-        self.backgroundUpdateTask = beginBackgroundUpdateTask()
-        guard let documentURL = VideoMarksConstants.documentURL() else { return }
-        let fileManager = FileManager.default
-        let combineDir = documentURL.appendingPathComponent("tmpCombine", isDirectory: true);
-        let composition = AVMutableComposition()
-        let videoTrack = composition.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
-        let audioTrack = composition.addMutableTrack(withMediaType: AVMediaTypeAudio, preferredTrackID: kCMPersistentTrackID_Invalid)
-        
-        var previousTime = kCMTimeZero
-        
-        guard let tsTask = tsFileDownloadTask else {
-            print("tsFileDownloadTask is nil")
-            return
-        }
-    
-        for i in 0 ..< tsTask.totalTaskCount {
-            let videoURL = combineDir.appendingPathComponent("\(i).mp4")
+}
 
-            let asset = AVAsset(url: videoURL)
-            do {
-                print("加入asset \(videoURL)")
-                
-                // Debug
-                let audios = asset.tracks(withMediaType: AVMediaTypeAudio)
-                let videos = asset.tracks(withMediaType: AVMediaTypeVideo)
-                print("audio tracks is  \(audios) videos is \(videos)")
-                print("tracks is \(asset.tracks)")
-                
-                guard audios.count > 0 && videos.count > 0 else {
-                    print("找不到视频")
-                    return
-                }
-                
-                try videoTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaTypeVideo)[0], at: previousTime)
-                try audioTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaTypeAudio)[0], at: previousTime)
-            } catch {
-                print("加入失败  \(error)")
-            }
-            previousTime = CMTimeAdd(previousTime, asset.duration)
+
+// MARK: - UICollectionViewDataSource and Delegate
+extension AssetGirdVC {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var numberOfItems: Int
+        if section == 0 {
+            numberOfItems = self.assetsFetchResults?.count ?? 0
+        } else {
+            numberOfItems = self.taskManager.taskList.count
         }
         
-        // 创建exportor
-        guard let exportor = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetPassthrough) else {
-            print("创建ExportSession 失败")
-            return
-        }
-        let exportURL = documentURL.appendingPathComponent("tmp.mp4")
-        if fileManager.fileExists(atPath: exportURL.path) {
-            do {
-                print("文件已存在 删除文件")
-                try fileManager.removeItem(at: exportURL)
-            } catch {
-                print("删除文件失败 \(error)")
-            }
-        }
-        exportor.outputURL = exportURL
-        exportor.outputFileType = AVFileTypeMPEG4
+        return numberOfItems
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var collectionViewCell: UICollectionViewCell
         
-        exportor.exportAsynchronously { 
-            DispatchQueue.main.async(execute: {
-                if exportor.status == .completed {
-                    print("合并成功")
-                    // MARK: 标记合并成功
-                    tsTask.isCombineDone = true
-                    self.clearUpTmpFiles()
-                } else {
-                    print("导出失败")
+        if indexPath.section == 0 {
+            let asset = self.assetsFetchResults![(indexPath as NSIndexPath).item] as! PHAsset
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GirdViewCell", for: indexPath) as! GirdViewCell
+            cell.representedAssetIdentifier = asset.localIdentifier
+            self.imageManager?.requestImage(for: asset, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil, resultHandler: { (image, info) in
+                if cell.representedAssetIdentifier == asset.localIdentifier {
+                    cell.thumbnail = image
                 }
             })
+            
+            collectionViewCell = cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DownloadViewCell", for: indexPath) as! DownloadViewCell
+            // 设置DownloadCell...
+            collectionViewCell = cell
         }
-        
-        endBackgroundUpdateTask()
+        return collectionViewCell
     }
     
-    
-    // MARK: - 合并后的清理工作
-    func clearUpTmpFiles() {
-        guard let documentURL = VideoMarksConstants.documentURL() else { return }
-        
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
-            let fileManager = FileManager.default
-            let combineDir = documentURL.appendingPathComponent("tmpCombine", isDirectory: true)
-
-            if fileManager.fileExists(atPath: combineDir.path) {
-                do {
-                    print("开始删除缓存文件")
-                    try fileManager.removeItem(at: combineDir)
-                } catch {
-                    print("删除缓存失败 \(error)")
-                }
-                
-                print("完成清理")
-            }
-        }
-        // 把视频文件导入到相册
-        saveVideoToPhotos()
-    }
-    
-    // MARK: - 保存视频到相册
-    func saveVideoToPhotos() {
-        print("保存视频到相册")
-        guard let documentURL = VideoMarksConstants.documentURL() else { return }
-        
-        let fileURL = documentURL.appendingPathComponent("tmp.mp4")
-
-        PHPhotoLibrary.shared().performChanges({
-            if let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL) {
-                let collectionChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection!)
-                let asset = assetChangeRequest.placeholderForCreatedAsset!
-                let assets = NSArray(object: asset)
-                collectionChangeRequest?.addAssets(assets)
-            }
-        }) { (success, error) in
-            guard success == true else {
-                print("download Video error \(error)")
-                return
-            }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).section == 0 {
+            let asset = self.assetsFetchResults![(indexPath as NSIndexPath).item] as! PHAsset
+            let videoRequestOptions = PHVideoRequestOptions()
+            videoRequestOptions.deliveryMode = .highQualityFormat
             
-            do {
-                try FileManager.default.removeItem(at: fileURL)
-            } catch {
-                print("error delete")
-            }
-            
-            DispatchQueue.main.async(execute: { 
-                self.finishTSDownloadTask()
+            self.imageManager?.requestPlayerItem(forVideo: asset, options: videoRequestOptions, resultHandler: { (avplayerItem, info) in
+                let player = AVPlayer(playerItem: avplayerItem!)
+                PlayerController.sharedInstance.playVideo(player, inViewController: self)
             })
         }
-    }
-    
-    // MARK: - 完成下载TSFile的任务
-    func finishTSDownloadTask() {
-        tsFileDownloadTask = nil
-        print("清楚下载任务")
-    }
-    
-    // MARK: - 后台任务
-    var backgroundUpdateTask = UIBackgroundTaskInvalid
-    
-    func beginBackgroundUpdateTask() -> UIBackgroundTaskIdentifier {
-        return UIApplication.shared.beginBackgroundTask(expirationHandler: {
-            self.endBackgroundUpdateTask()
-        })
-    }
-    
-    func endBackgroundUpdateTask() {
-        UIApplication.shared.endBackgroundTask(self.backgroundUpdateTask)
-        self.backgroundUpdateTask = UIBackgroundTaskInvalid
     }
     
     // MARK: - Asset Caching
@@ -426,60 +242,6 @@ class AssetGirdVC: UICollectionViewController {
     }
 }
 
-
-// MARK: - UICollectionViewDataSource and Delegate
-extension AssetGirdVC {
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var numberOfItems: Int
-        if section == 0 {
-            numberOfItems = self.assetsFetchResults?.count ?? 0
-        } else {
-            numberOfItems = self.taskManager.taskList.count
-        }
-        
-        return numberOfItems
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var collectionViewCell: UICollectionViewCell
-        
-        if (indexPath as NSIndexPath).section == 0 {
-            let asset = self.assetsFetchResults![(indexPath as NSIndexPath).item] as! PHAsset
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GirdViewCell", for: indexPath) as! GirdViewCell
-            cell.representedAssetIdentifier = asset.localIdentifier
-            self.imageManager?.requestImage(for: asset, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil, resultHandler: { (image, info) in
-                if cell.representedAssetIdentifier == asset.localIdentifier {
-                    cell.thumbnail = image
-                }
-            })
-            
-            collectionViewCell = cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DownloadViewCell", for: indexPath) as! DownloadViewCell
-            // 设置DownloadCell...
-            collectionViewCell = cell
-        }
-        return collectionViewCell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath as NSIndexPath).section == 0 {
-            let asset = self.assetsFetchResults![(indexPath as NSIndexPath).item] as! PHAsset
-            let videoRequestOptions = PHVideoRequestOptions()
-            videoRequestOptions.deliveryMode = .highQualityFormat
-            
-            self.imageManager?.requestPlayerItem(forVideo: asset, options: videoRequestOptions, resultHandler: { (avplayerItem, info) in
-                let player = AVPlayer(playerItem: avplayerItem!)
-                PlayerController.sharedInstance.playVideo(player, inViewController: self)
-            })
-        }
-    }
-}
-
 extension AssetGirdVC: PHPhotoLibraryChangeObserver {
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         guard self.assetsFetchResults != nil else { return }
@@ -503,7 +265,11 @@ extension AssetGirdVC: PHPhotoLibraryChangeObserver {
                             self?.collectionView?.reloadItems(at: changedIndexes.indexPathsFromIndexesWith(0))
                         }
                         
-                        }, completion:nil)
+                        }, completion:{ success in
+                            if success {
+                                self?.collectionView?.reloadData()
+                            }
+                    })
                 }
                 self?.resetCachedAssets()
             })
@@ -511,66 +277,6 @@ extension AssetGirdVC: PHPhotoLibraryChangeObserver {
     }
 }
 
-extension AssetGirdVC: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        // 完成下载
-        print("完成下载 文件在\(location)")
-        guard let tsTask = tsFileDownloadTask else {
-            print("tsFileDownloadTas 为nil")
-            return
-        }
-        tsTask.completeTaskCount += 1
-        print("已下载 \(tsTask.completeTaskCount) 个")
-        if let documentURL = VideoMarksConstants.documentURL() {
-            let fileManager = FileManager.default
-            let combineDir = documentURL.appendingPathComponent("tmpCombine", isDirectory: true)
-            if !fileManager.fileExists(atPath: combineDir.path) {
-                do {
-                    print("文件夹不存在 创建文件夹")
-                    try fileManager.createDirectory(at: combineDir, withIntermediateDirectories: false, attributes: nil)
-                } catch {
-                    print("创建文件夹失败 \(error)")
-                }
-            }
-            
-            print("combineDir is \(combineDir)")
-            var indexVideo: Int = -1
-            for (idx,task) in tsTask.subTasks.enumerated() {
-                if task.taskIdentifier == downloadTask.taskIdentifier {
-                    indexVideo = idx
-                    break
-                }
-            }
-            guard indexVideo != -1 else {
-                print("下载任务index 出错")
-                return
-            }
-            print("the idx is \(indexVideo)")
-            let videoURL = combineDir.appendingPathComponent("\(indexVideo).mp4")
-            
-            if fileManager.fileExists(atPath: videoURL.path) {
-                do {
-                    print("删除已存在 \(videoURL) 的文件")
-                    try fileManager.removeItem(at: videoURL)
-                } catch {
-                    print("remove item error \(error)")
-                }
-            }
-            do {
-                print("move item to destURL \(videoURL)")
-                try fileManager.moveItem(at: location, to: videoURL)
-            } catch {
-                print("error download \(error)")
-            }
-        }
-        if tsTask.completeTaskCount == tsTask.totalTaskCount {
-            print("全部下载完 开始合并文件")
-            DispatchQueue.main.async(execute: {
-                self.combineAllVideoFragment()
-            })
-        }
-    }
-}
 
 extension AssetGirdVC: URLSessionDelegate {
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
