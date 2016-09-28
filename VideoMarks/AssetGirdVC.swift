@@ -20,6 +20,7 @@ class AssetGirdVC: UICollectionViewController {
     var imageManager: PHCachingImageManager?
     var previousPreheatRect: CGRect?
     var taskManager = TaskManager.sharedInstance
+    var longTapGuesture: UILongPressGestureRecognizer?
 
     override func awakeFromNib() {
         self.setupViews()
@@ -59,6 +60,8 @@ class AssetGirdVC: UICollectionViewController {
         if let _ = assetCollection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo))
         }
+        self.longTapGuesture = UILongPressGestureRecognizer(target: self, action: #selector(userLongPressed(sender:)))
+        self.collectionView?.addGestureRecognizer(self.longTapGuesture!)
         // 注册通知
         NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: VideoMarksConstants.DownloadTaskFinish, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: VideoMarksConstants.DownloadTaskProgress, object: nil)
@@ -66,6 +69,42 @@ class AssetGirdVC: UICollectionViewController {
     }
     
     // MARK: - Actions
+    func userLongPressed(sender: UILongPressGestureRecognizer) {
+        let pressedLocation = sender.location(in: self.collectionView)
+        if let pressedItemIndexPath = self.collectionView?.indexPathForItem(at: pressedLocation) {
+            if let asset = self.assetsFetchResults?[pressedItemIndexPath.item] as? PHAsset {
+                if let pressedView = self.collectionView?.cellForItem(at: pressedItemIndexPath) as? GirdViewCell {
+                    showDeleteVideoActionSheet(atView: pressedView, deleteVideo: asset)
+                }
+            }
+        }
+    }
+    
+    func deleteVideo(video: PHAsset) {
+        // Delete asset from library
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.deleteAssets([video] as NSArray)
+            }, completionHandler: nil)
+    }
+    
+    func showDeleteVideoActionSheet(atView view: UIView, deleteVideo video: PHAsset) {
+        let alertController = UIAlertController(title: nil, message: NSLocalizedString("Delete Video?", comment: "删除视频？"), preferredStyle: .actionSheet)
+        alertController.modalPresentationStyle = .popover
+        if let presenter = alertController.popoverPresentationController {
+            presenter.sourceView = view
+            presenter.permittedArrowDirections = .any
+        }
+        
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "删除"), style: .destructive, handler: { (_) in
+            self.deleteVideo(video: video)
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .cancel, handler: nil))
+        
+        if self.presentedViewController == nil {
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     func addVideo(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: NSLocalizedString("Enter the URL for the video you want to save.", comment: "输入你想要保存的视频地址"), message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField) in
@@ -131,7 +170,7 @@ extension AssetGirdVC {
         var collectionViewCell: UICollectionViewCell
         
         if indexPath.section == 0 {
-            let asset = self.assetsFetchResults![(indexPath as NSIndexPath).item] as! PHAsset
+            let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GirdViewCell", for: indexPath) as! GirdViewCell
             cell.representedAssetIdentifier = asset.localIdentifier
             self.imageManager?.requestImage(for: asset, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil, resultHandler: { (image, info) in
