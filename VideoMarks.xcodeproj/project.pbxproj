@@ -227,6 +227,8 @@
 		4A07AE821D0B433900935701 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
+				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 				4A5FF03E1D74AD40002D156A /* ThirdTab */,
 				4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */,
 				4A68B1431D7BD646001CC266 /* ArrayDataSource.swift */,
@@ -264,8 +266,6 @@
 				4A5CFDA51D07FE14004C2C64 /* Video.swift */,
 				4A5CFDA81D080D5F004C2C64 /* NSManagedObject+Extension.swift */,
 				4A2EB6801D45FE3800019FAC /* DownloadTask.swift */,
-				4A2EB67E1D45FD9700019FAC /* TaskManager.swift */,
-				4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -345,8 +345,8 @@
 				4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */,
 				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
-				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */,
+				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
 				4A68B13F1D79A718001CC266 /* Assets.xcassets */,
