@@ -30,21 +30,51 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
+    changelog = prompt(
+      text: "Changelog: ",
+      multi_line_end_keyword: "END"
+    )
+    # Ensure that there that your git status is not dirty
+    ensure_git_status_clean
+    # Increment the build number (not the version number)
+    # Providing the xcodeproj is optional
     increment_build_number
-    gym(scheme: "VideoMarks") # Build your app - more options available
-    pilot
 
+    # Commit the version bump
+    commit_version_bump
+
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    add_git_tag
+
+    # Push the new commit and tag back to your git remote
+    push_to_git_remote
+
+    match(type: "appstore") # more information: https://codesigning.guide
+
+    gym(scheme: "VideoMarks",
+        include_bitcode: true) # Build your app - more options available
+    testflight
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
   end
 
   desc "Deploy a new version to the App Store"
-  lane :appstore do
+  lane :release do
     # match(type: "appstore")
     # snapshot
-    gym(scheme: "VideoMarks") # Build your app - more options available
-    deliver(force: false)
+    increment_build_number
+    # Commit the version bump
+    commit_version_bump
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    add_git_tag
+    # Push the new commit and tag back to your git remote
+    push_to_git_remote
+
+    gym(scheme: "VideoMarks",
+        include_bitcode: true) # Build your app - more options available
+    appstore
     # frameit
   end
 

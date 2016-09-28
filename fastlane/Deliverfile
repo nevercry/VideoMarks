@@ -27,17 +27,11 @@ app_review_information(
 Use this app extension in Safari to save the link of the mp4 video or copy it to pasteboard. After users save the link to the app, they can find the link in the app and play it."
 )
 
-submission_information({
-  add_id_info_serves_ads: true,
-  add_id_info_limits_tracking: true,
-  add_id_info_uses_idfa: true
-})
-
 release_notes({
-  'en-US' => "1. Fix QQ parsing",
-  'ja' => "1. Fix QQ parsing",
-  'zh-Hans' => "1. 修复腾讯视频的解析问题",
-  'zh-Hant' => "1. 修復騰訊視頻的解析問題"
+  'en-US' => "1. Update UI, bugfix",
+  'ja' => "1. Update UI, bugfix",
+  'zh-Hans' => "1. Update UI, bugfix",
+  'zh-Hant' => "1. Update UI, bugfix"
 })
 
 
