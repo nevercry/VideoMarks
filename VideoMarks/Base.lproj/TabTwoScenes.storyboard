@@ -114,7 +114,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DownloadViewCell" id="14Z-z6-TlU" customClass="DownloadViewCell" customModule="VideoMarks" customModuleProvider="target">
-                                <rect key="frame" x="98" y="0.0" width="80" height="80"/>
+                                <rect key="frame" x="98.5" y="0.0" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -144,7 +144,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ig4-jf-QuN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="672" y="437"/>
+            <point key="canvasLocation" x="999" y="437"/>
         </scene>
         <!--Videos-->
         <scene sceneID="esw-Eg-7YC">
@@ -169,7 +169,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z8N-aw-eAV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-287" y="437"/>
+            <point key="canvasLocation" x="-511" y="437"/>
         </scene>
     </scenes>
     <resources>

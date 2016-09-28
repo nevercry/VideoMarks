@@ -38,6 +38,19 @@ class AssetGirdVC: UICollectionViewController {
         self.setupController()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        updateCollectionViewLayout(with: size)
+    }
+    
+    private func updateCollectionViewLayout(with size: CGSize) {
+        if let layout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            let itemLength = size.width / 4
+            layout.itemSize = CGSize(width: itemLength, height: itemLength)
+            layout.invalidateLayout()
+        }
+    }
+    
     func setupViews() {
         imageManager = PHCachingImageManager()
         resetCachedAssets()
@@ -46,13 +59,10 @@ class AssetGirdVC: UICollectionViewController {
     
     func setupAssetGirdThumbnailSize() {
         let scale = UIScreen.main.scale
-        let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
         // 设备最小尺寸来显示Cell 考虑横屏时的情况
         let minWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         let itemWidth = minWidth / 4
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth)
-        let cellSize = flowLayout.itemSize
-        AssetGirdThumbnailSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale)
+        AssetGirdThumbnailSize = CGSize(width: itemWidth * scale, height: itemWidth * scale)
     }
     
     func setupController() {
@@ -62,6 +72,10 @@ class AssetGirdVC: UICollectionViewController {
         }
         self.longTapGuesture = UILongPressGestureRecognizer(target: self, action: #selector(userLongPressed(sender:)))
         self.collectionView?.addGestureRecognizer(self.longTapGuesture!)
+        let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
+        let itemLength = UIScreen.main.bounds.width / 4
+        flowLayout.itemSize = CGSize(width: itemLength, height: itemLength)
+        
         // 注册通知
         NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: VideoMarksConstants.DownloadTaskFinish, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: VideoMarksConstants.DownloadTaskProgress, object: nil)
@@ -92,9 +106,10 @@ class AssetGirdVC: UICollectionViewController {
         alertController.modalPresentationStyle = .popover
         if let presenter = alertController.popoverPresentationController {
             presenter.sourceView = view
+            presenter.sourceRect = view.bounds
             presenter.permittedArrowDirections = .any
+            presenter.canOverlapSourceViewRect = true
         }
-        
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "删除"), style: .destructive, handler: { (_) in
             self.deleteVideo(video: video)
         }))
