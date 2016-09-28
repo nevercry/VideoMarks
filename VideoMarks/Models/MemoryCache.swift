@@ -8,14 +8,14 @@
 
 import UIKit
 
-class MemoryCache: NSCache {
+class MemoryCache: NSCache<AnyObject, AnyObject> {
     
     static let shareInstance = MemoryCache()
     
     override init() {
         super.init()
         
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(clearMemory), name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(clearMemory), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
     }
     
     func clearMemory() {
@@ -23,7 +23,7 @@ class MemoryCache: NSCache {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

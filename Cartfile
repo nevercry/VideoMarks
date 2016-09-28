@@ -1,0 +1,5 @@
+github "Alamofire/Alamofire" ~> 4.0
+
+github "krzyzanowskim/CryptoSwift"
+
+github "SwiftyJSON/SwiftyJSON" "3.0.0"

@@ -443,7 +443,7 @@ run: function(arguments) {
         tumblrParse();
     } else if (originURL.includes('xvideos.com')) {
         xvideosParse();
-    } else if (originURL.includes('acfun.tv')) {
+    } else if (originURL.includes('m.aixifan.com')) {
         acfunParse();
     } else if (originURL.includes('vimeo.com')) {
         vimeoParse();

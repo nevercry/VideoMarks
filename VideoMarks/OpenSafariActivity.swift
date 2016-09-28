@@ -11,33 +11,33 @@ import UIKit
 
 
 class OpenSafariActivity: UIActivity {
-    var URL: NSURL?
+    var URL: Foundation.URL?
     
     let OpenSafari = "VMOpenSafariActivityType"
     
-    override func activityType() -> String? {
-        return OpenSafari
+    override var activityType : UIActivityType? {
+        return UIActivityType(rawValue: OpenSafari)
     }
     
-    override func activityTitle() -> String? {
+    override var activityTitle : String? {
         return NSLocalizedString("Open in Safari", comment: "在Safari中打开")
     }
     
-    override func activityImage() -> UIImage? {
-        return UIImage.alphaSafariIcon(52, scale: Float(UIScreen.mainScreen().scale))
+    override var activityImage : UIImage? {
+        return UIImage.alphaSafariIcon(52, scale: Float(UIScreen.main.scale))
     }
     
-    override func canPerformWithActivityItems(activityItems: [AnyObject]) -> Bool {
+    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         
         for item in activityItems {
             if let itemstr = item as? String {
-                if let u = NSURL(string: itemstr) {
-                    if !u.isFileReferenceURL() {
+                if let u = Foundation.URL(string: itemstr) {
+                    if !(u as NSURL).isFileReferenceURL() {
                         return true
                     }
                 }
-            } else if let itemUrl = item as? NSURL {
-                if !itemUrl.isFileReferenceURL() {
+            } else if let itemUrl = item as? Foundation.URL {
+                if !(itemUrl as NSURL).isFileReferenceURL() {
                     return true
                 }
             }
@@ -46,17 +46,17 @@ class OpenSafariActivity: UIActivity {
         return false;
     }
     
-    override func prepareWithActivityItems(activityItems: [AnyObject]) {
-        var strURL, dURL: NSURL?
+    override func prepare(withActivityItems activityItems: [Any]) {
+        var strURL, dURL: Foundation.URL?
         for item in activityItems {
             if let itemstr = item as? String {
-                if let u = NSURL(string: itemstr) {
-                    if !u.isFileReferenceURL() {
+                if let u = Foundation.URL(string: itemstr) {
+                    if !(u as NSURL).isFileReferenceURL() {
                         strURL = u
                     }
                 }
-            } else if let itemUrl = item as? NSURL {
-                if !itemUrl.isFileReferenceURL() {
+            } else if let itemUrl = item as? Foundation.URL {
+                if !(itemUrl as NSURL).isFileReferenceURL() {
                     dURL = itemUrl
                 }
             }
@@ -65,8 +65,8 @@ class OpenSafariActivity: UIActivity {
         self.URL = dURL ?? strURL
     }
     
-    override func performActivity() {
-        self.activityDidFinish(UIApplication.sharedApplication().openURL(self.URL!))
+    override func perform() {
+        self.activityDidFinish(UIApplication.shared.openURL(self.URL!))
     }
     
     

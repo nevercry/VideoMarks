@@ -9,13 +9,14 @@
 import UIKit
 
 
-extension NSIndexSet {
-    func indexPathsFromIndexesWith(section: Int) -> [NSIndexPath] {
-        var indexPaths: [NSIndexPath] = []
-        self.enumerateIndexesUsingBlock { (idx, _) in
-            indexPaths.append(NSIndexPath(forItem: idx, inSection: section))
+extension IndexSet {
+    func indexPathsFromIndexesWith(_ section: Int) -> [IndexPath] {
+        var indexPaths: [IndexPath] = []
+    
+        for (idx,_) in self.enumerated() {
+            indexPaths.append(IndexPath(item: idx, section: section))
         }
-        
+                
         return indexPaths
     }
     
