@@ -1,4 +1,9 @@
 language: objective-c
 osx_image: xcode8
+before_install:
+  - brew update
+  - breow outdated carthage || brew upgrade carthage
+before_script:
+  - carthage bootstrap
 script:
   - xcodebuild test -scheme VideoMarks -sdk iphonesimulator -destination "name=iPhone SE"
