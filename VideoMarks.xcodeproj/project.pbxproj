@@ -15,11 +15,9 @@
 		4A0FC5681D97A1A800E86249 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */; };
 		4A0FC5691D97A1C800E86249 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */; };
 		4A1B688E1D91CCB700B50EFD /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A1B688D1D91CCB700B50EFD /* Alamofire.framework */; };
-		4A1B68901D91CCC900B50EFD /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A1B688F1D91CCC900B50EFD /* CryptoSwift.framework */; };
 		4A2EB67F1D45FD9700019FAC /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB67E1D45FD9700019FAC /* TaskManager.swift */; };
 		4A2EB6811D45FE3800019FAC /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6801D45FE3800019FAC /* DownloadTask.swift */; };
 		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
-		4A2EB6E11D487D5500019FAC /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2EB6E01D487D5500019FAC /* openssl.framework */; };
 		4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFD9F1D060D6D004C2C64 /* DataController.swift */; };
 		4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */; };
 		4A5CFDA61D07FE14004C2C64 /* Video+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */; };
@@ -42,7 +40,6 @@
 		4AA06C671D37AA6700504AE3 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C661D37AA6700504AE3 /* PlayerController.swift */; };
 		4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */; };
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
-		4AB792661D4887C3007E4D4B /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */; };
 		4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB7926B1D4B1120007E4D4B /* StoreKit.framework */; };
 		4AD461431D5C588B00FF7CDA /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
@@ -148,7 +145,6 @@
 		4AA06C661D37AA6700504AE3 /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailTVC.swift; sourceTree = "<group>"; };
 		4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoDetailCell.swift; path = Views/VideoDetailCell.swift; sourceTree = "<group>"; };
-		4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
 		4AB7926B1D4B1120007E4D4B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HLSPlayListParser.swift; path = Models/HLSPlayListParser.swift; sourceTree = "<group>"; };
 		4AD4E2941D0C18770002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -190,9 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A0FC5681D97A1A800E86249 /* SwiftyJSON.framework in Frameworks */,
-				4A1B68901D91CCC900B50EFD /* CryptoSwift.framework in Frameworks */,
 				4A1B688E1D91CCB700B50EFD /* Alamofire.framework in Frameworks */,
-				4A2EB6E11D487D5500019FAC /* openssl.framework in Frameworks */,
 				4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
@@ -342,7 +336,6 @@
 				4AA06C5F1D36EFEF00504AE3 /* NSIndexSet+extension.swift */,
 				4AA06C4F1D366F5000504AE3 /* VideoMarksConstants.swift */,
 				4AD794941D0347BD008A1D2D /* AppDelegate.swift */,
-				4AB792651D4887C3007E4D4B /* AppleIncRootCertificate.cer */,
 				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
 				4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */,
@@ -453,6 +446,7 @@
 				4AD794C61D034B4D008A1D2D /* Sources */,
 				4AD794C71D034B4D008A1D2D /* Frameworks */,
 				4AD794C81D034B4D008A1D2D /* Resources */,
+				4A4C256B1D9D591000EA6F19 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -548,7 +542,6 @@
 			files = (
 				4AD794A21D0347BD008A1D2D /* LaunchScreen.storyboard in Resources */,
 				4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */,
-				4AB792661D4887C3007E4D4B /* AppleIncRootCertificate.cer in Resources */,
 				4AA06C5A1D3679D400504AE3 /* VideoMarkCell.xib in Resources */,
 				4A68B1401D79A718001CC266 /* Assets.xcassets in Resources */,
 				4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */,
@@ -586,6 +579,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4A4C256B1D9D591000EA6F19 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		4A5FF0491D75A546002D156A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -593,7 +600,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 			);
 			outputPaths = (
