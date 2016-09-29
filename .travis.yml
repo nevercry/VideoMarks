@@ -4,6 +4,6 @@ before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
 before_script:
-  - carthage bootstrap
+  - carthage bootstrap --platform iOS
 script:
   - xcodebuild test -scheme VideoMarks -sdk iphonesimulator -destination "name=iPhone SE"
