@@ -109,7 +109,6 @@
 		4A2EB67E1D45FD9700019FAC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskManager.swift; path = Models/TaskManager.swift; sourceTree = "<group>"; };
 		4A2EB6801D45FE3800019FAC /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTask.swift; path = Models/DownloadTask.swift; sourceTree = "<group>"; };
 		4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadViewCell.swift; path = Views/DownloadViewCell.swift; sourceTree = "<group>"; };
-		4A2EB6E01D487D5500019FAC /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = openssl.framework; sourceTree = "<group>"; };
 		4A5CFD9F1D060D6D004C2C64 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksTVC.swift; sourceTree = "<group>"; };
 		4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Video+CoreDataProperties.swift"; path = "Models/Video+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -238,7 +237,6 @@
 			children = (
 				4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */,
 				4AB7926B1D4B1120007E4D4B /* StoreKit.framework */,
-				4A2EB6E01D487D5500019FAC /* openssl.framework */,
 				4A07AE6F1D08702B00935701 /* AVFoundation.framework */,
 				4A07AE6D1D08702400935701 /* AVKit.framework */,
 				4A1B688F1D91CCC900B50EFD /* CryptoSwift.framework */,
