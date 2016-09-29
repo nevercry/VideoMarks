@@ -1,5 +1,4 @@
-# VideoMarks
-[![Build Status](https://travis-ci.org/nevercry/VideoMarks.svg?branch=master)](https://travis-ci.org/nevercry/VideoMarks)
+# VideoMarks 📱[![Build Status](https://travis-ci.org/nevercry/VideoMarks.svg?branch=master)](https://travis-ci.org/nevercry/VideoMarks)
 Finding video links from Safari for iOS
 
 <a href='https://itunes.apple.com/cn/app/videomarks/id1123317863?l=en&mt=8'><img src="https://devimages.apple.com.edgekey.net/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt=""></a>
