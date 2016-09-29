@@ -40,7 +40,6 @@
 		4AA06C671D37AA6700504AE3 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C661D37AA6700504AE3 /* PlayerController.swift */; };
 		4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */; };
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
-		4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB7926B1D4B1120007E4D4B /* StoreKit.framework */; };
 		4AD461431D5C588B00FF7CDA /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
 		4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */; };
@@ -187,7 +186,6 @@
 			files = (
 				4A0FC5681D97A1A800E86249 /* SwiftyJSON.framework in Frameworks */,
 				4A1B688E1D91CCB700B50EFD /* Alamofire.framework in Frameworks */,
-				4AB7926C1D4B1120007E4D4B /* StoreKit.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
 			);

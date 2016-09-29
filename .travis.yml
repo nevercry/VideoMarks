@@ -2,7 +2,7 @@ language: objective-c
 osx_image: xcode8
 before_install:
   - brew update
-  - breow outdated carthage || brew upgrade carthage
+  - brew outdated carthage || brew upgrade carthage
 before_script:
   - carthage bootstrap
 script:
