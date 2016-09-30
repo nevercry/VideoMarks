@@ -21,21 +21,31 @@ class AssetGirdVC: UICollectionViewController {
     var previousPreheatRect: CGRect?
     var taskManager = TaskManager.sharedInstance
     var longTapGuesture: UILongPressGestureRecognizer?
-
-    override func awakeFromNib() {
-        self.setupViews()
-    }
     
     deinit {
-        // 注销通知
-        PHPhotoLibrary.shared().unregisterChangeObserver(self)
-        NotificationCenter.default.removeObserver(self)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupAssetGirdThumbnailSize()
         self.setupController()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 注册通知
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: VideoMarksConstants.DownloadTaskFinish, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: VideoMarksConstants.DownloadTaskProgress, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startDownloading), name: VideoMarksConstants.DownloadTaskStart, object: nil)
+        PHPhotoLibrary.shared().register(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 注销通知
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -51,12 +61,6 @@ class AssetGirdVC: UICollectionViewController {
         }
     }
     
-    func setupViews() {
-        imageManager = PHCachingImageManager()
-        resetCachedAssets()
-        PHPhotoLibrary.shared().register(self)
-    }
-    
     func setupAssetGirdThumbnailSize() {
         let scale = UIScreen.main.scale
         // 设备最小尺寸来显示Cell 考虑横屏时的情况
@@ -66,6 +70,8 @@ class AssetGirdVC: UICollectionViewController {
     }
     
     func setupController() {
+        imageManager = PHCachingImageManager()
+        resetCachedAssets()
         self.updateCachedAssets()
         if let _ = assetCollection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo))
@@ -75,11 +81,6 @@ class AssetGirdVC: UICollectionViewController {
         let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
         let itemLength = UIScreen.main.bounds.width / 4
         flowLayout.itemSize = CGSize(width: itemLength, height: itemLength)
-        
-        // 注册通知
-        NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: VideoMarksConstants.DownloadTaskFinish, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: VideoMarksConstants.DownloadTaskProgress, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(startDownloading), name: VideoMarksConstants.DownloadTaskStart, object: nil)
     }
     
     // MARK: - Actions
@@ -330,7 +331,6 @@ extension AssetGirdVC: PHPhotoLibraryChangeObserver {
         }
     }
 }
-
 
 extension AssetGirdVC: URLSessionDelegate {
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
