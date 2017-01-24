@@ -52,6 +52,8 @@
 		4AD794D01D034B4D008A1D2D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD794CE1D034B4D008A1D2D /* MainInterface.storyboard */; };
 		4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AD794CA1D034B4D008A1D2D /* VExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4AD7CC3F1D726D0E00985E53 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD7CC3E1D726D0E00985E53 /* MemoryCache.swift */; };
+		DF592D791E37AC1B00B1003F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
+		DF592D7B1E37AC2C00B1003F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D7A1E37AC2C00B1003F /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +171,8 @@
 		4AEB09CB1D4BCBD100545A66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CD1D4BCBDA00545A66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CF1D4BCBE300545A66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		DF592D7A1E37AC2C00B1003F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF592D7B1E37AC2C00B1003F /* Alamofire.framework in Frameworks */,
+				DF592D791E37AC1B00B1003F /* SwiftyJSON.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
 			);
@@ -225,6 +231,8 @@
 		4A1B688C1D91CCB700B50EFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF592D7A1E37AC2C00B1003F /* Alamofire.framework */,
+				DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */,
 				4A07AE6F1D08702B00935701 /* AVFoundation.framework */,
 				4A07AE6D1D08702400935701 /* AVKit.framework */,
 			);
