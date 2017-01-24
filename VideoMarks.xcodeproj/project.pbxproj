@@ -12,9 +12,6 @@
 		4A07AE721D088C9000935701 /* OpenSafariActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07AE711D088C9000935701 /* OpenSafariActivity.swift */; };
 		4A07AE7A1D0A108000935701 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */; };
 		4A07AE7B1D0A108000935701 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07AE791D0A108000935701 /* Image.swift */; };
-		4A0FC5681D97A1A800E86249 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */; };
-		4A0FC5691D97A1C800E86249 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */; };
-		4A1B688E1D91CCB700B50EFD /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A1B688D1D91CCB700B50EFD /* Alamofire.framework */; };
 		4A2EB67F1D45FD9700019FAC /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB67E1D45FD9700019FAC /* TaskManager.swift */; };
 		4A2EB6811D45FE3800019FAC /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6801D45FE3800019FAC /* DownloadTask.swift */; };
 		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
@@ -103,13 +100,9 @@
 		4A07AE751D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Image+CoreDataProperties.swift"; path = "Models/Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4A07AE791D0A108000935701 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Models/Image.swift; sourceTree = "<group>"; };
-		4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		4A1B688D1D91CCB700B50EFD /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		4A1B688F1D91CCC900B50EFD /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		4A2EB67E1D45FD9700019FAC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskManager.swift; path = Models/TaskManager.swift; sourceTree = "<group>"; };
 		4A2EB6801D45FE3800019FAC /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTask.swift; path = Models/DownloadTask.swift; sourceTree = "<group>"; };
 		4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadViewCell.swift; path = Views/DownloadViewCell.swift; sourceTree = "<group>"; };
-		4A2EB6E01D487D5500019FAC /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = openssl.framework; sourceTree = "<group>"; };
 		4A5CFD9F1D060D6D004C2C64 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksTVC.swift; sourceTree = "<group>"; };
 		4A5CFDA41D07FE14004C2C64 /* Video+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Video+CoreDataProperties.swift"; path = "Models/Video+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -144,7 +137,6 @@
 		4AA06C661D37AA6700504AE3 /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailTVC.swift; sourceTree = "<group>"; };
 		4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoDetailCell.swift; path = Views/VideoDetailCell.swift; sourceTree = "<group>"; };
-		4AB7926B1D4B1120007E4D4B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4AD461421D5C588B00FF7CDA /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HLSPlayListParser.swift; path = Models/HLSPlayListParser.swift; sourceTree = "<group>"; };
 		4AD4E2941D0C18770002CE90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4AD4E2961D0C19240002CE90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -184,8 +176,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0FC5681D97A1A800E86249 /* SwiftyJSON.framework in Frameworks */,
-				4A1B688E1D91CCB700B50EFD /* Alamofire.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
 			);
@@ -209,7 +199,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0FC5691D97A1C800E86249 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,20 +225,38 @@
 		4A1B688C1D91CCB700B50EFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4A0FC5671D97A1A800E86249 /* SwiftyJSON.framework */,
-				4AB7926B1D4B1120007E4D4B /* StoreKit.framework */,
-				4A2EB6E01D487D5500019FAC /* openssl.framework */,
 				4A07AE6F1D08702B00935701 /* AVFoundation.framework */,
 				4A07AE6D1D08702400935701 /* AVKit.framework */,
-				4A1B688F1D91CCC900B50EFD /* CryptoSwift.framework */,
-				4A1B688D1D91CCB700B50EFD /* Alamofire.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A4C25701D9D875200EA6F19 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4AA06C511D3672D700504AE3 /* UIImage+extension.swift */,
+				4AA06C641D3707C000504AE3 /* UICollectionView+extension.swift */,
+				4AA06C5F1D36EFEF00504AE3 /* NSIndexSet+extension.swift */,
+				4AA06C4F1D366F5000504AE3 /* VideoMarksConstants.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		4A4C25711D9D879800EA6F19 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4AE707DD1D4883160064ACEE /* VideoMarks-Bridging-Header.h */,
+				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
+				4AD794A31D0347BD008A1D2D /* Info.plist */,
+			);
+			name = "Support Files";
+			path = VideoMarks;
 			sourceTree = "<group>";
 		};
 		4A5CFDA31D07FDCB004C2C64 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4AD7949B1D0347BD008A1D2D /* VideoMarks.xcdatamodeld */,
 				4AD7CC3E1D726D0E00985E53 /* MemoryCache.swift */,
 				4A07AE711D088C9000935701 /* OpenSafariActivity.swift */,
 				4A07AE781D0A108000935701 /* Image+CoreDataProperties.swift */,
@@ -301,11 +308,12 @@
 			isa = PBXGroup;
 			children = (
 				4AD794931D0347BD008A1D2D /* VideoMarks */,
+				4AD794CB1D034B4D008A1D2D /* VExtension */,
 				4AD794AB1D0347BD008A1D2D /* VideoMarksTests */,
 				4AD794B61D0347BD008A1D2D /* VideoMarksUITests */,
-				4AD794CB1D034B4D008A1D2D /* VExtension */,
 				4AD794921D0347BD008A1D2D /* Products */,
 				4A1B688C1D91CCB700B50EFD /* Frameworks */,
+				4A4C25711D9D879800EA6F19 /* Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -323,25 +331,18 @@
 		4AD794931D0347BD008A1D2D /* VideoMarks */ = {
 			isa = PBXGroup;
 			children = (
-				4AE707DD1D4883160064ACEE /* VideoMarks-Bridging-Header.h */,
+				4AD794941D0347BD008A1D2D /* AppDelegate.swift */,
 				4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */,
 				4AD4E2951D0C18770002CE90 /* Localizable.strings */,
 				4AA184F21D11F13100A348E7 /* Views */,
 				4A5CFDA31D07FDCB004C2C64 /* Models */,
 				4A07AE821D0B433900935701 /* Controllers */,
-				4AA06C511D3672D700504AE3 /* UIImage+extension.swift */,
-				4AA06C641D3707C000504AE3 /* UICollectionView+extension.swift */,
-				4AA06C5F1D36EFEF00504AE3 /* NSIndexSet+extension.swift */,
-				4AA06C4F1D366F5000504AE3 /* VideoMarksConstants.swift */,
-				4AD794941D0347BD008A1D2D /* AppDelegate.swift */,
-				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
+				4A4C25701D9D875200EA6F19 /* Extensions */,
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
 				4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */,
 				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
-				4AD794A31D0347BD008A1D2D /* Info.plist */,
 				4A68B13F1D79A718001CC266 /* Assets.xcassets */,
-				4AD7949B1D0347BD008A1D2D /* VideoMarks.xcdatamodeld */,
 			);
 			path = VideoMarks;
 			sourceTree = "<group>";
