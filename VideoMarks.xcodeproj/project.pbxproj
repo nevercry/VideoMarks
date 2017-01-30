@@ -360,10 +360,6 @@
 		4AD794931D0347BD008A1D2D /* VideoMarks */ = {
 			isa = PBXGroup;
 			children = (
-				2FA88D351E3F34FC00F26BE6 /* Constent */,
-				2FA88D361E3F34FC00F26BE6 /* Utils */,
-				2FA88D371E3F34FC00F26BE6 /* Widget */,
-				2FA88D341E3F342100F26BE6 /* Network */,
 				4AD794941D0347BD008A1D2D /* AppDelegate.swift */,
 				4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */,
 				4AD4E2951D0C18770002CE90 /* Localizable.strings */,
@@ -375,6 +371,10 @@
 				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
 				4A68B13F1D79A718001CC266 /* Assets.xcassets */,
+				2FA88D341E3F342100F26BE6 /* Network */,
+				2FA88D351E3F34FC00F26BE6 /* Constent */,
+				2FA88D361E3F34FC00F26BE6 /* Utils */,
+				2FA88D371E3F34FC00F26BE6 /* Widget */,
 			);
 			path = VideoMarks;
 			sourceTree = "<group>";
