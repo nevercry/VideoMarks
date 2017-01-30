@@ -8,13 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2FA88D291E3F31FF00F26BE6 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */; };
-		2FA88D2A1E3F31FF00F26BE6 /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1E1E3F31FF00F26BE6 /* HLSPlayListParser.swift */; };
 		2FA88D2B1E3F31FF00F26BE6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1F1E3F31FF00F26BE6 /* Image.swift */; };
 		2FA88D2C1E3F31FF00F26BE6 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */; };
-		2FA88D2D1E3F31FF00F26BE6 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D211E3F31FF00F26BE6 /* MemoryCache.swift */; };
 		2FA88D2E1E3F31FF00F26BE6 /* NSManagedObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D221E3F31FF00F26BE6 /* NSManagedObject+Extension.swift */; };
 		2FA88D2F1E3F31FF00F26BE6 /* OpenSafariActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D231E3F31FF00F26BE6 /* OpenSafariActivity.swift */; };
-		2FA88D301E3F31FF00F26BE6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D241E3F31FF00F26BE6 /* TaskManager.swift */; };
 		2FA88D311E3F31FF00F26BE6 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D251E3F31FF00F26BE6 /* Video.swift */; };
 		2FA88D321E3F31FF00F26BE6 /* Video+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D261E3F31FF00F26BE6 /* Video+CoreDataProperties.swift */; };
 		2FA88D331E3F31FF00F26BE6 /* VideoMarks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D271E3F31FF00F26BE6 /* VideoMarks.xcdatamodeld */; };
@@ -23,6 +20,9 @@
 		2FA88D3E1E3F360600F26BE6 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D3B1E3F360600F26BE6 /* UICollectionView+extension.swift */; };
 		2FA88D3F1E3F360600F26BE6 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D3C1E3F360600F26BE6 /* UIImage+extension.swift */; };
 		2FA88D411E3F361D00F26BE6 /* VideoMarksConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D401E3F361D00F26BE6 /* VideoMarksConstants.swift */; };
+		2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */; };
+		2FA88D461E3F3CAF00F26BE6 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */; };
+		2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */; };
 		4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6D1D08702400935701 /* AVKit.framework */; };
 		4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6F1D08702B00935701 /* AVFoundation.framework */; };
 		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
@@ -96,13 +96,10 @@
 
 /* Begin PBXFileReference section */
 		2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadTask.swift; sourceTree = "<group>"; };
-		2FA88D1E1E3F31FF00F26BE6 /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLSPlayListParser.swift; sourceTree = "<group>"; };
 		2FA88D1F1E3F31FF00F26BE6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2FA88D211E3F31FF00F26BE6 /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
 		2FA88D221E3F31FF00F26BE6 /* NSManagedObject+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extension.swift"; sourceTree = "<group>"; };
 		2FA88D231E3F31FF00F26BE6 /* OpenSafariActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSafariActivity.swift; sourceTree = "<group>"; };
-		2FA88D241E3F31FF00F26BE6 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		2FA88D251E3F31FF00F26BE6 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		2FA88D261E3F31FF00F26BE6 /* Video+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Video+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2FA88D281E3F31FF00F26BE6 /* VideoMarks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VideoMarks.xcdatamodel; sourceTree = "<group>"; };
@@ -111,6 +108,9 @@
 		2FA88D3B1E3F360600F26BE6 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		2FA88D3C1E3F360600F26BE6 /* UIImage+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		2FA88D401E3F361D00F26BE6 /* VideoMarksConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksConstants.swift; sourceTree = "<group>"; };
+		2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLSPlayListParser.swift; sourceTree = "<group>"; };
+		2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
+		2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		4A07AE6D1D08702400935701 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		4A07AE6F1D08702B00935701 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4A07AE741D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -240,6 +240,9 @@
 		2FA88D371E3F34FC00F26BE6 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
+				2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */,
+				2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */,
+				2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -284,13 +287,10 @@
 			isa = PBXGroup;
 			children = (
 				2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */,
-				2FA88D1E1E3F31FF00F26BE6 /* HLSPlayListParser.swift */,
 				2FA88D1F1E3F31FF00F26BE6 /* Image.swift */,
 				2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */,
-				2FA88D211E3F31FF00F26BE6 /* MemoryCache.swift */,
 				2FA88D221E3F31FF00F26BE6 /* NSManagedObject+Extension.swift */,
 				2FA88D231E3F31FF00F26BE6 /* OpenSafariActivity.swift */,
-				2FA88D241E3F31FF00F26BE6 /* TaskManager.swift */,
 				2FA88D251E3F31FF00F26BE6 /* Video.swift */,
 				2FA88D261E3F31FF00F26BE6 /* Video+CoreDataProperties.swift */,
 				2FA88D271E3F31FF00F26BE6 /* VideoMarks.xcdatamodeld */,
@@ -646,10 +646,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FA88D2A1E3F31FF00F26BE6 /* HLSPlayListParser.swift in Sources */,
+				2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */,
 				2FA88D331E3F31FF00F26BE6 /* VideoMarks.xcdatamodeld in Sources */,
 				4AA06C591D3679D400504AE3 /* VideoMarkCell.swift in Sources */,
 				2FA88D311E3F31FF00F26BE6 /* Video.swift in Sources */,
+				2FA88D461E3F3CAF00F26BE6 /* MemoryCache.swift in Sources */,
 				2FA88D3E1E3F360600F26BE6 /* UICollectionView+extension.swift in Sources */,
 				4AA06C5C1D368E9C00504AE3 /* PhotosTVC.swift in Sources */,
 				4AA06C631D36F69E00504AE3 /* GirdViewCell.swift in Sources */,
@@ -662,14 +663,13 @@
 				4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */,
 				2FA88D321E3F31FF00F26BE6 /* Video+CoreDataProperties.swift in Sources */,
 				2FA88D2E1E3F31FF00F26BE6 /* NSManagedObject+Extension.swift in Sources */,
-				2FA88D301E3F31FF00F26BE6 /* TaskManager.swift in Sources */,
+				2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */,
 				2FA88D411E3F361D00F26BE6 /* VideoMarksConstants.swift in Sources */,
 				4AA06C5E1D36EBFA00504AE3 /* AssetGirdVC.swift in Sources */,
 				4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */,
 				2FA88D291E3F31FF00F26BE6 /* DownloadTask.swift in Sources */,
 				2FA88D3D1E3F360600F26BE6 /* NSIndexSet+extension.swift in Sources */,
 				2FA88D2F1E3F31FF00F26BE6 /* OpenSafariActivity.swift in Sources */,
-				2FA88D2D1E3F31FF00F26BE6 /* MemoryCache.swift in Sources */,
 				4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */,
 				4AD794951D0347BD008A1D2D /* AppDelegate.swift in Sources */,
 				2FA88D2C1E3F31FF00F26BE6 /* Image+CoreDataProperties.swift in Sources */,
