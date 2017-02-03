@@ -33,6 +33,7 @@ struct VideoMarksConstants {
     // MARK: - Segue
     static let ShowAllVideos = "showAllVideos"
     static let ShowColleciton = "showCollection"
+    static let ShowSetting = "showSetting"
     
     
     // 
@@ -41,4 +42,6 @@ struct VideoMarksConstants {
     }
     
     static let appGroupID = "group.nevercry.videoMarks"
+    static let kSaveMarks = "savedMarks"
+    static let kIsUsingURLScheme = "isUsingURLScheme"
 }

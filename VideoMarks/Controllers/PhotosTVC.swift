@@ -24,6 +24,7 @@ class PhotosTVC: UITableViewController {
         super.viewDidLoad()
         self.navigationItem.title = NSLocalizedString("Videos", comment: "视频")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewAlbum))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings"), style: .plain, target: self, action: #selector(setting))
         self.clearsSelectionOnViewWillAppear = false
     }
     
@@ -55,6 +56,10 @@ class PhotosTVC: UITableViewController {
     
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
+    }
+    
+    func setting() {
+        self.performSegue(withIdentifier: VideoMarksConstants.ShowSetting, sender: nil)
     }
     
     // MARK: Memery Warning
@@ -97,6 +102,7 @@ class PhotosTVC: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
         guard let assetGirdVC = segue.destination as? AssetGirdVC,let cell = sender as? UITableViewCell else { return }
         
         assetGirdVC.title = cell.textLabel?.text
