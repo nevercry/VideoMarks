@@ -574,7 +574,6 @@
 				4AD794C61D034B4D008A1D2D /* Sources */,
 				4AD794C71D034B4D008A1D2D /* Frameworks */,
 				4AD794C81D034B4D008A1D2D /* Resources */,
-				4A4C256B1D9D591000EA6F19 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -726,20 +725,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4A4C256B1D9D591000EA6F19 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
 		4A5FF0491D75A546002D156A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
