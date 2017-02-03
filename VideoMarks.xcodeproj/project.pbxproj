@@ -13,6 +13,7 @@
 		2F5A38E01E446FA100BA0550 /* SystemConfigHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */; };
 		2F5A38E41E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38E61E44A83700BA0550 /* InfoPlist.strings */; };
 		2F5A38E91E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */; };
+		2F5A38F51E44ACF700BA0550 /* TabOneScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38F71E44ACF700BA0550 /* TabOneScenes.storyboard */; };
 		2FA88D291E3F31FF00F26BE6 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */; };
 		2FA88D2B1E3F31FF00F26BE6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1F1E3F31FF00F26BE6 /* Image.swift */; };
 		2FA88D2C1E3F31FF00F26BE6 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */; };
@@ -35,7 +36,6 @@
 		4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFD9F1D060D6D004C2C64 /* DataController.swift */; };
 		4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */; };
 		4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */; };
-		4A600D8C1D7476CD007BC9DB /* TabOneScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */; };
 		4A68B1401D79A718001CC266 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A68B13F1D79A718001CC266 /* Assets.xcassets */; };
 		4A75616B1D056C6A00D76EBA /* MyJSFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 4A75616A1D056C6A00D76EBA /* MyJSFile.js */; };
 		4AA06C591D3679D400504AE3 /* VideoMarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C571D3679D400504AE3 /* VideoMarkCell.swift */; };
@@ -114,6 +114,10 @@
 		2F5A38EF1E44A8F400BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabTwoScenes.strings"; sourceTree = "<group>"; };
 		2F5A38F01E44A8F500BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2F5A38F11E44A8F500BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2F5A38F61E44ACF700BA0550 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabOneScenes.storyboard; sourceTree = "<group>"; };
+		2F5A38F91E44AD0400BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabOneScenes.strings"; sourceTree = "<group>"; };
+		2F5A38FB1E44AD0500BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TabOneScenes.strings"; sourceTree = "<group>"; };
+		2F5A38FD1E44AD0600BA0550 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/TabOneScenes.strings; sourceTree = "<group>"; };
 		2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadTask.swift; sourceTree = "<group>"; };
 		2FA88D1F1E3F31FF00F26BE6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -138,7 +142,6 @@
 		4A5CFD9F1D060D6D004C2C64 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksTVC.swift; sourceTree = "<group>"; };
 		4A5FF03C1D747BE1002D156A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabTwoScenes.storyboard; sourceTree = "<group>"; };
-		4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TabOneScenes.storyboard; sourceTree = "<group>"; };
 		4A68B13F1D79A718001CC266 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A75616A1D056C6A00D76EBA /* MyJSFile.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MyJSFile.js; sourceTree = "<group>"; };
 		4A8777221D22637500BB92C5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -389,7 +392,7 @@
 				4A5CFDA31D07FDCB004C2C64 /* Models */,
 				4A07AE821D0B433900935701 /* Controllers */,
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
-				4A600D8B1D7476CD007BC9DB /* TabOneScenes.storyboard */,
+				2F5A38F71E44ACF700BA0550 /* TabOneScenes.storyboard */,
 				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
 				4A68B13F1D79A718001CC266 /* Assets.xcassets */,
@@ -603,7 +606,7 @@
 				4AD7949A1D0347BD008A1D2D /* Main.storyboard in Resources */,
 				4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */,
 				2F5A38DE1E446B2000BA0550 /* Settings.bundle in Resources */,
-				4A600D8C1D7476CD007BC9DB /* TabOneScenes.storyboard in Resources */,
+				2F5A38F51E44ACF700BA0550 /* TabOneScenes.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,6 +772,17 @@
 				2F5A38F11E44A8F500BA0550 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2F5A38F71E44ACF700BA0550 /* TabOneScenes.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F5A38F61E44ACF700BA0550 /* Base */,
+				2F5A38F91E44AD0400BA0550 /* zh-Hans */,
+				2F5A38FB1E44AD0500BA0550 /* zh-Hant */,
+				2F5A38FD1E44AD0600BA0550 /* ja */,
+			);
+			name = TabOneScenes.storyboard;
 			sourceTree = "<group>";
 		};
 		4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */ = {
