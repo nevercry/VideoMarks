@@ -34,6 +34,8 @@
 		2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */; };
 		2FA88D461E3F3CAF00F26BE6 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */; };
 		2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */; };
+		2FE71F631E44CA63000D892C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F651E44CA63000D892C /* InfoPlist.strings */; };
+		2FE71F6D1E44CD52000D892C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F6F1E44CD52000D892C /* Localizable.strings */; };
 		4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6D1D08702400935701 /* AVKit.framework */; };
 		4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6F1D08702B00935701 /* AVFoundation.framework */; };
 		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
@@ -151,6 +153,16 @@
 		2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLSPlayListParser.swift; sourceTree = "<group>"; };
 		2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
 		2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		2FE71F671E44CAD2000D892C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2FE71F681E44CAD3000D892C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2FE71F691E44CAD4000D892C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2FE71F6A1E44CADB000D892C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2FE71F6E1E44CD52000D892C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2FE71F701E44CD52000D892C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		2FE71F711E44CD69000D892C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2FE71F721E44CD69000D892C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
+		2FE71F731E44CD79000D892C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2FE71F741E44CD7A000D892C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		4A07AE6D1D08702400935701 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		4A07AE6F1D08702B00935701 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4A07AE741D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -261,9 +273,11 @@
 		2F5A39051E44BBD500BA0550 /* VTodayExtension */ = {
 			isa = PBXGroup;
 			children = (
+				2FE71F6F1E44CD52000D892C /* Localizable.strings */,
 				2F5A39061E44BBD500BA0550 /* TodayViewController.swift */,
 				2F5A39081E44BBD500BA0550 /* MainInterface.storyboard */,
 				2F5A390B1E44BBD500BA0550 /* Info.plist */,
+				2FE71F651E44CA63000D892C /* InfoPlist.strings */,
 			);
 			path = VTodayExtension;
 			sourceTree = "<group>";
@@ -660,6 +674,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FE71F631E44CA63000D892C /* InfoPlist.strings in Resources */,
+				2FE71F6D1E44CD52000D892C /* Localizable.strings in Resources */,
 				2F5A390A1E44BBD500BA0550 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -872,8 +888,32 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F5A39091E44BBD500BA0550 /* Base */,
+				2FE71F701E44CD52000D892C /* ja */,
+				2FE71F721E44CD69000D892C /* zh-Hans */,
+				2FE71F741E44CD7A000D892C /* zh-Hant */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		2FE71F651E44CA63000D892C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FE71F671E44CAD2000D892C /* zh-Hans */,
+				2FE71F681E44CAD3000D892C /* zh-Hant */,
+				2FE71F691E44CAD4000D892C /* ja */,
+				2FE71F6A1E44CADB000D892C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2FE71F6F1E44CD52000D892C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FE71F6E1E44CD52000D892C /* ja */,
+				2FE71F711E44CD69000D892C /* zh-Hans */,
+				2FE71F731E44CD79000D892C /* zh-Hant */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */ = {
@@ -1241,6 +1281,7 @@
 				2F5A39111E44BBD500BA0550 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4AD7948C1D0347BD008A1D2D /* Build configuration list for PBXProject "VideoMarks" */ = {
 			isa = XCConfigurationList;
