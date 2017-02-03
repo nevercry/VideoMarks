@@ -20,8 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+//        print("url is \(url) options is \(options)")
+        let tabC = window?.rootViewController as! UITabBarController
+        tabC.selectedIndex = 1
+        return true
+    }
+    
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        print("\(launchOptions)")
         
         return true
     }
@@ -30,9 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 读取Preference
         SystemConfigHelper.shareInstance.readingPreference()
         
-        // Override point for customization after application launch.
-        print("\(launchOptions)")
-                
+        // Override point for customization after application launch.                
         dataController = DataController(callback: {
             NotificationCenter.default.post(Notification(name: VideoMarksConstants.CoreDataStackCompletion))
         })
