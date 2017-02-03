@@ -62,7 +62,7 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :release do
-    match(type: "appstore")
+    #match(type: "appstore")
     # snapshot
     increment_build_number
     # Commit the version bump
