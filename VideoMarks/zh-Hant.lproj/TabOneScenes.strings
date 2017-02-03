@@ -1,9 +1,8 @@
-
 /* Class = "UITabBarItem"; title = "Web"; ObjectID = "5d8-2u-mSS"; */
-"5d8-2u-mSS.title" = "Web";
+"5d8-2u-mSS.title" = "網頁";
 
 /* Class = "UILabel"; text = "Source Link"; ObjectID = "EZe-CP-5N0"; */
-"EZe-CP-5N0.text" = "Source Link";
+"EZe-CP-5N0.text" = "源連結";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "KdQ-C3-yAb"; */
 "KdQ-C3-yAb.title" = "Title";
@@ -15,4 +14,5 @@
 "g9O-up-kN4.text" = "Subtitle";
 
 /* Class = "UILabel"; text = "Photo Library"; ObjectID = "yB6-WK-ZuZ"; */
-"yB6-WK-ZuZ.text" = "Photo Library";
+"yB6-WK-ZuZ.text" = "照片庫";
+
