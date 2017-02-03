@@ -28,11 +28,11 @@ Use this app extension in Safari to save the link of the mp4 video or copy it to
 )
 
 release_notes({
-  'en-US' => "1. Update UI, bugfix",
-  'ja' => "1. Update UI, bugfix",
-  'zh-Hans' => "1. Update UI, bugfix",
-  'zh-Hant' => "1. Update UI, bugfix"
+  'en-US' => "1. i18n /n2. URL Scheme support /n3. Add Today Widget",
+  'ja' => "1. i18n /n2. URL Scheme support /n3. Add Today Widget",
+  'zh-Hans' => "1. i18n /n2. URL Scheme 支持，可在设置页面打开，复制链接后可以直接跳转到应用内 /n3. 增加Today Widget 方便直接切入应用 ",
+  'zh-Hant' => "1. i18n /n2. URL Scheme 支持，可在設置頁面打開，複製鏈接後可以直接跳轉到應用內 /n3. 增加Today Widget 方便直接切入應用 "
 })
 
 
-automatic_release true
+automatic_release false
