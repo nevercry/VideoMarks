@@ -280,7 +280,6 @@
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
 			);
 			name = "Support Files";
-			path = VideoMarks;
 			sourceTree = "<group>";
 		};
 		4A5CFDA31D07FDCB004C2C64 /* Models */ = {
@@ -342,7 +341,6 @@
 				4AD794B61D0347BD008A1D2D /* VideoMarksUITests */,
 				4AD794921D0347BD008A1D2D /* Products */,
 				4A1B688C1D91CCB700B50EFD /* Frameworks */,
-				4A4C25711D9D879800EA6F19 /* Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -360,6 +358,7 @@
 		4AD794931D0347BD008A1D2D /* VideoMarks */ = {
 			isa = PBXGroup;
 			children = (
+				4A4C25711D9D879800EA6F19 /* Support Files */,
 				4AD794941D0347BD008A1D2D /* AppDelegate.swift */,
 				4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */,
 				4AD4E2951D0C18770002CE90 /* Localizable.strings */,
@@ -510,7 +509,7 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.iCloud = {
 								enabled = 0;

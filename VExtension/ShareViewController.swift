@@ -12,6 +12,8 @@ import SwiftyJSON
 
 struct Constant {
     static let appGroupID = "group.nevercry.videoMarks"
+    static let kSaveMarks = "savedMarks"
+    static let kIsUsingURLScheme = "isUsingURLScheme"
 }
 
 
@@ -399,7 +401,7 @@ class ShareViewController: UIViewController {
         // #### 请替换为自己的App Group ID ####
         let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
         
-        if let jsonData:Data = groupDefaults.object(forKey: "savedMarks") as? Data {
+        if let jsonData:Data = groupDefaults.object(forKey: Constant.kSaveMarks) as? Data {
             do {
                 guard let jsonArray:NSArray = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? NSArray else { return nil}
                 return jsonArray as? [[String : String]]
@@ -425,7 +427,7 @@ class ShareViewController: UIViewController {
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: markList!, options: .prettyPrinted)
-            groupDefaults.set(jsonData, forKey: "savedMarks")
+            groupDefaults.set(jsonData, forKey: Constant.kSaveMarks)
             groupDefaults.synchronize()
         } catch {
             print("保存UserDefault出错")
@@ -470,6 +472,7 @@ class ShareViewController: UIViewController {
             case .copy:
                 UIPasteboard.general.string = videoInfo["url"]
                 self.hideExtensionWithCompletionHandler()
+                tryOpenVideoMarks()
             case .save:
                 startSave()
             }
@@ -490,6 +493,29 @@ class ShareViewController: UIViewController {
                 },completion: { sucess in
                     self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
             })
+        }
+    }
+    
+    // MARK: - 打开APP
+    func tryOpenVideoMarks() {
+        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
+        let isUsingURLScheme = groupDefaults.bool(forKey: Constant.kIsUsingURLScheme)
+        
+        if isUsingURLScheme == true {
+            // Test
+            let url = NSURL(string:"videomarks://test.com")
+            let context = NSExtensionContext()
+            context.open(url! as URL, completionHandler: nil)
+            
+            var responder = self as UIResponder?
+            
+            // This workaround can bring some warning
+            while (responder != nil){
+                if responder?.responds(to: Selector("openURL:")) == true{
+                    responder?.perform(Selector("openURL:"), with: url)
+                }
+                responder = responder!.next
+            }
         }
     }
 }
