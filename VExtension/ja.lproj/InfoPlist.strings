@@ -1,9 +1,3 @@
-/* 
-  InfoPlist.strings
-  VideoMarks
+/* (No Commment) */
+"CFBundleDisplayName" = "マークを追加";
 
-  Created by nevercry on 6/11/16.
-  Copyright © 2016 nevercry. All rights reserved.
-*/
-
-CFBundleDisplayName = "マークを追加";

@@ -1,0 +1,9 @@
+/* Class = "UIButton"; normalTitle = "Go to Setting"; ObjectID = "cJV-ml-Hwc"; */
+"cJV-ml-Hwc.normalTitle" = "去設置";
+
+/* Class = "UITabBarItem"; title = "Videos"; ObjectID = "l8k-HK-ZkK"; */
+"l8k-HK-ZkK.title" = "視頻";
+
+/* Class = "UILabel"; text = "Photos access deny"; ObjectID = "tEF-Q9-mEH"; */
+"tEF-Q9-mEH.text" = "無法訪問照片";
+

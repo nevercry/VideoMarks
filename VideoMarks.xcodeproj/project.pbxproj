@@ -11,6 +11,8 @@
 		2F5A38DC1E44551200BA0550 /* SwitchSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */; };
 		2F5A38DE1E446B2000BA0550 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38DD1E446B2000BA0550 /* Settings.bundle */; };
 		2F5A38E01E446FA100BA0550 /* SystemConfigHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */; };
+		2F5A38E41E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38E61E44A83700BA0550 /* InfoPlist.strings */; };
+		2F5A38E91E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */; };
 		2FA88D291E3F31FF00F26BE6 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */; };
 		2FA88D2B1E3F31FF00F26BE6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1F1E3F31FF00F26BE6 /* Image.swift */; };
 		2FA88D2C1E3F31FF00F26BE6 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */; };
@@ -103,6 +105,15 @@
 		2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchSettingCell.swift; sourceTree = "<group>"; };
 		2F5A38DD1E446B2000BA0550 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfigHelper.swift; sourceTree = "<group>"; };
+		2F5A38E11E44A83600BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TabTwoScenes.strings"; sourceTree = "<group>"; };
+		2F5A38E51E44A83700BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2F5A38EA1E44A83700BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2F5A38EC1E44A8D500BA0550 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/TabTwoScenes.strings; sourceTree = "<group>"; };
+		2F5A38ED1E44A8D500BA0550 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2F5A38EE1E44A8D500BA0550 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2F5A38EF1E44A8F400BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabTwoScenes.strings"; sourceTree = "<group>"; };
+		2F5A38F01E44A8F500BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2F5A38F11E44A8F500BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadTask.swift; sourceTree = "<group>"; };
 		2FA88D1F1E3F31FF00F26BE6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -393,6 +404,7 @@
 		4AD794AB1D0347BD008A1D2D /* VideoMarksTests */ = {
 			isa = PBXGroup;
 			children = (
+				2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */,
 				4AD794AC1D0347BD008A1D2D /* VideoMarksTests.swift */,
 				4AD794AE1D0347BD008A1D2D /* Info.plist */,
 			);
@@ -402,6 +414,7 @@
 		4AD794B61D0347BD008A1D2D /* VideoMarksUITests */ = {
 			isa = PBXGroup;
 			children = (
+				2F5A38E61E44A83700BA0550 /* InfoPlist.strings */,
 				4AD794B71D0347BD008A1D2D /* VideoMarksUITests.swift */,
 				4AD794B91D0347BD008A1D2D /* Info.plist */,
 			);
@@ -598,6 +611,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F5A38E91E44A83700BA0550 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +619,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F5A38E41E44A83700BA0550 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,10 +751,33 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2F5A38E61E44A83700BA0550 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F5A38E51E44A83700BA0550 /* zh-Hant */,
+				2F5A38ED1E44A8D500BA0550 /* ja */,
+				2F5A38F01E44A8F500BA0550 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F5A38EA1E44A83700BA0550 /* zh-Hant */,
+				2F5A38EE1E44A8D500BA0550 /* ja */,
+				2F5A38F11E44A8F500BA0550 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4A5FF03C1D747BE1002D156A /* Base */,
+				2F5A38E11E44A83600BA0550 /* zh-Hant */,
+				2F5A38EC1E44A8D500BA0550 /* ja */,
+				2F5A38EF1E44A8F400BA0550 /* zh-Hans */,
 			);
 			name = TabTwoScenes.storyboard;
 			sourceTree = "<group>";

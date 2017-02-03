@@ -1,0 +1,12 @@
+/* Class = "UILabel"; text = "通过URL Scheme自动打开应用"; ObjectID = "STX-Je-zja"; */
+"STX-Je-zja.text" = "";
+
+/* Class = "UIButton"; normalTitle = "Go to Setting"; ObjectID = "cJV-ml-Hwc"; */
+"cJV-ml-Hwc.normalTitle" = "設定に行く";
+
+/* Class = "UITabBarItem"; title = "Videos"; ObjectID = "l8k-HK-ZkK"; */
+"l8k-HK-ZkK.title" = "映画";
+
+/* Class = "UILabel"; text = "Photos access deny"; ObjectID = "tEF-Q9-mEH"; */
+"tEF-Q9-mEH.text" = "写真アクセス拒否";
+
