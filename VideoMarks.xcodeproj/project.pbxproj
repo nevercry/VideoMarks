@@ -52,6 +52,8 @@
 		4AA06C671D37AA6700504AE3 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C661D37AA6700504AE3 /* PlayerController.swift */; };
 		4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */; };
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
+		4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D7A1E37AC2C00B1003F /* Alamofire.framework */; };
+		4AB63BBE1E4A040200983548 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
 		4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */; };
 		4AD4E2A11D0C1FA00002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2A31D0C1FA00002CE90 /* InfoPlist.strings */; };
@@ -64,8 +66,6 @@
 		4AD794CD1D034B4D008A1D2D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD794CC1D034B4D008A1D2D /* ShareViewController.swift */; };
 		4AD794D01D034B4D008A1D2D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD794CE1D034B4D008A1D2D /* MainInterface.storyboard */; };
 		4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AD794CA1D034B4D008A1D2D /* VExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		DF592D791E37AC1B00B1003F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
-		DF592D7B1E37AC2C00B1003F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D7A1E37AC2C00B1003F /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,8 +239,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF592D7B1E37AC2C00B1003F /* Alamofire.framework in Frameworks */,
-				DF592D791E37AC1B00B1003F /* SwiftyJSON.framework in Frameworks */,
+				4AB63BBE1E4A040200983548 /* SwiftyJSON.framework in Frameworks */,
+				4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
 			);
