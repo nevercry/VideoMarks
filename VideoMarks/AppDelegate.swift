@@ -19,23 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class func shareDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-//        print("url is \(url) options is \(options)")
-        if url.absoluteString == "videomarks://debug" {
-            UserDefaults.standard.set(true, forKey: "isInDebugMode")
-        }
-        
-        let tabC = window?.rootViewController as! UITabBarController
-        tabC.selectedIndex = 1
-        return true
-    }
-    
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        
-        return true
-    }
-    
+   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // 读取Preference
         SystemConfigHelper.shareInstance.readingPreference()

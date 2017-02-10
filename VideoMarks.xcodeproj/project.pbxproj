@@ -14,10 +14,6 @@
 		2F5A38E41E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38E61E44A83700BA0550 /* InfoPlist.strings */; };
 		2F5A38E91E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */; };
 		2F5A38F51E44ACF700BA0550 /* TabOneScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38F71E44ACF700BA0550 /* TabOneScenes.storyboard */; };
-		2F5A39041E44BBD500BA0550 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F5A39031E44BBD500BA0550 /* NotificationCenter.framework */; };
-		2F5A39071E44BBD500BA0550 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A39061E44BBD500BA0550 /* TodayViewController.swift */; };
-		2F5A390A1E44BBD500BA0550 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A39081E44BBD500BA0550 /* MainInterface.storyboard */; };
-		2F5A390E1E44BBD500BA0550 /* VTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F5A39021E44BBD500BA0550 /* VTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FA88D291E3F31FF00F26BE6 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1D1E3F31FF00F26BE6 /* DownloadTask.swift */; };
 		2FA88D2B1E3F31FF00F26BE6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D1F1E3F31FF00F26BE6 /* Image.swift */; };
 		2FA88D2C1E3F31FF00F26BE6 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D201E3F31FF00F26BE6 /* Image+CoreDataProperties.swift */; };
@@ -31,14 +27,9 @@
 		2FA88D3E1E3F360600F26BE6 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D3B1E3F360600F26BE6 /* UICollectionView+extension.swift */; };
 		2FA88D3F1E3F360600F26BE6 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D3C1E3F360600F26BE6 /* UIImage+extension.swift */; };
 		2FA88D411E3F361D00F26BE6 /* VideoMarksConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D401E3F361D00F26BE6 /* VideoMarksConstants.swift */; };
-		2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */; };
 		2FA88D461E3F3CAF00F26BE6 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */; };
-		2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */; };
-		2FE71F631E44CA63000D892C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F651E44CA63000D892C /* InfoPlist.strings */; };
-		2FE71F6D1E44CD52000D892C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F6F1E44CD52000D892C /* Localizable.strings */; };
 		4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6D1D08702400935701 /* AVKit.framework */; };
 		4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6F1D08702B00935701 /* AVFoundation.framework */; };
-		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
 		4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFD9F1D060D6D004C2C64 /* DataController.swift */; };
 		4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */; };
 		4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */; };
@@ -69,13 +60,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2F5A390C1E44BBD500BA0550 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4AD794891D0347BD008A1D2D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2F5A39011E44BBD500BA0550;
-			remoteInfo = VTodayExtension;
-		};
 		4AD794A91D0347BD008A1D2D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4AD794891D0347BD008A1D2D /* Project object */;
@@ -107,7 +91,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */,
-				2F5A390E1E44BBD500BA0550 /* VTodayExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,7 +115,6 @@
 		2F5A38F91E44AD0400BA0550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabOneScenes.strings"; sourceTree = "<group>"; };
 		2F5A38FB1E44AD0500BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TabOneScenes.strings"; sourceTree = "<group>"; };
 		2F5A38FD1E44AD0600BA0550 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/TabOneScenes.strings; sourceTree = "<group>"; };
-		2F5A39021E44BBD500BA0550 /* VTodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VTodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5A39031E44BBD500BA0550 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		2F5A39061E44BBD500BA0550 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		2F5A39091E44BBD500BA0550 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -150,9 +132,7 @@
 		2FA88D3B1E3F360600F26BE6 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		2FA88D3C1E3F360600F26BE6 /* UIImage+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		2FA88D401E3F361D00F26BE6 /* VideoMarksConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksConstants.swift; sourceTree = "<group>"; };
-		2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLSPlayListParser.swift; sourceTree = "<group>"; };
 		2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
-		2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		2FE71F671E44CAD2000D892C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2FE71F681E44CAD3000D892C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2FE71F691E44CAD4000D892C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -167,7 +147,6 @@
 		4A07AE6F1D08702B00935701 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4A07AE741D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		4A07AE751D08A5C600935701 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
-		4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadViewCell.swift; path = Views/DownloadViewCell.swift; sourceTree = "<group>"; };
 		4A5CFD9F1D060D6D004C2C64 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMarksTVC.swift; sourceTree = "<group>"; };
 		4A5FF03C1D747BE1002D156A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabTwoScenes.storyboard; sourceTree = "<group>"; };
@@ -227,14 +206,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2F5A38FF1E44BBD500BA0550 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2F5A39041E44BBD500BA0550 /* NotificationCenter.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4AD7948E1D0347BD008A1D2D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -311,9 +282,7 @@
 		2FA88D371E3F34FC00F26BE6 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */,
 				2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */,
-				2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */,
 				2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */,
 			);
 			path = Widget;
@@ -394,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				4AA06C621D36F69E00504AE3 /* GirdViewCell.swift */,
-				4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */,
 			);
 			name = CollectionViewCells;
 			sourceTree = "<group>";
@@ -428,7 +396,6 @@
 				4AD794A81D0347BD008A1D2D /* VideoMarksTests.xctest */,
 				4AD794B31D0347BD008A1D2D /* VideoMarksUITests.xctest */,
 				4AD794CA1D034B4D008A1D2D /* VExtension.appex */,
-				2F5A39021E44BBD500BA0550 /* VTodayExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -493,23 +460,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2F5A39011E44BBD500BA0550 /* VTodayExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2F5A390F1E44BBD500BA0550 /* Build configuration list for PBXNativeTarget "VTodayExtension" */;
-			buildPhases = (
-				2F5A38FE1E44BBD500BA0550 /* Sources */,
-				2F5A38FF1E44BBD500BA0550 /* Frameworks */,
-				2F5A39001E44BBD500BA0550 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = VTodayExtension;
-			productName = VTodayExtension;
-			productReference = 2F5A39021E44BBD500BA0550 /* VTodayExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		4AD794901D0347BD008A1D2D /* VideoMarks */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AD794BC1D0347BD008A1D2D /* Build configuration list for PBXNativeTarget "VideoMarks" */;
@@ -524,7 +474,6 @@
 			);
 			dependencies = (
 				4AD794D31D034B4D008A1D2D /* PBXTargetDependency */,
-				2F5A390D1E44BBD500BA0550 /* PBXTargetDependency */,
 			);
 			name = VideoMarks;
 			productName = VideoMarks;
@@ -594,11 +543,6 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = nevercry;
 				TargetAttributes = {
-					2F5A39011E44BBD500BA0550 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = L8463XAM23;
-						ProvisioningStyle = Automatic;
-					};
 					4AD794901D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L8463XAM23;
@@ -663,22 +607,11 @@
 				4AD794A71D0347BD008A1D2D /* VideoMarksTests */,
 				4AD794B21D0347BD008A1D2D /* VideoMarksUITests */,
 				4AD794C91D034B4D008A1D2D /* VExtension */,
-				2F5A39011E44BBD500BA0550 /* VTodayExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2F5A39001E44BBD500BA0550 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2FE71F631E44CA63000D892C /* InfoPlist.strings in Resources */,
-				2FE71F6D1E44CD52000D892C /* Localizable.strings in Resources */,
-				2F5A390A1E44BBD500BA0550 /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4AD7948F1D0347BD008A1D2D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -743,19 +676,10 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2F5A38FE1E44BBD500BA0550 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2F5A39071E44BBD500BA0550 /* TodayViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4AD7948D1D0347BD008A1D2D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */,
 				2FA88D331E3F31FF00F26BE6 /* VideoMarks.xcdatamodeld in Sources */,
 				4AA06C591D3679D400504AE3 /* VideoMarkCell.swift in Sources */,
 				2FA88D311E3F31FF00F26BE6 /* Video.swift in Sources */,
@@ -766,13 +690,11 @@
 				2FA88D2B1E3F31FF00F26BE6 /* Image.swift in Sources */,
 				2FA88D391E3F355200F26BE6 /* ArrayDataSource.swift in Sources */,
 				4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */,
-				4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */,
 				4AA06C671D37AA6700504AE3 /* PlayerController.swift in Sources */,
 				2FA88D3F1E3F360600F26BE6 /* UIImage+extension.swift in Sources */,
 				4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */,
 				2FA88D321E3F31FF00F26BE6 /* Video+CoreDataProperties.swift in Sources */,
 				2FA88D2E1E3F31FF00F26BE6 /* NSManagedObject+Extension.swift in Sources */,
-				2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */,
 				2FA88D411E3F361D00F26BE6 /* VideoMarksConstants.swift in Sources */,
 				4AA06C5E1D36EBFA00504AE3 /* AssetGirdVC.swift in Sources */,
 				4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */,
@@ -815,11 +737,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2F5A390D1E44BBD500BA0550 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2F5A39011E44BBD500BA0550 /* VTodayExtension */;
-			targetProxy = 2F5A390C1E44BBD500BA0550 /* PBXContainerItemProxy */;
-		};
 		4AD794AA1D0347BD008A1D2D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4AD794901D0347BD008A1D2D /* VideoMarks */;
@@ -992,39 +909,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2F5A39101E44BBD500BA0550 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = L8463XAM23;
-				INFOPLIST_FILE = VTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VTodayExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		2F5A39111E44BBD500BA0550 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = L8463XAM23;
-				INFOPLIST_FILE = VTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VTodayExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 		4AD794BA1D0347BD008A1D2D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1259,15 +1143,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2F5A390F1E44BBD500BA0550 /* Build configuration list for PBXNativeTarget "VTodayExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2F5A39101E44BBD500BA0550 /* Debug */,
-				2F5A39111E44BBD500BA0550 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4AD7948C1D0347BD008A1D2D /* Build configuration list for PBXProject "VideoMarks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

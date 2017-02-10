@@ -19,7 +19,6 @@ class AssetGirdVC: UICollectionViewController {
     var assetCollection: PHAssetCollection?
     var imageManager: PHCachingImageManager?
     var previousPreheatRect: CGRect?
-    var taskManager = TaskManager.sharedInstance
     var longTapGuesture: UILongPressGestureRecognizer?
     
     deinit {
@@ -35,9 +34,6 @@ class AssetGirdVC: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // 注册通知
-        NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name: VideoMarksConstants.DownloadTaskFinish, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(downloading), name: VideoMarksConstants.DownloadTaskProgress, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(startDownloading), name: VideoMarksConstants.DownloadTaskStart, object: nil)
         PHPhotoLibrary.shared().register(self)
     }
     
@@ -73,11 +69,6 @@ class AssetGirdVC: UICollectionViewController {
         imageManager = PHCachingImageManager()
         resetCachedAssets()
         self.updateCachedAssets()
-        if let _ = assetCollection {
-            if UserDefaults.standard.bool(forKey: "isInDebugMode") == true {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo))
-            }
-        }
         self.longTapGuesture = UILongPressGestureRecognizer(target: self, action: #selector(userLongPressed(sender:)))
         self.collectionView?.addGestureRecognizer(self.longTapGuesture!)
         let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
@@ -122,88 +113,32 @@ class AssetGirdVC: UICollectionViewController {
             present(alertController, animated: true, completion: nil)
         }
     }
-    
-    func addVideo(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: NSLocalizedString("Enter the URL for the video you want to save.", comment: "输入你想要保存的视频地址"), message: nil, preferredStyle: .alert)
-        alertController.addTextField { (textField) in
-            textField.keyboardType = .URL
-            textField.placeholder = "Video URL"
-        }
-        
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "取消"), style: .cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "保存"), style: .default, handler: { [weak self] (action) in
-            // 添加下载任务
-            guard let videoUrl = alertController.textFields?.first?.text, let vURL = URL(string: videoUrl) , videoUrl.isEmpty != true else { return }
-            self?.taskManager.addNewTask(vURL, collectionId: self!.assetCollection!.localIdentifier)
-            }))
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func startDownloading(_ note: Notification) {
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func downloadFinished(_ note: Notification) {
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func downloading(_ note: Notification) {
-        // 下载中
-        if let progressInfo: [String: AnyObject] = note.object as? [String: AnyObject] {
-            guard let task = progressInfo["task"] as? DownloadTask else { return }
-           
-            // 获得对应的Cell
-            if let taskIdx = self.taskManager.taskList.index(of: task) {
-                if let cell = collectionView?.cellForItem(at: IndexPath(item: taskIdx, section: 1)) as? DownloadViewCell {
-                    cell.progressLabel.text = "\(Int(task.progress.fractionCompleted * 100)) %"
-                }
-            }
-        }
-    }
 }
 
 
 // MARK: - UICollectionViewDataSource and Delegate
 extension AssetGirdVC {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var numberOfItems: Int
-        if section == 0 {
-            numberOfItems = self.assetsFetchResults?.count ?? 0
-        } else {
-            numberOfItems = self.taskManager.taskList.count
-        }
-        
-        return numberOfItems
+        return self.assetsFetchResults?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var collectionViewCell: UICollectionViewCell
         
-        if indexPath.section == 0 {
-            let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GirdViewCell", for: indexPath) as! GirdViewCell
-            cell.representedAssetIdentifier = asset.localIdentifier
-            self.imageManager?.requestImage(for: asset, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil, resultHandler: { (image, info) in
-                if cell.representedAssetIdentifier == asset.localIdentifier {
-                    cell.thumbnail = image
-                }
-            })
-            
-            collectionViewCell = cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DownloadViewCell", for: indexPath) as! DownloadViewCell
-            // 设置DownloadCell...
-            collectionViewCell = cell
-        }
-        return collectionViewCell
+        let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GirdViewCell", for: indexPath) as! GirdViewCell
+        cell.representedAssetIdentifier = asset.localIdentifier
+        self.imageManager?.requestImage(for: asset, targetSize: AssetGirdThumbnailSize!, contentMode: .aspectFill, options: nil, resultHandler: { (image, info) in
+            if cell.representedAssetIdentifier == asset.localIdentifier {
+                cell.thumbnail = image
+            }
+        })
+        
+        
+        return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
