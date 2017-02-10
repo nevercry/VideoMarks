@@ -40,5 +40,5 @@ struct VideoMarksConstants {
     
     static let appGroupID = "group.nevercry.videoMarks"
     static let kSaveMarks = "savedMarks"
-    static let kIsUsingURLScheme = "isUsingURLScheme"
+    static let kCustomURLScheme = "custom_url_scheme"
 }

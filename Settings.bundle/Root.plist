@@ -6,13 +6,13 @@
 	<array>
 		<dict>
 			<key>DefaultValue</key>
-			<false/>
+			<string></string>
 			<key>Key</key>
-			<string>isUsingURLScheme</string>
+			<string>custom_url_scheme</string>
 			<key>Title</key>
-			<string>Using URL Scheme</string>
+			<string>Custom URL Scheme</string>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>PSTextFieldSpecifier</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>

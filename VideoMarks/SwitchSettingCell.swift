@@ -11,6 +11,7 @@ import UIKit
 class SwitchSettingCell: UITableViewCell {
     
     @IBOutlet var titeLabel: UILabel?
+    @IBOutlet var urlSchemeTextFeild: UITextField?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,5 +22,12 @@ class SwitchSettingCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+}
+
+extension SwitchSettingCell: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
     }
 }
