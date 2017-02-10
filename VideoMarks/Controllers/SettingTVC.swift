@@ -37,8 +37,6 @@ class SettingTVC: UITableViewController {
                 let groupDefaults = UserDefaults.init(suiteName: VideoMarksConstants.appGroupID)!
                 groupDefaults.set(urlSchemeString, forKey: VideoMarksConstants.kCustomURLScheme)
                 groupDefaults.synchronize()
-                UserDefaults.standard.set(urlSchemeString, forKey: VideoMarksConstants.kCustomURLScheme)
-                UserDefaults.standard.synchronize()
             }
         }
         
