@@ -38,10 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        SystemConfigHelper.shareInstance.readingPreference() 
-    }
-    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.

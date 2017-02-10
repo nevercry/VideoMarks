@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2F5A38DA1E4432CD00BA0550 /* SettingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38D91E4432CD00BA0550 /* SettingTVC.swift */; };
 		2F5A38DC1E44551200BA0550 /* SwitchSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */; };
-		2F5A38DE1E446B2000BA0550 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38DD1E446B2000BA0550 /* Settings.bundle */; };
 		2F5A38E01E446FA100BA0550 /* SystemConfigHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */; };
 		2F5A38E41E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38E61E44A83700BA0550 /* InfoPlist.strings */; };
 		2F5A38E91E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */; };
@@ -100,7 +99,6 @@
 /* Begin PBXFileReference section */
 		2F5A38D91E4432CD00BA0550 /* SettingTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTVC.swift; sourceTree = "<group>"; };
 		2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchSettingCell.swift; sourceTree = "<group>"; };
-		2F5A38DD1E446B2000BA0550 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfigHelper.swift; sourceTree = "<group>"; };
 		2F5A38E11E44A83600BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TabTwoScenes.strings"; sourceTree = "<group>"; };
 		2F5A38E51E44A83700BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -318,7 +316,6 @@
 		4A4C25711D9D879800EA6F19 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				2F5A38DD1E446B2000BA0550 /* Settings.bundle */,
 				4AE707DD1D4883160064ACEE /* VideoMarks-Bridging-Header.h */,
 				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
@@ -623,7 +620,6 @@
 				4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */,
 				4AD7949A1D0347BD008A1D2D /* Main.storyboard in Resources */,
 				4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */,
-				2F5A38DE1E446B2000BA0550 /* Settings.bundle in Resources */,
 				2F5A38F51E44ACF700BA0550 /* TabOneScenes.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
