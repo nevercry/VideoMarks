@@ -44,7 +44,7 @@ extension UIImage {
             context!.saveGState();
             context!.setBlendMode(.clear);
             context!.translateBy(x: CGFloat(halfWidth), y: CGFloat(halfWidth));
-            context!.rotate(by: CGFloat(2 * Float(M_PI) * ( Float(i) / Float(numTickLines))));
+            context!.rotate(by: CGFloat(2 * Float.pi * ( Float(i) / Float(numTickLines))));
             context!.translateBy(x: -CGFloat(halfWidth), y: -CGFloat(halfWidth));
             
             let tickLine = UIBezierPath()
@@ -59,7 +59,7 @@ extension UIImage {
         context!.saveGState();
         
         context!.translateBy(x: CGFloat(halfWidth), y: CGFloat(halfWidth))
-        context!.rotate(by: CGFloat(M_PI + M_PI_4));
+        context!.rotate(by: CGFloat(Float.pi + Float.pi/4));
         context!.translateBy(x: -CGFloat(halfWidth), y: -CGFloat(halfWidth))
         UIColor.black.setFill()
         let topTriangle = UIBezierPath()

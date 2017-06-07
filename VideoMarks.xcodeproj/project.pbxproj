@@ -39,6 +39,7 @@
 		4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6D1D08702400935701 /* AVKit.framework */; };
 		4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6F1D08702B00935701 /* AVFoundation.framework */; };
 		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
+		4A575CBA1EE8479A00D5ACC5 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
 		4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFD9F1D060D6D004C2C64 /* DataController.swift */; };
 		4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */; };
 		4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */; };
@@ -53,7 +54,6 @@
 		4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */; };
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
 		4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D7A1E37AC2C00B1003F /* Alamofire.framework */; };
-		4AB63BBE1E4A040200983548 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
 		4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */; };
 		4AD4E2A11D0C1FA00002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2A31D0C1FA00002CE90 /* InfoPlist.strings */; };
@@ -239,7 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AB63BBE1E4A040200983548 /* SwiftyJSON.framework in Frameworks */,
+				4A575CBA1EE8479A00D5ACC5 /* SwiftyJSON.framework in Frameworks */,
 				4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,

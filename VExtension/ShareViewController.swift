@@ -98,7 +98,7 @@ class ShareViewController: UIViewController {
             })
         })
         
-        print("分享内容是: \(item.attributedContentText?.string)")
+        print("分享内容是: \(String(describing: item.attributedContentText?.string))")
     }
     
     func updateUI(){
@@ -206,7 +206,7 @@ class ShareViewController: UIViewController {
                 scaner.scanUpTo("};", into: &jsonString)
                 jsonString = jsonString?.appending("}") as NSString?
                 
-                let json = JSON.parse(jsonString as! String)
+                let json = JSON.parse(jsonString! as String)
                 
                 print("json \(json)")
                 
@@ -336,9 +336,9 @@ class ShareViewController: UIViewController {
             scaner.scanUpTo(" ", into: &vURL)
             
 //                print("dateinfo: \(dataInfo)")
-            print("poster: \(poster)")
-            print("videoURL: \(vURL)")
-            print("duration: \(duration)")
+            print("poster: \(String(describing: poster))")
+            print("videoURL: \(String(describing: vURL))")
+            print("duration: \(String(describing: duration))")
             
             guard vURL != nil && poster != nil && duration != nil else {
                 let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: nil)
@@ -498,32 +498,32 @@ class ShareViewController: UIViewController {
     
     // MARK: - 打开APP
     func tryOpenVideoMarks() {
-        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
-        let isUsingURLScheme = groupDefaults.bool(forKey: Constant.kIsUsingURLScheme)
-        
-        if isUsingURLScheme == true {
-            // Test
-            let url = NSURL(string:"videomarks://test.com")
-            let context = NSExtensionContext()
-            context.open(url! as URL, completionHandler: nil)
-            
-            var responder = self as UIResponder?
-            
-            // This workaround can bring some warning
-            while (responder != nil){
-                if responder?.responds(to: Selector("openURL:")) == true{
-                    responder?.perform(Selector("openURL:"), with: url)
-                }
-                responder = responder!.next
-            }
-        }
+//        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
+//        let isUsingURLScheme = groupDefaults.bool(forKey: Constant.kIsUsingURLScheme)
+//        
+//        if isUsingURLScheme == true {
+//            // Test
+//            let url = NSURL(string:"videomarks://test.com")
+//            let context = NSExtensionContext()
+//            context.open(url! as URL, completionHandler: nil)
+//            
+//            var responder = self as UIResponder?
+//            
+//            // This workaround can bring some warning
+//            while (responder != nil){
+//                if responder?.responds(to: #selector(UIApplication.open(_:options:completionHandler:))) == true{
+//                    responder?.perform(#selector(UIApplication.openURL(_:options:completionHandler:))), with: url ,with: nil, with: nil)
+//                }
+//                responder = responder!.next
+//            }
+//        }
     }
 }
 
 extension ShareViewController: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
         let videoURL = String(data: CDATABlock, encoding: String.Encoding.utf8)
-        print("url is \(videoURL)")
+        print("url is \(String(describing: videoURL))")
         
         if let _ = videoURL {
             self.videoInfo["url"] = videoURL!

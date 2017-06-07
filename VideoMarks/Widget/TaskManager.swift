@@ -264,7 +264,7 @@ class TaskManager: NSObject {
             }
         }) { (success, error) in
             guard success == true else {
-                print("download Video error \(error)")
+                print("download Video error \(String(describing: error))")
                 return
             }
             

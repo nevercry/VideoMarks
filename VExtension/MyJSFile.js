@@ -128,16 +128,17 @@ run: function(arguments) {
     
     // 解析bilibili
     function bilibiliParse() {
-        // iPhone
-        var share_pic = document.getElementById('share_pic');
-        if (share_pic) {
-            videoInfo.title = share_pic.alt;
-            videoInfo.poster = share_pic.src;
-        } else {
-            // iPad
-            videoInfo.title = document.getElementsByClassName('v-title')[0].textContent;
-            videoInfo.poster = document.getElementsByClassName('cover_image')[0].src;
+        var preTitle = document.querySelector("head>meta[property='og:title']").content;
+        var prePoster = document.querySelector("head>meta[property='og:image']").content;
+        
+        if (preTitle) {
+            videoInfo.title = preTitle;
         }
+        
+        if (prePoster) {
+            videoInfo.poster = prePoster;
+        }
+    
         videoInfo.url = document.getElementsByTagName('source')[0].src;
         videoInfo.duration = document.getElementsByClassName('time-total-text')[0].textContent;
     }
@@ -427,7 +428,7 @@ run: function(arguments) {
         youkuParse();
     } else if (originURL.includes("gfycat.com")) {
         gfycatParse();
-    } else if (originURL.includes('bilibili.com')) {
+    } else if (originURL.includes("bilibili.com")) {
         bilibiliParse();
     } else if (originURL.includes('twitter.com')) {
         twitterParse();

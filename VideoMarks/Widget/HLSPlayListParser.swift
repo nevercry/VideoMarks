@@ -35,12 +35,12 @@ class HLSPlayListParser {
             scanner.scanInt(&isKeyFrame)
             
             if isKeyFrame == 0 {
-                if kf0_previousVideoURL == nil || !kf0_previousVideoURL!.isEqual(to: videoFragmentURL as! String) {
+                if kf0_previousVideoURL == nil || !kf0_previousVideoURL!.isEqual(to: videoFragmentURL! as String) {
                     kf0_videoFragments.append(videoFragmentURL!)
                     kf0_previousVideoURL = videoFragmentURL!
                 }
             } else if isKeyFrame == 1 {
-                if kf1_previousVideoURL == nil || !kf1_previousVideoURL!.isEqual(to: videoFragmentURL as! String) {
+                if kf1_previousVideoURL == nil || !kf1_previousVideoURL!.isEqual(to: videoFragmentURL! as String) {
                     kf1_videoFragments.append(videoFragmentURL!)
                     kf1_previousVideoURL = videoFragmentURL!
                 }

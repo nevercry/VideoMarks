@@ -86,7 +86,7 @@ class PhotosTVC: UITableViewController {
                 PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: title)
                 }, completionHandler: { (success, error) in
                     if !success {
-                        print("error create ablum: \(error)")
+                        print("error create ablum: \(String(describing: error))")
                     }
             })
         })
@@ -194,7 +194,7 @@ extension PhotosTVC {
             PHAssetCollectionChangeRequest.deleteAssetCollections(assets)
         }) { (success, error) in
             if !success {
-                print("error delete ablum: \(error)")
+                print("error delete ablum: \(String(describing: error))")
             }
         }
     }
