@@ -34,12 +34,12 @@
 		2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */; };
 		2FA88D461E3F3CAF00F26BE6 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */; };
 		2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */; };
+		2FB5A3BE1EF413B000AF7DE7 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
 		2FE71F631E44CA63000D892C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F651E44CA63000D892C /* InfoPlist.strings */; };
 		2FE71F6D1E44CD52000D892C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F6F1E44CD52000D892C /* Localizable.strings */; };
 		4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6D1D08702400935701 /* AVKit.framework */; };
 		4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6F1D08702B00935701 /* AVFoundation.framework */; };
 		4A2EB6831D462C9600019FAC /* DownloadViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EB6821D462C9600019FAC /* DownloadViewCell.swift */; };
-		4A575CBA1EE8479A00D5ACC5 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
 		4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFD9F1D060D6D004C2C64 /* DataController.swift */; };
 		4A5CFDA21D07FCFA004C2C64 /* VideoMarksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CFDA11D07FCFA004C2C64 /* VideoMarksTVC.swift */; };
 		4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */; };
@@ -239,7 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A575CBA1EE8479A00D5ACC5 /* SwiftyJSON.framework in Frameworks */,
+				2FB5A3BE1EF413B000AF7DE7 /* SwiftyJSON.framework in Frameworks */,
 				4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
