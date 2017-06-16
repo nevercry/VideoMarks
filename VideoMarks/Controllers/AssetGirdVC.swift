@@ -74,9 +74,7 @@ class AssetGirdVC: UICollectionViewController {
         resetCachedAssets()
         self.updateCachedAssets()
         if let _ = assetCollection {
-            if UserDefaults.standard.bool(forKey: "isInDebugMode") == true {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo))
-            }
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVideo)) 
         }
         self.longTapGuesture = UILongPressGestureRecognizer(target: self, action: #selector(userLongPressed(sender:)))
         self.collectionView?.addGestureRecognizer(self.longTapGuesture!)

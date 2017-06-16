@@ -498,27 +498,26 @@ class ShareViewController: UIViewController {
     
     // MARK: - 打开APP
     func tryOpenVideoMarks() {
-//        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
-//        let isUsingURLScheme = groupDefaults.bool(forKey: Constant.kIsUsingURLScheme)
-//        
-//        if isUsingURLScheme == true {
-//            // Test
-//            let url = NSURL(string:"videomarks://test.com")
-//            let context = NSExtensionContext()
-//            context.open(url! as URL, completionHandler: nil)
-//            
-//            var responder = self as UIResponder?
-//            
-//            // This workaround can bring some warning
-//            while (responder != nil){
-//                if responder?.responds(to: #selector(UIApplication.open(_:options:completionHandler:))) == true{
-//                    responder?.perform(#selector(UIApplication.openURL(_:options:completionHandler:))), with: url ,with: nil, with: nil)
-//                }
-//                responder = responder!.next
-//            }
-//        }
+        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
+        let isUsingURLScheme = groupDefaults.bool(forKey: Constant.kIsUsingURLScheme)
+        
+        if isUsingURLScheme == true {
+            let url = NSURL(string:"videomarks://test.com")
+            let context = NSExtensionContext()
+            context.open(url! as URL, completionHandler: nil)
+            
+            var responder = self as UIResponder?
+            while (responder != nil){
+                if responder?.responds(to: Selector("openURL:")) == true{
+                    responder?.perform(Selector("openURL:"), with: url)
+                }
+                responder = responder!.next
+            }
+        }
     }
 }
+
+
 
 extension ShareViewController: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {

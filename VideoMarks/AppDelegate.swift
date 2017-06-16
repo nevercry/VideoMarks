@@ -20,12 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-//        print("url is \(url) options is \(options)")
-        if url.absoluteString == "videomarks://debug" {
-            UserDefaults.standard.set(true, forKey: "isInDebugMode")
-        }
-        
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {        
         let tabC = window?.rootViewController as! UITabBarController
         tabC.selectedIndex = 1
         return true
