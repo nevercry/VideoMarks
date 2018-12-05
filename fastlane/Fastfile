@@ -51,7 +51,7 @@ platform :ios do
     # Push the new commit and tag back to your git remote
     push_to_git_remote
 
-    match(type: "appstore") # more information: https://codesigning.guide
+    #match(type: "appstore") # more information: https://codesigning.guide
 
     gym(scheme: "VideoMarks",
         include_bitcode: true) # Build your app - more options available
