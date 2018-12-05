@@ -30,11 +30,7 @@ class VideoMarksTVC: UITableViewController {
     }
     
     func setupViews() {
-        if #available(iOS 10, *) {
-            try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.moviePlayback, options: AVAudioSession.CategoryOptions.allowBluetooth)
-        } else {
-            
-        }
+        
         
         self.clearsSelectionOnViewWillAppear = true
         self.navigationItem.title = NSLocalizedString("Video Marks", comment: "影签")

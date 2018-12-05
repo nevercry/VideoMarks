@@ -143,51 +143,7 @@ run: function(arguments) {
         videoInfo.duration = document.getElementsByClassName('time-total-text')[0].textContent;
     }
     
-    // 解析twitter
-    function twitterParse() {
-        var sources = document.getElementsByTagName("source");
-        var initdata = document.getElementById('init-data');
-        var elem;
-        if (initdata) {
-            // 非登录
-            var jsonData = JSON.parse(initdata.innerHTML);
-            elem = sources[0];
-            var textParts_first = jsonData.state.tweet.text.textParts[0];
-            if (textParts_first) {
-                videoInfo.title = textParts_first.text;
-            } else {
-                videoInfo.title = jsonData.state.tweet.text.textString;
-            }
-            
-            if (jsonData.state.tweet.inlineMedia.mediaDetails.duration) {
-                videoInfo.duration = jsonData.state.tweet.inlineMedia.mediaDetails.duration;
-            } else {
-                videoInfo.duration = "0:06"
-            }
-            
-        } else {
-            // 已登录
-            for (var i = 0; i < sources.length; i++) {
-                var source = sources[i];
-                if (source.type.includes("video/mp4")) {
-                    elem = source;
-                    break;
-                }
-            }
-            
-            if (elem.src.includes('.vine.')) {
-                // vine
-                videoInfo.duration = "0:06";
-            } else {
-                var duration_seconds = document.getElementsByTagName('video')[0].duration;
-                videoInfo.duration = seconds2time(duration_seconds);
-            }
-            
-            videoInfo.title = urlLastComponent(elem.src);
-        }
-        videoInfo.poster = document.getElementsByTagName('video')[0].poster;
-        videoInfo.url = elem.src;
-    }
+    
     
     // 解析twimg
     function twimgParse() {
@@ -365,6 +321,15 @@ run: function(arguments) {
         videoInfo.type = "vimeo";
     }
     
+    // 解析twitter
+    function twitterParse() {
+        const regex = /\d{15,}/;
+        var tweet_id = videoInfo.source.match(regex)[0];
+        
+        videoInfo.type = "twitter";
+        videoInfo.url = "https://api.twitter.com/1.1/statuses/show/" + tweet_id + ".json?tweet_mode=extended";
+    }
+    
     function otherParse() {
         // 其他网站
         var sources = document.getElementsByTagName("source");
@@ -422,13 +387,13 @@ run: function(arguments) {
         }
     }
 
-    if (originURL.includes("youtube.com")) {
+    if (originURL.includes('youtube.com')) {
         youtubeParse();
-    } else if (originURL.includes("youku.com")) {
+    } else if (originURL.includes('youku.com')) {
         youkuParse();
-    } else if (originURL.includes("gfycat.com")) {
+    } else if (originURL.includes('gfycat.com')) {
         gfycatParse();
-    } else if (originURL.includes("bilibili.com")) {
+    } else if (originURL.includes('bilibili.com')) {
         bilibiliParse();
     } else if (originURL.includes('twitter.com')) {
         twitterParse();

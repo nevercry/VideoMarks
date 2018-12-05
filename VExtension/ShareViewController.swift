@@ -110,6 +110,114 @@ class ShareViewController: UIViewController {
         }
     }
     
+    // MARK: - 解析Twitter视频
+    func parse_twitter(_ action: ShareActions)  {
+        saveLinkButton.isEnabled = false
+        copyButton.isEnabled = false
+        activityStatusView.startAnimating()
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        let session = URLSession(configuration: config)
+        
+        guard let config_url = videoInfo["url"] else { return }
+        var tweetRequest = URLRequest(url: URL(string: config_url)!)
+        let bearString = "Bearer AAAAAAAAAAAAAAAAAAAAABXsygAAAAAAmJuTUyoBiQiFqw9KIVOZPoELi%2FM%3DPau8s2HiUxM9v3eiOtJQu3bdKcCbaHyw5le0yH1LLhfJh6580X"
+        tweetRequest.addValue(bearString, forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: tweetRequest) { (data, res, error) in
+            DispatchQueue.main.async(execute: {
+                self.activityStatusView.stopAnimating()
+            })
+            
+            do {
+                
+                if let jsonData = data {
+                    let json = try JSON(data: jsonData)
+                    
+                    self.videoInfo["title"] = json["full_text"].stringValue
+                    
+                    if let mediaInfo = json["extended_entities"]["media"][0].dictionary {
+                        
+                        self.videoInfo["poster"] = mediaInfo["media_url"]!.string!
+                        
+                        
+                        
+                        if let vInfo = mediaInfo["video_info"]?.dictionary {
+                            
+                            let milisec = vInfo["duration_millis"]!.number!.intValue
+                            
+                            self.videoInfo["duration"] = self.seconds2time(milisec/1000)
+                            
+                            if let variants = vInfo["variants"]?.array {
+                                
+                                var bestQualityURL = ""
+                                
+                                var highBitrate = 0
+                                
+                                for var elem in variants {
+                                    
+                                    if let videoType = elem["content_type"].string {
+                                        
+                                        if videoType == "video/mp4" {
+                                            
+                                            if let videoBitrate = elem["bitrate"].int {
+                                                
+                                                if videoBitrate > highBitrate {
+                                                    
+                                                    highBitrate = videoBitrate
+                                                    
+                                                    bestQualityURL = elem["url"].stringValue
+                                                    
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                if bestQualityURL.count > 0 {
+                                    
+                                    DispatchQueue.main.async(execute: {
+                                        self.videoInfo["url"] = bestQualityURL
+                                        self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(bestQualityURL)";
+                                        self.title = self.videoInfo["title"]
+                                        switch action {
+                                        case .copy:
+                                            UIPasteboard.general.string = bestQualityURL
+                                            self.hideExtensionWithCompletionHandler()
+                                            self.tryOpenVideoMarks()
+                                        case .save:
+                                            self.startSave()
+                                        }
+                                    })
+                                    
+                                    return
+                                }
+                                
+                            }
+                            
+                            
+                        }
+                        
+                    }
+                }
+                
+                let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+                let message = NSLocalizedString("Try again", comment: "请重试")
+                let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
+                    action in
+                    self.hideExtensionWithCompletionHandler()
+                })
+                self.showAlert(alertTitle, message: message, actions: [cancelAction])
+                
+            }
+                
+            catch {
+                
+            }
+            
+        }.resume()
+    }
+    
     // MARK: - 解析Vimeo视频
     func parse_vimeo(_ action: ShareActions) {
         saveLinkButton.isEnabled = false
@@ -461,6 +569,7 @@ class ShareViewController: UIViewController {
             return
         }
         
+        // 解析用户动作 根据类型 重新获取其中的视频真实地址
         parse(userAction)
     }
     
@@ -474,6 +583,8 @@ class ShareViewController: UIViewController {
             parse_qq(userAction)
         } else if (videoInfo["type"] == "vimeo") {
             parse_vimeo(userAction)
+        } else if (videoInfo["type"] == "twitter") {
+            parse_twitter(userAction)
         } else {
             switch userAction {
             case .copy:
