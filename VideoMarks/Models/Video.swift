@@ -51,15 +51,15 @@ extension Video {
         paragraphAtt.paragraphSpacing = defaultPara.paragraphSpacing
         paragraphAtt.paragraphSpacingBefore = defaultPara.paragraphSpacingBefore
         
-        let titleAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1),NSParagraphStyleAttributeName:paragraphAtt]
-        let linkAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.body),NSForegroundColorAttributeName:UIColor.darkGray,NSParagraphStyleAttributeName:paragraphAtt]
-        let dateAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption1),NSForegroundColorAttributeName:UIColor.gray]
-        let durationAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption1),NSForegroundColorAttributeName:UIColor.gray]
+        let titleAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title1),convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle):paragraphAtt]
+        let linkAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body),convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor):UIColor.darkGray,convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle):paragraphAtt]
+        let dateAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1),convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor):UIColor.gray]
+        let durationAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1),convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor):UIColor.gray]
         
-        let titleAttributeString = NSAttributedString(string: "\(self.title!)", attributes: titleAtts)
-        let linkDes = NSAttributedString(string: "\n\(self.url)", attributes: linkAtts)
-        let dateDes = NSAttributedString(string: "\n\n\(self.createDateDescription(.short,timeStyle: .short))", attributes: dateAtts)
-        let durationDes = NSMutableAttributedString(string: "\n\(self.durationDescription)", attributes: durationAtts)
+        let titleAttributeString = NSAttributedString(string: "\(self.title!)", attributes: convertToOptionalNSAttributedStringKeyDictionary(titleAtts))
+        let linkDes = NSAttributedString(string: "\n\(self.url)", attributes: convertToOptionalNSAttributedStringKeyDictionary(linkAtts))
+        let dateDes = NSAttributedString(string: "\n\n\(self.createDateDescription(.short,timeStyle: .short))", attributes: convertToOptionalNSAttributedStringKeyDictionary(dateAtts))
+        let durationDes = NSMutableAttributedString(string: "\n\(self.durationDescription)", attributes: convertToOptionalNSAttributedStringKeyDictionary(durationAtts))
         
         let combineStr = NSMutableAttributedString(attributedString: titleAttributeString)
         combineStr.append(linkDes)
@@ -87,15 +87,15 @@ extension Video {
     }
     
     func heightForTableView(_ drawWidth: CGFloat) -> CGFloat {
-        let titleAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1)]
-        let linkAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        let dateAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption1)]
-        let durationAtts = [NSFontAttributeName:UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption1)]
+        let titleAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title1)]
+        let linkAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)]
+        let dateAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1)]
+        let durationAtts = [convertFromNSAttributedStringKey(NSAttributedString.Key.font):UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1)]
         
-        let titleAttributeString = NSAttributedString(string: "\(self.title!)", attributes: titleAtts)
-        let linkDes = NSAttributedString(string: "\n\(self.url)", attributes: linkAtts)
-        let dateDes = NSAttributedString(string: "\n\n\(self.createDateDescription(.short,timeStyle: .short))", attributes: dateAtts)
-        let durationDes = NSMutableAttributedString(string: "\n\(self.durationDescription)", attributes: durationAtts)
+        let titleAttributeString = NSAttributedString(string: "\(self.title!)", attributes: convertToOptionalNSAttributedStringKeyDictionary(titleAtts))
+        let linkDes = NSAttributedString(string: "\n\(self.url)", attributes: convertToOptionalNSAttributedStringKeyDictionary(linkAtts))
+        let dateDes = NSAttributedString(string: "\n\n\(self.createDateDescription(.short,timeStyle: .short))", attributes: convertToOptionalNSAttributedStringKeyDictionary(dateAtts))
+        let durationDes = NSMutableAttributedString(string: "\n\(self.durationDescription)", attributes: convertToOptionalNSAttributedStringKeyDictionary(durationAtts))
         
         let drawSize = CGSize(width: drawWidth, height: CGFloat(INT_MAX))
         let drawOpts:NSStringDrawingOptions = [.usesLineFragmentOrigin]
@@ -128,7 +128,7 @@ extension Video {
         
         var time = asset.duration
         //If possible - take not the first frame (it could be completely black or white on camara's videos)
-        let tmpTime = CMTimeMakeWithSeconds(Float64(interval), 100)
+        let tmpTime = CMTimeMakeWithSeconds(Float64(interval), preferredTimescale: 100)
         time.value = min(time.value, tmpTime.value)
         
         do {
@@ -140,7 +140,7 @@ extension Video {
             compressImage.draw(in: CGRect(x: 0, y: 0, width: newImageSize.width, height: newImageSize.height))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            return UIImageJPEGRepresentation(newImage!, 1.0)
+            return newImage!.jpegData(compressionQuality: 1.0)
         } catch {
             /* error handling here */
             print("获取视频截图失败")
@@ -148,4 +148,15 @@ extension Video {
         return nil
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

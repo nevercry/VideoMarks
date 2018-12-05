@@ -64,7 +64,7 @@ extension VideoMarkCell {
                             // 根据16:9 截取图片
                             guard let preImage = UIImage(data: imageData!) else { return }
                             let cropImage = preImage.crop16_9()
-                            let cropData = UIImageJPEGRepresentation(cropImage, 1)!
+                            let cropData = cropImage.jpegData(compressionQuality: 1)!
                             
                             let image = Image(data: cropData, context: video.managedObjectContext!)
                             image.fromVideo = video

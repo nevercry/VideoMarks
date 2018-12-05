@@ -130,7 +130,7 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        let comressImage = UIImage(data: UIImageJPEGRepresentation(newImage!, compressionQuality)!)
+        let comressImage = UIImage(data: newImage!.jpegData(compressionQuality: compressionQuality)!)
         return comressImage!
     }
     

@@ -15,10 +15,10 @@ class MemoryCache: NSCache<AnyObject, AnyObject> {
     override init() {
         super.init()
         
-         NotificationCenter.default.addObserver(self, selector: #selector(clearMemory), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(clearMemory), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
     
-    func clearMemory() {
+    @objc func clearMemory() {
         self.removeAllObjects()
     }
     

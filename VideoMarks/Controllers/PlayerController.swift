@@ -26,7 +26,7 @@ class PlayerController: NSObject {
         
         //注册视频播放器播放完成通知
         NotificationCenter.default.addObserver(self, selector: #selector(rePlay), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updatePlayer), name: NSNotification.Name.AVAudioSessionInterruption, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePlayer), name: AVAudioSession.interruptionNotification, object: nil)
     }
     
     deinit {
@@ -54,16 +54,16 @@ class PlayerController: NSObject {
         }
     }
     
-    func rePlay(_ note: Notification) {
-        avPlayer.player?.seek(to: kCMTimeZero)
+    @objc func rePlay(_ note: Notification) {
+        avPlayer.player?.seek(to: CMTime.zero)
         avPlayer.player?.play()
     }
     
     // 修复调用Siri完毕后，音频自动播放的bug
-    func updatePlayer(_ note: Notification) {
+    @objc func updatePlayer(_ note: Notification) {
         if let userInfo = (note as NSNotification).userInfo {
             if let interruptType = userInfo[AVAudioSessionInterruptionTypeKey] as? NSNumber {
-                if interruptType.uintValue == AVAudioSessionInterruptionType.ended.rawValue {
+                if interruptType.uintValue == AVAudioSession.InterruptionType.ended.rawValue {
                     if viewController?.view.window != nil && isInPiP == false {
                         avPlayer.player = nil
                     }

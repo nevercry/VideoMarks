@@ -165,10 +165,10 @@ class TaskManager: NSObject {
         let fileManager = FileManager.default
         let combineDir = documentURL.appendingPathComponent("tmpCombine", isDirectory: true);
         let composition = AVMutableComposition()
-        let videoTrack = composition.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
-        let audioTrack = composition.addMutableTrack(withMediaType: AVMediaTypeAudio, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let videoTrack = composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let audioTrack = composition.addMutableTrack(withMediaType: AVMediaType.audio, preferredTrackID: kCMPersistentTrackID_Invalid)
         
-        var previousTime = kCMTimeZero
+        var previousTime = CMTime.zero
         
         for i in 0 ..< task.subTaskCount() {
             let videoURL = combineDir.appendingPathComponent("\(i).mp4")
@@ -178,8 +178,8 @@ class TaskManager: NSObject {
                 print("加入asset \(videoURL)")
                 
                 // Debug
-                let audios = asset.tracks(withMediaType: AVMediaTypeAudio)
-                let videos = asset.tracks(withMediaType: AVMediaTypeVideo)
+                let audios = asset.tracks(withMediaType: AVMediaType.audio)
+                let videos = asset.tracks(withMediaType: AVMediaType.video)
                 print("audio tracks is  \(audios) videos is \(videos)")
                 print("tracks is \(asset.tracks)")
                 
@@ -188,8 +188,9 @@ class TaskManager: NSObject {
                     return
                 }
                 
-                try videoTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaTypeVideo)[0], at: previousTime)
-                try audioTrack.insertTimeRange(CMTimeRange(start: kCMTimeZero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaTypeAudio)[0], at: previousTime)
+                
+                try videoTrack?.insertTimeRange(CMTimeRange(start: CMTime.zero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaType.video)[0], at: previousTime)
+                try audioTrack?.insertTimeRange(CMTimeRange(start: CMTime.zero, end: asset.duration), of: asset.tracks(withMediaType: AVMediaType.audio)[0], at: previousTime)
             } catch {
                 print("加入失败  \(error)")
             }
@@ -211,7 +212,7 @@ class TaskManager: NSObject {
             }
         }
         exportor.outputURL = exportURL
-        exportor.outputFileType = AVFileTypeMPEG4
+        exportor.outputFileType = AVFileType.mp4
         
         exportor.exportAsynchronously {
             DispatchQueue.main.async(execute: {
@@ -283,7 +284,7 @@ class TaskManager: NSObject {
     }
     
     // MARK: - 后台任务
-    var backgroundUpdateTask = UIBackgroundTaskInvalid
+    var backgroundUpdateTask = UIBackgroundTaskIdentifier.invalid
     
     func beginBackgroundUpdateTask() -> UIBackgroundTaskIdentifier {
         return UIApplication.shared.beginBackgroundTask(expirationHandler: {
@@ -292,8 +293,8 @@ class TaskManager: NSObject {
     }
     
     func endBackgroundUpdateTask() {
-        UIApplication.shared.endBackgroundTask(self.backgroundUpdateTask)
-        self.backgroundUpdateTask = UIBackgroundTaskInvalid
+        UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(self.backgroundUpdateTask.rawValue))
+        self.backgroundUpdateTask = UIBackgroundTaskIdentifier.invalid
     }
 }
 
@@ -341,4 +342,9 @@ extension TaskManager: URLSessionDelegate {
             }
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
 }

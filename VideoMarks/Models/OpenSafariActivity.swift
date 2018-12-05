@@ -15,8 +15,8 @@ class OpenSafariActivity: UIActivity {
     
     let OpenSafari = "VMOpenSafariActivityType"
     
-    override var activityType : UIActivityType? {
-        return UIActivityType(rawValue: OpenSafari)
+    override var activityType : UIActivity.ActivityType? {
+        return UIActivity.ActivityType(rawValue: OpenSafari)
     }
     
     override var activityTitle : String? {

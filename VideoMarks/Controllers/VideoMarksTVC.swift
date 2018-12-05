@@ -30,13 +30,18 @@ class VideoMarksTVC: UITableViewController {
     }
     
     func setupViews() {
-        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        if #available(iOS 10, *) {
+            try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.moviePlayback, options: AVAudioSession.CategoryOptions.allowBluetooth)
+        } else {
+            
+        }
+        
         self.clearsSelectionOnViewWillAppear = true
         self.navigationItem.title = NSLocalizedString("Video Marks", comment: "影签")
         self.navigationItem.rightBarButtonItem = editButtonItem
         self.tableView.allowsSelectionDuringEditing = true
         self.tableView.estimatedRowHeight = 70
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.tableView.register(UINib(nibName: "VideoMarkCell", bundle: nil), forCellReuseIdentifier: VideoMarksConstants.VideoMarkCellID)
         if let _ = dataController {
@@ -51,7 +56,7 @@ class VideoMarksTVC: UITableViewController {
     }
     
     func registerNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: UIApplication.willEnterForegroundNotification, object: nil)
         // 注册CoreData完成初始化后的通知
         NotificationCenter.default.addObserver(self, selector: #selector(coreDataStackComplete), name: VideoMarksConstants.CoreDataStackCompletion, object: nil)
     }
@@ -59,7 +64,7 @@ class VideoMarksTVC: UITableViewController {
     /**
      CoreStack 完成初始化
      */
-    func coreDataStackComplete()  {
+    @objc func coreDataStackComplete()  {
         refetchResultAndUpdate()
         updateVideoMarksFromExtension()
     }
@@ -92,7 +97,7 @@ class VideoMarksTVC: UITableViewController {
     /**
      刷新数据
      */
-    func refreshData() {
+    @objc func refreshData() {
         updateVideoMarksFromExtension()
         self.refreshControl?.endRefreshing()
     }
@@ -264,4 +269,9 @@ extension VideoMarksTVC: UIViewControllerPreviewingDelegate {
         videDetailTVC.video = video        
         return videDetailTVC
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
 }

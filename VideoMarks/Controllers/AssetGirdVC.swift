@@ -84,7 +84,7 @@ class AssetGirdVC: UICollectionViewController {
     }
     
     // MARK: - Actions
-    func userLongPressed(sender: UILongPressGestureRecognizer) {
+    @objc func userLongPressed(sender: UILongPressGestureRecognizer) {
         let pressedLocation = sender.location(in: self.collectionView)
         if let pressedItemIndexPath = self.collectionView?.indexPathForItem(at: pressedLocation) {
             if let asset = self.assetsFetchResults?[pressedItemIndexPath.item] as? PHAsset {
@@ -121,7 +121,7 @@ class AssetGirdVC: UICollectionViewController {
         }
     }
     
-    func addVideo(_ sender: UIBarButtonItem) {
+    @objc func addVideo(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: NSLocalizedString("Enter the URL for the video you want to save.", comment: "输入你想要保存的视频地址"), message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.keyboardType = .URL
@@ -137,19 +137,19 @@ class AssetGirdVC: UICollectionViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func startDownloading(_ note: Notification) {
+    @objc func startDownloading(_ note: Notification) {
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
     }
     
-    func downloadFinished(_ note: Notification) {
+    @objc func downloadFinished(_ note: Notification) {
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
     }
     
-    func downloading(_ note: Notification) {
+    @objc func downloading(_ note: Notification) {
         // 下载中
         if let progressInfo: [String: AnyObject] = note.object as? [String: AnyObject] {
             guard let task = progressInfo["task"] as? DownloadTask else { return }

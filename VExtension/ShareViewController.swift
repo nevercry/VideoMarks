@@ -68,7 +68,7 @@ class ShareViewController: UIViewController {
         
         let propertyList = String(kUTTypePropertyList)
         guard let item = extensionContext?.inputItems.first as? NSExtensionItem,
-            let itemProvider = item.attachments?.first as? NSItemProvider , itemProvider.hasItemConformingToTypeIdentifier(propertyList) else { return }
+            let itemProvider = item.attachments?.first , itemProvider.hasItemConformingToTypeIdentifier(propertyList) else { return }
         
         itemProvider.loadItem(forTypeIdentifier: propertyList, options: nil, completionHandler: { (diction, error) in
             guard let shareDic = diction as? NSDictionary,
@@ -84,7 +84,7 @@ class ShareViewController: UIViewController {
             
             print("videoInfo is \(self.videoInfo)")
             
-            guard let videoURLStr = self.videoInfo["url"] , videoURLStr.characters.count > 0 else { return }
+            guard let videoURLStr = self.videoInfo["url"] , videoURLStr.count > 0 else { return }
                                 
             
             // 如果获取到视频地址
@@ -128,42 +128,50 @@ class ShareViewController: UIViewController {
                 self.activityStatusView.stopAnimating()
             })
             
-            if let jsonData = data {
-                let json = JSON(data: jsonData)
-                if let dicts = json["request"]["files"]["progressive"].array {
-                    
-                    let sortDicts = dicts.sorted(by: { (a, b) -> Bool in
+            do {
+                
+                if let jsonData = data {
+                    let json = try JSON(data: jsonData)
+                    if let dicts = json["request"]["files"]["progressive"].array {
                         
-                        let aWidth = a["width"].numberValue.intValue, bWidth = b["width"].numberValue.intValue
-                        
-                        return aWidth > bWidth
-                    })
-                    
-                    if let bestQualityURL = sortDicts.first?["url"].string {
-                        DispatchQueue.main.async(execute: {
-                            self.videoInfo["url"] = bestQualityURL
-                            self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(bestQualityURL)";
-                            switch action {
-                            case .copy:
-                                UIPasteboard.general.string = bestQualityURL
-                                self.hideExtensionWithCompletionHandler()
-                            case .save:
-                                self.startSave()
-                            }
+                        let sortDicts = dicts.sorted(by: { (a, b) -> Bool in
+                            
+                            let aWidth = a["width"].numberValue.intValue, bWidth = b["width"].numberValue.intValue
+                            
+                            return aWidth > bWidth
                         })
                         
-                        return
+                        if let bestQualityURL = sortDicts.first?["url"].string {
+                            DispatchQueue.main.async(execute: {
+                                self.videoInfo["url"] = bestQualityURL
+                                self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(bestQualityURL)";
+                                switch action {
+                                case .copy:
+                                    UIPasteboard.general.string = bestQualityURL
+                                    self.hideExtensionWithCompletionHandler()
+                                case .save:
+                                    self.startSave()
+                                }
+                            })
+                            
+                            return
+                        }
                     }
                 }
+                
+                let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+                let message = NSLocalizedString("Try again", comment: "请重试")
+                let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
+                    action in
+                    self.hideExtensionWithCompletionHandler()
+                })
+                self.showAlert(alertTitle, message: message, actions: [cancelAction])
+                
+            } catch {
+                
             }
             
-            let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
-            let message = NSLocalizedString("Try again", comment: "请重试")
-            let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
-                action in
-                self.hideExtensionWithCompletionHandler()
-            })
-            self.showAlert(alertTitle, message: message, actions: [cancelAction])
+            
         }).resume()
     }
     
@@ -179,13 +187,13 @@ class ShareViewController: UIViewController {
         let vidURL = videoInfo["url"]!
         let video_id_Range = vidURL.range(of: "video_id=")!
         
-        let nextRange = video_id_Range.upperBound..<vidURL.characters.endIndex
+        let nextRange = video_id_Range.upperBound..<vidURL.endIndex
         
         let endOfvidRange = videoInfo["url"]!.range(of: "&", options: .literal, range: nextRange)!
         
         let vidRange = video_id_Range.upperBound..<endOfvidRange.lowerBound
         
-        let vid = vidURL.substring(with: vidRange)
+        let vid = vidURL[vidRange]
         
         print("vid is \(vid)")
         
@@ -206,7 +214,7 @@ class ShareViewController: UIViewController {
                 scaner.scanUpTo("};", into: &jsonString)
                 jsonString = jsonString?.appending("}") as NSString?
                 
-                let json = JSON.parse(jsonString! as String)
+                let json = JSON(parseJSON: jsonString! as String)
                 
                 print("json \(json)")
                 
@@ -508,8 +516,8 @@ class ShareViewController: UIViewController {
             
             var responder = self as UIResponder?
             while (responder != nil){
-                if responder?.responds(to: Selector("openURL:")) == true{
-                    responder?.perform(Selector("openURL:"), with: url)
+                if responder?.responds(to: #selector(UIApplication.openURL(_:))) == true{
+                    responder?.perform(#selector(UIApplication.openURL(_:)), with: url)
                 }
                 responder = responder!.next
             }

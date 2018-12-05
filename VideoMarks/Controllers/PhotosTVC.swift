@@ -58,7 +58,7 @@ class PhotosTVC: UITableViewController {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
-    func setting() {
+    @objc func setting() {
         self.performSegue(withIdentifier: VideoMarksConstants.ShowSetting, sender: nil)
     }
     
@@ -70,7 +70,7 @@ class PhotosTVC: UITableViewController {
     }
     
     // MARK: - Actions
-    func addNewAlbum(_ sender: UIBarButtonItem) {
+    @objc func addNewAlbum(_ sender: UIBarButtonItem) {
         // 添加新的相册
         let alertC = UIAlertController(title: NSLocalizedString("New Ablum", comment: "新建相册"), message: nil, preferredStyle: .alert)
         alertC.addTextField { (textField) in
@@ -94,7 +94,7 @@ class PhotosTVC: UITableViewController {
     }
     
     @IBAction func goToSetting(_ sender: UIButton) {
-        UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+        UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
     }
     
     // MARK: - Navigation
@@ -179,11 +179,11 @@ extension PhotosTVC {
         return canEditOrNot
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete && (indexPath as NSIndexPath).section == 1 else { return }
         
         let resut = sectionFetchResults![indexPath.section]

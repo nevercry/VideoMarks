@@ -34,7 +34,6 @@
 		2FA88D451E3F3CAF00F26BE6 /* HLSPlayListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D421E3F3CAF00F26BE6 /* HLSPlayListParser.swift */; };
 		2FA88D461E3F3CAF00F26BE6 /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D431E3F3CAF00F26BE6 /* MemoryCache.swift */; };
 		2FA88D471E3F3CAF00F26BE6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA88D441E3F3CAF00F26BE6 /* TaskManager.swift */; };
-		2FB5A3BE1EF413B000AF7DE7 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */; };
 		2FE71F631E44CA63000D892C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F651E44CA63000D892C /* InfoPlist.strings */; };
 		2FE71F6D1E44CD52000D892C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE71F6F1E44CD52000D892C /* Localizable.strings */; };
 		4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A07AE6D1D08702400935701 /* AVKit.framework */; };
@@ -53,7 +52,6 @@
 		4AA06C671D37AA6700504AE3 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA06C661D37AA6700504AE3 /* PlayerController.swift */; };
 		4AA184EF1D11E16800A348E7 /* VideoDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184EE1D11E16800A348E7 /* VideoDetailTVC.swift */; };
 		4AA184F11D11F12A00A348E7 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA184F01D11F12A00A348E7 /* VideoDetailCell.swift */; };
-		4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF592D7A1E37AC2C00B1003F /* Alamofire.framework */; };
 		4AD4E2931D0C18770002CE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2951D0C18770002CE90 /* Localizable.strings */; };
 		4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */; };
 		4AD4E2A11D0C1FA00002CE90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD4E2A31D0C1FA00002CE90 /* InfoPlist.strings */; };
@@ -66,6 +64,11 @@
 		4AD794CD1D034B4D008A1D2D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD794CC1D034B4D008A1D2D /* ShareViewController.swift */; };
 		4AD794D01D034B4D008A1D2D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD794CE1D034B4D008A1D2D /* MainInterface.storyboard */; };
 		4AD794D41D034B4D008A1D2D /* VExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AD794CA1D034B4D008A1D2D /* VExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		82BBB809DB06A91258725C50 /* Pods_VTodayExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE645F17E5CE3B1AE914C1F9 /* Pods_VTodayExtension.framework */; };
+		8E87A6FA69396F064089E8F9 /* Pods_VideoMarksUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3236B47CE8E9ECA70D4C3DA /* Pods_VideoMarksUITests.framework */; };
+		8EC39131368A87724970BA7B /* Pods_VideoMarksTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8892FBD4E09693773290A337 /* Pods_VideoMarksTests.framework */; };
+		E38BD2C05AEE2A8B1172AF38 /* Pods_VExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC5FB10F0CA7402DBADE1ED6 /* Pods_VExtension.framework */; };
+		E7D1D65C90F35BCBBA6E9DDD /* Pods_VideoMarks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA3FB11BDA5570A2BD2C98B /* Pods_VideoMarks.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +118,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1387A304DAC8D00D7E6D6FF6 /* Pods-VideoMarksUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarksUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarksUITests/Pods-VideoMarksUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		1D07A205B8C3EB636C1A7642 /* Pods-VideoMarksUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarksUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarksUITests/Pods-VideoMarksUITests.release.xcconfig"; sourceTree = "<group>"; };
+		265D4E0EFAA95B8BE0BB2AE8 /* Pods-VideoMarksTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarksTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarksTests/Pods-VideoMarksTests.debug.xcconfig"; sourceTree = "<group>"; };
+		26E90BFE71385B51F65E65EC /* Pods-VTodayExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VTodayExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VTodayExtension/Pods-VTodayExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		2C7FB85A97EBA702E5C57238 /* Pods-VideoMarksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarksTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarksTests/Pods-VideoMarksTests.release.xcconfig"; sourceTree = "<group>"; };
+		2D617DA9F27CF163F6AE6543 /* Pods-VideoMarks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarks.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarks/Pods-VideoMarks.release.xcconfig"; sourceTree = "<group>"; };
 		2F5A38D91E4432CD00BA0550 /* SettingTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTVC.swift; sourceTree = "<group>"; };
 		2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchSettingCell.swift; sourceTree = "<group>"; };
 		2F5A38DD1E446B2000BA0550 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
@@ -222,8 +231,15 @@
 		4AEB09CB1D4BCBD100545A66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CD1D4BCBDA00545A66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		4AEB09CF1D4BCBE300545A66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		DF592D7A1E37AC2C00B1003F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		71018F0F46D8180538580FCF /* Pods-VExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VExtension/Pods-VExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		71046853E552AA1271EDD405 /* Pods-VTodayExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VTodayExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-VTodayExtension/Pods-VTodayExtension.release.xcconfig"; sourceTree = "<group>"; };
+		8892FBD4E09693773290A337 /* Pods_VideoMarksTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoMarksTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F1470AEAFF05A4416568D7B /* Pods-VExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-VExtension/Pods-VExtension.release.xcconfig"; sourceTree = "<group>"; };
+		9DA3FB11BDA5570A2BD2C98B /* Pods_VideoMarks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoMarks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3236B47CE8E9ECA70D4C3DA /* Pods_VideoMarksUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoMarksUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC5FB10F0CA7402DBADE1ED6 /* Pods_VExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE645F17E5CE3B1AE914C1F9 /* Pods_VTodayExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VTodayExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F129E360753307FF651D82C3 /* Pods-VideoMarks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarks/Pods-VideoMarks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F5A39041E44BBD500BA0550 /* NotificationCenter.framework in Frameworks */,
+				82BBB809DB06A91258725C50 /* Pods_VTodayExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,10 +256,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FB5A3BE1EF413B000AF7DE7 /* SwiftyJSON.framework in Frameworks */,
-				4AB63BBD1E4A03F000983548 /* Alamofire.framework in Frameworks */,
 				4A07AE701D08702B00935701 /* AVFoundation.framework in Frameworks */,
 				4A07AE6E1D08702400935701 /* AVKit.framework in Frameworks */,
+				E7D1D65C90F35BCBBA6E9DDD /* Pods_VideoMarks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +266,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC39131368A87724970BA7B /* Pods_VideoMarksTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E87A6FA69396F064089E8F9 /* Pods_VideoMarksUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E38BD2C05AEE2A8B1172AF38 /* Pods_VExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,11 +356,14 @@
 		4A1B688C1D91CCB700B50EFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DF592D7A1E37AC2C00B1003F /* Alamofire.framework */,
-				DF592D781E37AC1B00B1003F /* SwiftyJSON.framework */,
 				4A07AE6F1D08702B00935701 /* AVFoundation.framework */,
 				4A07AE6D1D08702400935701 /* AVKit.framework */,
 				2F5A39031E44BBD500BA0550 /* NotificationCenter.framework */,
+				CC5FB10F0CA7402DBADE1ED6 /* Pods_VExtension.framework */,
+				DE645F17E5CE3B1AE914C1F9 /* Pods_VTodayExtension.framework */,
+				9DA3FB11BDA5570A2BD2C98B /* Pods_VideoMarks.framework */,
+				8892FBD4E09693773290A337 /* Pods_VideoMarksTests.framework */,
+				C3236B47CE8E9ECA70D4C3DA /* Pods_VideoMarksUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -418,6 +440,7 @@
 				2F5A39051E44BBD500BA0550 /* VTodayExtension */,
 				4AD794921D0347BD008A1D2D /* Products */,
 				4A1B688C1D91CCB700B50EFD /* Frameworks */,
+				C65D2EA7D336771CE7B9D4B2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -490,6 +513,23 @@
 			path = VExtension;
 			sourceTree = "<group>";
 		};
+		C65D2EA7D336771CE7B9D4B2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71018F0F46D8180538580FCF /* Pods-VExtension.debug.xcconfig */,
+				8F1470AEAFF05A4416568D7B /* Pods-VExtension.release.xcconfig */,
+				26E90BFE71385B51F65E65EC /* Pods-VTodayExtension.debug.xcconfig */,
+				71046853E552AA1271EDD405 /* Pods-VTodayExtension.release.xcconfig */,
+				F129E360753307FF651D82C3 /* Pods-VideoMarks.debug.xcconfig */,
+				2D617DA9F27CF163F6AE6543 /* Pods-VideoMarks.release.xcconfig */,
+				265D4E0EFAA95B8BE0BB2AE8 /* Pods-VideoMarksTests.debug.xcconfig */,
+				2C7FB85A97EBA702E5C57238 /* Pods-VideoMarksTests.release.xcconfig */,
+				1387A304DAC8D00D7E6D6FF6 /* Pods-VideoMarksUITests.debug.xcconfig */,
+				1D07A205B8C3EB636C1A7642 /* Pods-VideoMarksUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -497,6 +537,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F5A390F1E44BBD500BA0550 /* Build configuration list for PBXNativeTarget "VTodayExtension" */;
 			buildPhases = (
+				BF71539E0F4E62D3C0D7B755 /* [CP] Check Pods Manifest.lock */,
 				2F5A38FE1E44BBD500BA0550 /* Sources */,
 				2F5A38FF1E44BBD500BA0550 /* Frameworks */,
 				2F5A39001E44BBD500BA0550 /* Resources */,
@@ -514,11 +555,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AD794BC1D0347BD008A1D2D /* Build configuration list for PBXNativeTarget "VideoMarks" */;
 			buildPhases = (
+				E431B1CDE70CC03F0D1C7E83 /* [CP] Check Pods Manifest.lock */,
 				4AD7948D1D0347BD008A1D2D /* Sources */,
 				4AD7948E1D0347BD008A1D2D /* Frameworks */,
 				4AD7948F1D0347BD008A1D2D /* Resources */,
 				4AD794D81D034B4D008A1D2D /* Embed App Extensions */,
-				4A5FF0491D75A546002D156A /* ShellScript */,
+				81339FA90315212D1FBE0BA5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -535,6 +577,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AD794BF1D0347BD008A1D2D /* Build configuration list for PBXNativeTarget "VideoMarksTests" */;
 			buildPhases = (
+				2FE843DB33F6C015D9C9191F /* [CP] Check Pods Manifest.lock */,
 				4AD794A41D0347BD008A1D2D /* Sources */,
 				4AD794A51D0347BD008A1D2D /* Frameworks */,
 				4AD794A61D0347BD008A1D2D /* Resources */,
@@ -553,6 +596,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AD794C21D0347BD008A1D2D /* Build configuration list for PBXNativeTarget "VideoMarksUITests" */;
 			buildPhases = (
+				E5A75319506D575D4DCB2781 /* [CP] Check Pods Manifest.lock */,
 				4AD794AF1D0347BD008A1D2D /* Sources */,
 				4AD794B01D0347BD008A1D2D /* Frameworks */,
 				4AD794B11D0347BD008A1D2D /* Resources */,
@@ -571,6 +615,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AD794D51D034B4D008A1D2D /* Build configuration list for PBXNativeTarget "VExtension" */;
 			buildPhases = (
+				6B2313A649AE641DBAA8F8A9 /* [CP] Check Pods Manifest.lock */,
 				4AD794C61D034B4D008A1D2D /* Sources */,
 				4AD794C71D034B4D008A1D2D /* Frameworks */,
 				4AD794C81D034B4D008A1D2D /* Resources */,
@@ -591,18 +636,19 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = nevercry;
 				TargetAttributes = {
 					2F5A39011E44BBD500BA0550 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = L8463XAM23;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					4AD794901D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L8463XAM23;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -620,18 +666,18 @@
 					};
 					4AD794A71D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 						TestTargetID = 4AD794901D0347BD008A1D2D;
 					};
 					4AD794B21D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 						TestTargetID = 4AD794901D0347BD008A1D2D;
 					};
 					4AD794C91D034B4D008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L8463XAM23;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -725,20 +771,139 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4A5FF0491D75A546002D156A /* ShellScript */ = {
+		2FE843DB33F6C015D9C9191F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VideoMarksTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B2313A649AE641DBAA8F8A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81339FA90315212D1FBE0BA5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-VideoMarks/Pods-VideoMarks-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoMarks/Pods-VideoMarks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF71539E0F4E62D3C0D7B755 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VTodayExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E431B1CDE70CC03F0D1C7E83 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VideoMarks-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5A75319506D575D4DCB2781 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VideoMarksUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -994,6 +1159,7 @@
 /* Begin XCBuildConfiguration section */
 		2F5A39101E44BBD500BA0550 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26E90BFE71385B51F65E65EC /* Pods-VTodayExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1005,12 +1171,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		2F5A39111E44BBD500BA0550 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71046853E552AA1271EDD405 /* Pods-VTodayExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1021,7 +1189,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VTodayExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1035,14 +1204,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1084,14 +1261,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1119,6 +1304,7 @@
 		};
 		4AD794BD1D0347BD008A1D2D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F129E360753307FF651D82C3 /* Pods-VideoMarks.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1126,10 +1312,10 @@
 				CODE_SIGN_ENTITLEMENTS = VideoMarks/VideoMarks.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = L8463XAM23;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = VideoMarks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1137,13 +1323,15 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VideoMarks/VideoMarks-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		4AD794BE1D0347BD008A1D2D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D617DA9F27CF163F6AE6543 /* Pods-VideoMarks.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1151,107 +1339,114 @@
 				CODE_SIGN_ENTITLEMENTS = VideoMarks/VideoMarks.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = L8463XAM23;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = VideoMarks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VideoMarks/VideoMarks-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		4AD794C01D0347BD008A1D2D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 265D4E0EFAA95B8BE0BB2AE8 /* Pods-VideoMarksTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = VideoMarksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoMarks.app/VideoMarks";
 			};
 			name = Debug;
 		};
 		4AD794C11D0347BD008A1D2D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C7FB85A97EBA702E5C57238 /* Pods-VideoMarksTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = VideoMarksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoMarks.app/VideoMarks";
 			};
 			name = Release;
 		};
 		4AD794C31D0347BD008A1D2D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1387A304DAC8D00D7E6D6FF6 /* Pods-VideoMarksUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = VideoMarksUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = VideoMarks;
 			};
 			name = Debug;
 		};
 		4AD794C41D0347BD008A1D2D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D07A205B8C3EB636C1A7642 /* Pods-VideoMarksUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = VideoMarksUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = VideoMarks;
 			};
 			name = Release;
 		};
 		4AD794D61D034B4D008A1D2D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71018F0F46D8180538580FCF /* Pods-VExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = VExtension/VExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 8;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		4AD794D71D034B4D008A1D2D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F1470AEAFF05A4416568D7B /* Pods-VExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = VExtension/VExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 8;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
