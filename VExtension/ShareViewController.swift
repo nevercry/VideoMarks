@@ -13,7 +13,6 @@ import SwiftyJSON
 struct Constant {
     static let appGroupID = "group.nevercry.videoMarks"
     static let kSaveMarks = "savedMarks"
-    static let kIsUsingURLScheme = "isUsingURLScheme"
 }
 
 
@@ -506,21 +505,16 @@ class ShareViewController: UIViewController {
     
     // MARK: - 打开APP
     func tryOpenVideoMarks() {
-        let groupDefaults = UserDefaults.init(suiteName: Constant.appGroupID)!
-        let isUsingURLScheme = groupDefaults.bool(forKey: Constant.kIsUsingURLScheme)
+        let url = NSURL(string:"videomarks://test.com")
+        let context = NSExtensionContext()
+        context.open(url! as URL, completionHandler: nil)
         
-        if isUsingURLScheme == true {
-            let url = NSURL(string:"videomarks://test.com")
-            let context = NSExtensionContext()
-            context.open(url! as URL, completionHandler: nil)
-            
-            var responder = self as UIResponder?
-            while (responder != nil){
-                if responder?.responds(to: #selector(UIApplication.openURL(_:))) == true{
-                    responder?.perform(#selector(UIApplication.openURL(_:)), with: url)
-                }
-                responder = responder!.next
+        var responder = self as UIResponder?
+        while (responder != nil){
+            if responder?.responds(to: #selector(UIApplication.openURL(_:))) == true{
+                responder?.perform(#selector(UIApplication.openURL(_:)), with: url)
             }
+            responder = responder!.next
         }
     }
 }

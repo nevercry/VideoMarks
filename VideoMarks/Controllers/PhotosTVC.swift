@@ -24,7 +24,6 @@ class PhotosTVC: UITableViewController {
         super.viewDidLoad()
         self.navigationItem.title = NSLocalizedString("Videos", comment: "视频")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewAlbum))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings"), style: .plain, target: self, action: #selector(setting))
         self.clearsSelectionOnViewWillAppear = false
     }
     
@@ -58,9 +57,6 @@ class PhotosTVC: UITableViewController {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
-    @objc func setting() {
-        self.performSegue(withIdentifier: VideoMarksConstants.ShowSetting, sender: nil)
-    }
     
     // MARK: Memery Warning
     

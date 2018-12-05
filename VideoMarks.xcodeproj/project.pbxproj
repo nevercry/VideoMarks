@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F5A38DA1E4432CD00BA0550 /* SettingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38D91E4432CD00BA0550 /* SettingTVC.swift */; };
 		2F5A38DC1E44551200BA0550 /* SwitchSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */; };
-		2F5A38DE1E446B2000BA0550 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38DD1E446B2000BA0550 /* Settings.bundle */; };
 		2F5A38E01E446FA100BA0550 /* SystemConfigHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */; };
 		2F5A38E41E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38E61E44A83700BA0550 /* InfoPlist.strings */; };
 		2F5A38E91E44A83700BA0550 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F5A38EB1E44A83700BA0550 /* InfoPlist.strings */; };
@@ -124,9 +122,7 @@
 		26E90BFE71385B51F65E65EC /* Pods-VTodayExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VTodayExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VTodayExtension/Pods-VTodayExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		2C7FB85A97EBA702E5C57238 /* Pods-VideoMarksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarksTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarksTests/Pods-VideoMarksTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D617DA9F27CF163F6AE6543 /* Pods-VideoMarks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoMarks.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoMarks/Pods-VideoMarks.release.xcconfig"; sourceTree = "<group>"; };
-		2F5A38D91E4432CD00BA0550 /* SettingTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTVC.swift; sourceTree = "<group>"; };
 		2F5A38DB1E44551200BA0550 /* SwitchSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchSettingCell.swift; sourceTree = "<group>"; };
-		2F5A38DD1E446B2000BA0550 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		2F5A38DF1E446FA100BA0550 /* SystemConfigHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfigHelper.swift; sourceTree = "<group>"; };
 		2F5A38E11E44A83600BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TabTwoScenes.strings"; sourceTree = "<group>"; };
 		2F5A38E51E44A83700BA0550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -348,7 +344,6 @@
 				4A5CFD9F1D060D6D004C2C64 /* DataController.swift */,
 				4AA06C5B1D368E9C00504AE3 /* PhotosTVC.swift */,
 				4AA06C5D1D36EBFA00504AE3 /* AssetGirdVC.swift */,
-				2F5A38D91E4432CD00BA0550 /* SettingTVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -371,7 +366,6 @@
 		4A4C25711D9D879800EA6F19 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				2F5A38DD1E446B2000BA0550 /* Settings.bundle */,
 				4AE707DD1D4883160064ACEE /* VideoMarks-Bridging-Header.h */,
 				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
@@ -736,7 +730,6 @@
 				4A5FF03D1D747BE1002D156A /* TabTwoScenes.storyboard in Resources */,
 				4AD7949A1D0347BD008A1D2D /* Main.storyboard in Resources */,
 				4AD4E29A1D0C1C220002CE90 /* InfoPlist.strings in Resources */,
-				2F5A38DE1E446B2000BA0550 /* Settings.bundle in Resources */,
 				2F5A38F51E44ACF700BA0550 /* TabOneScenes.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -942,7 +935,6 @@
 				4AA06C5E1D36EBFA00504AE3 /* AssetGirdVC.swift in Sources */,
 				4A5CFDA01D060D6D004C2C64 /* DataController.swift in Sources */,
 				2FA88D291E3F31FF00F26BE6 /* DownloadTask.swift in Sources */,
-				2F5A38DA1E4432CD00BA0550 /* SettingTVC.swift in Sources */,
 				2FA88D3D1E3F360600F26BE6 /* NSIndexSet+extension.swift in Sources */,
 				2F5A38E01E446FA100BA0550 /* SystemConfigHelper.swift in Sources */,
 				2FA88D2F1E3F31FF00F26BE6 /* OpenSafariActivity.swift in Sources */,
