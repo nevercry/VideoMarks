@@ -126,22 +126,7 @@ run: function(arguments) {
         }
     }
     
-    // 解析bilibili
-    function bilibiliParse() {
-        var preTitle = document.querySelector("head>meta[property='og:title']").content;
-        var prePoster = document.querySelector("head>meta[property='og:image']").content;
-        
-        if (preTitle) {
-            videoInfo.title = preTitle;
-        }
-        
-        if (prePoster) {
-            videoInfo.poster = prePoster;
-        }
     
-        videoInfo.url = document.getElementsByTagName('source')[0].src;
-        videoInfo.duration = document.getElementsByClassName('time-total-text')[0].textContent;
-    }
     
     
     
@@ -328,6 +313,17 @@ run: function(arguments) {
         
         videoInfo.type = "twitter";
         videoInfo.url = "https://api.twitter.com/1.1/statuses/show/" + tweet_id + ".json?tweet_mode=extended";
+    }
+    
+    // 解析bilibili
+    function bilibiliParse() {
+        
+        const regex = /[0-9]+/;
+        var aid = videoInfo.source.match(regex)[0];
+        
+        videoInfo.type = "bilibili";
+        videoInfo.url = "https://api.bilibili.com/playurl?callback=callbackfunction&aid=" + aid + "&page=1&platform=html5&quality=1&vtype=mp4&type=jsonp"
+        
     }
     
     function otherParse() {
