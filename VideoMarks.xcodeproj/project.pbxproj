@@ -1408,6 +1408,7 @@
 				CODE_SIGN_ENTITLEMENTS = VExtension/VExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = L8463XAM23;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1427,6 +1428,7 @@
 				CODE_SIGN_ENTITLEMENTS = VExtension/VExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = L8463XAM23;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

@@ -65,6 +65,80 @@ class ShareViewController: UIViewController {
         updateUI()
         activityStatusView.stopAnimating()
         
+        
+        // 判断输入的类型
+        
+        if let unKnowItem = extensionContext?.inputItems.first as? NSExtensionItem {
+            
+            if let unKnowItemProvider = unKnowItem.attachments?.first {
+                
+                let kPlainText = String(kUTTypePlainText)
+                
+                if unKnowItemProvider.hasItemConformingToTypeIdentifier(kPlainText) {
+                    // 纯文本
+                    
+                    unKnowItemProvider.loadItem(forTypeIdentifier: kPlainText, options: nil) { (plainText, error) in
+                        
+                        if let shareText = plainText as? NSString {
+                            
+                            print(shareText)
+                        }
+ 
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+                
+                let kUrl = String(kUTTypeURL)
+                
+                if unKnowItemProvider.hasItemConformingToTypeIdentifier(kUrl) {
+                    // URL
+                    
+                    unKnowItemProvider.loadItem(forTypeIdentifier: kUrl, options: nil) { (url, error) in
+                        
+                        if let shareURL = url as? NSURL {
+                            
+                            self.videoInfo = self.makeURLToVideoInfo(url:shareURL)
+                            
+                            
+                            guard let videoURLStr = self.videoInfo["url"] , videoURLStr.count > 0 else { return }
+                            
+                            
+                            // 如果获取到视频地址
+                            print("video url is \(videoURLStr)")
+                            
+                            // 设置文件名
+                            DispatchQueue.main.async(execute: {
+                                self.title = self.videoInfo["title"]
+                                self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(videoURLStr)"
+                                self.updateUI()
+                            })
+                            
+                            
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         let propertyList = String(kUTTypePropertyList)
         guard let item = extensionContext?.inputItems.first as? NSExtensionItem,
             let itemProvider = item.attachments?.first , itemProvider.hasItemConformingToTypeIdentifier(propertyList) else { return }
@@ -98,6 +172,27 @@ class ShareViewController: UIViewController {
         })
         
         print("分享内容是: \(String(describing: item.attributedContentText?.string))")
+    }
+    
+    func makeURLToVideoInfo(url: NSURL) -> [String: String] {
+        var videoInfo = [String:String]()
+        videoInfo["title"] = url.description
+        
+    
+        // 判断url 属于哪个视频服务
+        
+        let hostName = url.host
+        
+        if hostName!.contains("twitter") {
+           // twitter 视频
+            let tweet_id = url.lastPathComponent!
+            
+            videoInfo["url"] = "https://api.twitter.com/1.1/statuses/show/" + tweet_id + ".json?tweet_mode=extended";
+            videoInfo["type"] = "twitter"
+        }
+        
+        return videoInfo
+
     }
     
     func updateUI(){
