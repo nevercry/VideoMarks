@@ -4,19 +4,19 @@
 /* 添加日期 */
 "Add Date" = "添加日期";
 
-/* No comment provided by engineer. */
+/* 相册 */
 "Albums" = "相冊";
 
 /* No comment provided by engineer. */
 "All Videos" = "所有視頻";
 
-/* (No Commment) */
+/* 无法获取到商品 */
 "Can't fetch the product." = "無法獲取到商品";
 
 /* 取消 */
 "Cancel" = "取消";
 
-/* (No Commment) */
+/* 清空 */
 "Clear Data" = "清空";
 
 /* 复制链接 */
@@ -40,10 +40,10 @@
 /* 输入你想要保存的视频地址 */
 "Enter the URL for the video you want to save." = "請輸入你想要保存的地址";
 
-/* (No Commment) */
+/* 过期时间 */
 "Expire" = "有效期";
 
-/* (No Commment) */
+/* 过期 */
 "Invalid to play" = "視頻過期無法播放";
 
 /* 新建相册 */
@@ -55,13 +55,13 @@
 /* 在Safari中打开 */
 "Open in Safari" = "在Safari中打開";
 
-/* (No Commment) */
+/* 照片 */
 "Photos Library" = "照片庫";
 
-/* (No Commment) */
+/* 去广告 */
 "Remove Ad" = "去廣告";
 
-/* (No Commment) */
+/* 恢复购买 */
 "Restore Purchase" = "恢復購買";
 
 /* 保存 */
@@ -70,8 +70,14 @@
 /* 保存失败 */
 "Save Error" = "保存失敗";
 
-/* 设置 */
-"Setting" = "設置";
+/* 保存封面 */
+"Save Poster" = "保存封面";
+
+/* 照片已保存到您的相册中 */
+"Saved Success Message" = "照片已保存到您的相冊中";
+
+/* 保存成功！ */
+"Saved!" = "保存成功！";
 
 /* 分享 */
 "Share" = "分享";
@@ -79,8 +85,11 @@
 /* 源链接 */
 "Source Link" = "源鏈接";
 
-/* 通过URL Scheme 自动打开应用 */
-"Using URL Scheme" = "通過URL Scheme自動打開";
+/* 交易失败 */
+"Transaction Fail" = "交易失敗";
+
+/* 未知 */
+"unknow" = "未知";
 
 /* 影片信息 */
 "Video Detail" = "影片信息";
@@ -91,9 +100,6 @@
 /* 视频 */
 "Videos" = "視頻";
 
-/* (No Commment) */
+/* 网页 */
 "Web" = "網頁";
-
-/* 未知 */
-"unknow" = "未知";
 

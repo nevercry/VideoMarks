@@ -322,7 +322,7 @@ run: function(arguments) {
         var aid = videoInfo.source.match(regex)[0];
         
         videoInfo.type = "bilibili";
-        videoInfo.url = "https://api.bilibili.com/playurl?callback=callbackfunction&aid=" + aid + "&page=1&platform=html5&quality=1&vtype=mp4&type=jsonp"
+        videoInfo.url = "https://api.bilibili.com/playurl?callback=callbackfunction&aid=" + aid + "&page=1&platform=html5&quality=1&vtype=mp4&type=json"
         
     }
     

@@ -1,6 +1,6 @@
-/* Class = "UIButton"; normalTitle = "Copy Link "; ObjectID = "LMl-yA-0ef"; */
-"LMl-yA-0ef.normalTitle" = "コピーリンクペーストボード";
-
 /* Class = "UILabel"; text = "Link: unknow"; ObjectID = "fE0-h2-sEA"; */
 "fE0-h2-sEA.text" = "リンク:  未知の";
+
+/* Class = "UIButton"; normalTitle = "Copy Link "; ObjectID = "LMl-yA-0ef"; */
+"LMl-yA-0ef.normalTitle" = "コピーリンクペーストボード";
 

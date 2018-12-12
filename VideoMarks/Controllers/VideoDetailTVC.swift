@@ -65,6 +65,14 @@ class VideoDetailTVC: UITableViewController {
         var numOfRow = 1
         if video?.source.lowercased() != "unknow" {
             numOfRow = 2
+            
+            if let postCount = video?.poster.count {
+                if postCount > 0 {
+                    numOfRow = 3
+                }
+            }
+            
+            
         }
         return numOfRow
     }
@@ -78,6 +86,10 @@ class VideoDetailTVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Source Link Cell", for: indexPath)
             cell.textLabel?.text = NSLocalizedString("Source Link", comment: "源链接")
             return cell
+        } else if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Save Poster Cell", for: indexPath)
+            cell.textLabel?.text = NSLocalizedString("Save Poster", comment: "保存封面")
+            return cell
         } else {
             return UITableViewCell()
         }
@@ -89,6 +101,8 @@ class VideoDetailTVC: UITableViewController {
         case 0:
             height = video!.heightForTableView(tableView.bounds.width - 16)
         case 1:
+            height = 44
+        case 2:
             height = 44
         default:
             height = 0
@@ -122,6 +136,31 @@ class VideoDetailTVC: UITableViewController {
             present(alertC, animated: true, completion: nil)
             
             tableView.deselectRow(at: indexPath, animated: false)
+        } else if (indexPath.row == 2) {
+            
+            // 保存图片
+            
+            if let imageData = self.video?.posterImage?.data  {
+                if let image = UIImage(data: imageData) {
+                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+                }
+            }
         }
     }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: NSLocalizedString("Save Error", comment: "保存失败"), message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "确认"), style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: NSLocalizedString("Saved!", comment: "保存成功！"), message: NSLocalizedString("Saved Success Message", comment: "照片已保存到您的相册中"), preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
+    
+    
 }

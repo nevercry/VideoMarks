@@ -347,12 +347,18 @@ class ShareViewController: UIViewController {
             
             
             do {
+                print(data!)
+                
                 
                 if let jsonData = data {
                     let json = try JSON(data: jsonData)
                     
                     if let img = json["img"].string {
                         self.videoInfo["poster"] = img
+                    }
+                    
+                    if let timelength = json["timelength"].int {
+                        self.videoInfo["duration"] = self.seconds2time(timelength/1000)
                     }
                     
                     if let vInfo = json["durl"][0].dictionary {

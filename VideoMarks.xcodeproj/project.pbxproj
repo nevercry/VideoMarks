@@ -297,13 +297,6 @@
 			path = VTodayExtension;
 			sourceTree = "<group>";
 		};
-		2FA88D341E3F342100F26BE6 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		2FA88D351E3F34FC00F26BE6 /* Constent */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,7 +458,6 @@
 				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
 				4AD794A01D0347BD008A1D2D /* LaunchScreen.storyboard */,
 				4A68B13F1D79A718001CC266 /* Assets.xcassets */,
-				2FA88D341E3F342100F26BE6 /* Network */,
 				2FA88D351E3F34FC00F26BE6 /* Constent */,
 				2FA88D361E3F34FC00F26BE6 /* Utils */,
 				2FA88D371E3F34FC00F26BE6 /* Widget */,
