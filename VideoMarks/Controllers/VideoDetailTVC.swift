@@ -86,7 +86,7 @@ class VideoDetailTVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Source Link Cell", for: indexPath)
             cell.textLabel?.text = NSLocalizedString("Source Link", comment: "源链接")
             return cell
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Save Poster Cell", for: indexPath)
             cell.textLabel?.text = NSLocalizedString("Save Poster", comment: "保存封面")
             return cell

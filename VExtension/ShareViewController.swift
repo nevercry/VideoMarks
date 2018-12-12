@@ -178,11 +178,13 @@ class ShareViewController: UIViewController {
     func makeURLToVideoInfo(url: NSURL) -> [String: String] {
         var videoInfo = [String:String]()
         videoInfo["title"] = url.description
+        videoInfo["source"] = url.absoluteString
         
     
         // 判断url 属于哪个视频服务
         
         let hostName = url.host!
+        
         
         if hostName.contains("twitter") {
            // twitter 视频
