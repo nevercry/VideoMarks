@@ -113,6 +113,31 @@ class ShareViewController: UIViewController {
                                 
                                 self.videoInfo["title"] = shareText as String
                                 
+                                if shareText.contains("www.youtube.com/watch?v=") {
+                                    // youtube 的分享
+                                    
+                                    let youtubeURLComps = URLComponents(string: shareText as String)
+                                    
+                                    let vId = youtubeURLComps!.queryItems!.first(where: { (queryItem) -> Bool in
+                                        return queryItem.name == "v"
+                                    })!.value!
+                                    
+                                    self.videoInfo["type"] = "youtube"
+                                    self.videoInfo["poster"] = "https://i.ytimg.com/vi/" + vId + "/hqdefault.jpg"
+                                    
+                                    let videoURLStr = "http://youtube.com/get_video_info?video_id=" + vId + "&el=detailpage&ps=default&eurl=&gl=US&hl=en"
+                                    self.videoInfo["url"] = videoURLStr
+                                    
+                                    // 设置文件名
+                                    DispatchQueue.main.async(execute: {
+                                        self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(videoURLStr)"
+                                    })
+                                    
+                                    
+                                    
+                                }
+                                
+                                
                                 // 设置文件名
                                 DispatchQueue.main.async(execute: {
                                     self.title = self.videoInfo["title"]
@@ -146,8 +171,8 @@ class ShareViewController: UIViewController {
         
         itemProvider.loadItem(forTypeIdentifier: propertyList, options: nil, completionHandler: { (diction, error) in
             guard let shareDic = diction as? NSDictionary,
-            let results = shareDic.object(forKey: NSExtensionJavaScriptPreprocessingResultsKey) as? NSDictionary,
-            let vInfo = results.object(forKey: "videoInfo") as? NSDictionary else { return }
+                let results = shareDic.object(forKey: NSExtensionJavaScriptPreprocessingResultsKey) as? NSDictionary,
+                let vInfo = results.object(forKey: "videoInfo") as? NSDictionary else { return }
             // 视频信息
             self.videoInfo["title"] = vInfo["title"] as? String
             self.videoInfo["duration"] = vInfo["duration"] as? String
@@ -159,7 +184,7 @@ class ShareViewController: UIViewController {
             print("videoInfo is \(self.videoInfo)")
             
             guard let videoURLStr = self.videoInfo["url"] , videoURLStr.count > 0 else { return }
-                                
+            
             
             // 如果获取到视频地址
             print("video url is \(videoURLStr)")
@@ -180,14 +205,14 @@ class ShareViewController: UIViewController {
         videoInfo["title"] = url.description
         videoInfo["source"] = url.absoluteString
         
-    
+        
         // 判断url 属于哪个视频服务
         
         let hostName = url.host!
         
         
         if hostName.contains("twitter") {
-           // twitter 视频
+            // twitter 视频
             let tweet_id = url.lastPathComponent!
             
             videoInfo["url"] = "https://api.twitter.com/1.1/statuses/show/" + tweet_id + ".json?tweet_mode=extended";
@@ -205,7 +230,7 @@ class ShareViewController: UIViewController {
         }
         
         return videoInfo
-
+        
     }
     
     func updateUI(){
@@ -327,7 +352,7 @@ class ShareViewController: UIViewController {
                 
             }
             
-        }.resume()
+            }.resume()
     }
     
     // MARK: - 解析Bilibili视频
@@ -336,7 +361,7 @@ class ShareViewController: UIViewController {
         
         guard let config_url = videoInfo["url"] else {return}
         var bilibiliRequest = URLRequest(url: URL(string: config_url)!)
-//        bilibiliRequest.addValue("Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G34", forHTTPHeaderField: "User-Agent")
+        //        bilibiliRequest.addValue("Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G34", forHTTPHeaderField: "User-Agent")
         bilibiliRequest.addValue("close", forHTTPHeaderField: "Connection")
         bilibiliRequest.addValue("e3109812c147ae086f573ba91d781f40", forHTTPHeaderField: "If-None-Match")
         bilibiliRequest.addValue("https://m.bilibili.com/video/av29030248.html", forHTTPHeaderField: "Referer")
@@ -386,21 +411,99 @@ class ShareViewController: UIViewController {
                     }
                     
                     
-                let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
-                let message = NSLocalizedString("Try again", comment: "请重试")
-                let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
-                    action in
-                    self.hideExtensionWithCompletionHandler()
-                })
-                self.showAlert(alertTitle, message: message, actions: [cancelAction])
-                
-            }
+                    let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+                    let message = NSLocalizedString("Try again", comment: "请重试")
+                    let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
+                        action in
+                        self.hideExtensionWithCompletionHandler()
+                    })
+                    self.showAlert(alertTitle, message: message, actions: [cancelAction])
+                    
+                }
                 
             }
             catch {
                 
             }
-        }.resume()
+            }.resume()
+    }
+    
+    // MARK: - 解析Youtube视频
+    func parse_youtube(_ action: ShareActions)  {
+        let session = prepareParseInfoAndSession()
+        
+        guard let config_url = videoInfo["url"] else {return}
+        let youtubeRequest = URLRequest(url: URL(string: config_url)!)
+        
+        session.dataTask(with: youtubeRequest) { (data, res, error) in
+            DispatchQueue.main.async(execute: {
+                self.activityStatusView.stopAnimating()
+            })
+            
+            if error == nil , let respString = String(data: data!, encoding: .utf8) {
+                
+                let params = respString.components(separatedBy: "&").map({
+                    $0.components(separatedBy: "=")
+                }).reduce(into: [String:String]()) { dict, pair in
+                    if pair.count == 2 {
+                        dict[pair[0]] = pair[1]
+                    }
+                }
+                
+                self.videoInfo["title"] = params["title"]
+                self.videoInfo["duration"] =   self.seconds2time(Int(params["length_seconds"]!)!)
+                
+                let decodeStreamURLMapString = params["url_encoded_fmt_stream_map"]!.removingPercentEncoding!
+                
+                let streamsArr = decodeStreamURLMapString.components(separatedBy: ",").map({ (streamRawString) -> [String: String] in
+                    
+                    return streamRawString.components(separatedBy: "&").map({
+                        $0.components(separatedBy: "=")
+                    }).reduce(into: [String:String]()) { dict, pair in
+                        if pair.count == 2 {
+                            dict[pair[0]] = pair[1]
+                        }
+                    }
+                    
+                })
+                
+                print(streamsArr)
+                
+                let itag22Info = streamsArr.first(where: { (itagInfo) -> Bool in
+                    return itagInfo["itag"] == "22"
+                })!
+                
+                print(itag22Info)
+                
+                let itag22VideURL = itag22Info["url"]!.removingPercentEncoding!
+                
+                
+                DispatchQueue.main.async(execute: {
+                    self.videoInfo["url"] = itag22VideURL
+                    self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(itag22VideURL)";
+                    switch action {
+                    case .copy:
+                        UIPasteboard.general.string = itag22VideURL
+                        self.hideExtensionWithCompletionHandler()
+                        self.tryOpenVideoMarks()
+                    case .save:
+                        self.startSave()
+                    }
+                })
+                
+                return
+            }
+            
+            let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+            let message = NSLocalizedString("Try again", comment: "请重试")
+            let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
+                action in
+                self.hideExtensionWithCompletionHandler()
+            })
+            self.showAlert(alertTitle, message: message, actions: [cancelAction])
+            
+            
+            }.resume()
     }
     
     // MARK: - 解析Vimeo视频
@@ -635,7 +738,7 @@ class ShareViewController: UIViewController {
             var vURL:NSString?
             scaner.scanUpTo(" ", into: &vURL)
             
-//                print("dateinfo: \(dataInfo)")
+            //                print("dateinfo: \(dataInfo)")
             print("poster: \(String(describing: poster))")
             print("videoURL: \(String(describing: vURL))")
             print("duration: \(String(describing: duration))")
@@ -772,6 +875,8 @@ class ShareViewController: UIViewController {
             parse_twitter(userAction)
         } else if (videoInfo["type"] == "bilibili") {
             parse_bilibili(userAction)
+        } else if (videoInfo["type"] == "youtube") {
+            parse_youtube(userAction)
         } else {
             switch userAction {
             case .copy:
@@ -795,8 +900,8 @@ class ShareViewController: UIViewController {
             self.navigationItem.leftBarButtonItem?.isEnabled = false
             UIView.animate(withDuration: 0.20, animations: { () -> Void in
                 self.navigationController!.view.transform = CGAffineTransform(translationX: 0, y: self.navigationController!.view.frame.size.height)
-                },completion: { sucess in
-                    self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+            },completion: { sucess in
+                self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
             })
         }
     }

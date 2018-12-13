@@ -61,26 +61,7 @@ run: function(arguments) {
                 );
     }
     
-    // 解析Youtube
-    function youtubeParse() {
-        // youtube
-        var elem = document.getElementsByTagName("video")[0];
-        var vIndex = document.URL.search('v=');
-        var vId = document.URL.slice(vIndex+2);
-        // 解析URL 获得时长
-        var searchs = elem.src.split('?')[1].split('&');
-        for (var pairs of searchs) {
-            if (pairs.includes('dur=')) {
-                var dur = pairs.split('=')[1];
-                videoInfo.duration = seconds2time(parseInt(dur,10));
-                break;
-            }
-        }
-        
-        videoInfo.title = elem.title;
-        videoInfo.url = elem.src;
-        videoInfo.poster = "https://i.ytimg.com/vi/" + vId + "/hqdefault.jpg";
-    }
+    
     
     // 解析youku
     function youkuParse() {
@@ -323,6 +304,18 @@ run: function(arguments) {
         
         videoInfo.type = "bilibili";
         videoInfo.url = "https://api.bilibili.com/playurl?callback=callbackfunction&aid=" + aid + "&page=1&platform=html5&quality=1&vtype=mp4&type=json"
+        
+    }
+    
+    // 解析Youtube
+    function youtubeParse() {
+        // youtube
+        const url = new URL(document.URL);
+        let vId = url.searchParams.get("v");
+        
+        videoInfo.type = "youtube";
+        videoInfo.poster = "https://i.ytimg.com/vi/" + vId + "/hqdefault.jpg";
+        videoInfo.url = "http://youtube.com/get_video_info?video_id=" + vId + "&el=detailpage&ps=default&eurl=&gl=US&hl=en"
         
     }
     
