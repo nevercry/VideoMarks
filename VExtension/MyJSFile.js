@@ -319,6 +319,19 @@ run: function(arguments) {
         
     }
     
+    // 解析douban
+    function doubanParse() {
+        // douban
+        const regex = /status\/([0-9]+)/;
+        let vId = regex.exec(document.URL)[1]
+        
+        videoInfo.type = "douban";
+        videoInfo.url = "https://frodo.douban.com/api/v2/status/" + vId + "?_sig=maV9k/gfVy8qE8cAF3HTQQ0uh6A%3D&_ts=1544700569&alt=json&apikey=0ab215a8b1977939201640fa14c66bab&douban_udid=2117660d7b29a9f1820c6b90d2102f7423f15592&latitude=0&loc_id=118159&longitude=0&udid=0c33e09b9bad592c444dbc72778171c331bbdb77&version=6.5.0"
+    }
+    
+    
+    
+    
     function otherParse() {
         // 其他网站
         var sources = document.getElementsByTagName("source");
@@ -402,6 +415,8 @@ run: function(arguments) {
         acfunParse();
     } else if (originURL.includes('vimeo.com')) {
         vimeoParse();
+    } else if (originURL.includes('douban.com')) {
+        doubanParse();
     } else {
         otherParse();
     }
