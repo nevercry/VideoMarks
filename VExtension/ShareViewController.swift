@@ -94,7 +94,12 @@ class ShareViewController: UIViewController {
                                 
                                 // 设置文件名
                                 DispatchQueue.main.async(execute: {
-                                    self.title = self.videoInfo["title"]
+                                    if let title = self.videoInfo["title"] {
+                                        self.title = title
+                                    } else {
+                                        self.title = self.videoInfo["url"]
+                                    }
+                                    
                                     self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(videoURLStr)"
                                     self.updateUI()
                                 })
@@ -202,7 +207,6 @@ class ShareViewController: UIViewController {
     
     func makeURLToVideoInfo(url: NSURL) -> [String: String] {
         var videoInfo = [String:String]()
-        videoInfo["title"] = url.description
         videoInfo["source"] = url.absoluteString
         
         
@@ -226,6 +230,14 @@ class ShareViewController: UIViewController {
                 
                 videoInfo["url"] = "https://api.bilibili.com/playurl?callback=callbackfunction&aid=" + aid + "&page=1&platform=html5&quality=1&vtype=mp4&type=json"
                 videoInfo["type"] = "bilibili"
+            }
+        } else if hostName.contains("douban") {
+            // 豆瓣视频
+            let queryString = url.query!
+            
+            if let vid = queryString.match(for: "[0-9]+", in: queryString) {
+                videoInfo["url"] = "https://frodo.douban.com/api/v2/status/" + vid + "?_sig=maV9k/gfVy8qE8cAF3HTQQ0uh6A%3D&_ts=1544700569&alt=json&apikey=0ab215a8b1977939201640fa14c66bab&douban_udid=2117660d7b29a9f1820c6b90d2102f7423f15592&latitude=0&loc_id=118159&longitude=0&udid=0c33e09b9bad592c444dbc72778171c331bbdb77&version=6.5.0"
+                videoInfo["type"] = "douban"
             }
         }
         
@@ -374,9 +386,6 @@ class ShareViewController: UIViewController {
             
             
             do {
-                print(data!)
-                
-                
                 if let jsonData = data {
                     let json = try JSON(data: jsonData)
                     
@@ -504,6 +513,73 @@ class ShareViewController: UIViewController {
             
             
             }.resume()
+    }
+    
+    // MARK: - 解析豆瓣视频
+    func parse_douban(_ action: ShareActions)  {
+        let session = prepareParseInfoAndSession()
+        
+        guard let config_url = videoInfo["url"] else {return}
+        var duobanRequest = URLRequest(url: URL(string: config_url)!)
+        duobanRequest.addValue("frodo.douban.com", forHTTPHeaderField: "Host")
+        duobanRequest.addValue("keep-alive", forHTTPHeaderField: "Connection")
+        duobanRequest.addValue("*/*", forHTTPHeaderField: "Accept")
+        duobanRequest.addValue("api-client/0.1.3 com.douban.frodo.test/6.5.0 iOS/12.1.1 iPhone10,3 network/wifi", forHTTPHeaderField: "User-Agent")
+        duobanRequest.addValue("zh-Hans-CN;q=1, en-CN;q=0.9", forHTTPHeaderField: "Accept-Language")
+        duobanRequest.addValue("Bearer ec3778cd8eb16af9c4a66a68ac1440eb", forHTTPHeaderField: "Authorization")
+        duobanRequest.addValue("br, gzip, deflate", forHTTPHeaderField: "Accept-Encoding")
+        
+        session.dataTask(with: duobanRequest) { (data, res, error) in
+            DispatchQueue.main.async(execute: {
+                self.activityStatusView.stopAnimating()
+            })
+            
+            do {
+                if let jsonData = data {
+                    let json = try JSON(data: jsonData)
+                    
+                    
+                    if let duration = json["video_info"]["duration"].string {
+                        self.videoInfo["duration"] = duration
+                    }
+                    
+                    if let videoURL = json["video_info"]["video_url"].string {
+                        self.videoInfo["url"] = videoURL
+                        
+                        DispatchQueue.main.async(execute: {
+                            self.videoInfo["url"] = videoURL
+                            self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(videoURL)";
+                            switch action {
+                            case .copy:
+                                UIPasteboard.general.string = videoURL
+                                self.hideExtensionWithCompletionHandler()
+                                self.tryOpenVideoMarks()
+                            case .save:
+                                self.startSave()
+                            }
+                        })
+                        
+                        return
+                    }
+                    
+                    let alertTitle = NSLocalizedString("Operation Failed", comment: "操作失败")
+                    let message = NSLocalizedString("Try again", comment: "请重试")
+                    let cancelAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "确认"), style: .cancel, handler: {
+                        action in
+                        self.hideExtensionWithCompletionHandler()
+                    })
+                    self.showAlert(alertTitle, message: message, actions: [cancelAction])
+                    
+                }
+                
+            }
+            catch {
+                
+            }
+            
+        
+            }.resume()
+    
     }
     
     // MARK: - 解析Vimeo视频
@@ -877,6 +953,8 @@ class ShareViewController: UIViewController {
             parse_bilibili(userAction)
         } else if (videoInfo["type"] == "youtube") {
             parse_youtube(userAction)
+        } else if (videoInfo["type"] == "douban") {
+            parse_douban(userAction)
         } else {
             switch userAction {
             case .copy:
