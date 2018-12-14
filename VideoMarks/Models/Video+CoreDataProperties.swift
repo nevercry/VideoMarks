@@ -48,7 +48,7 @@ extension Video {
         let title = tmpTitle
         var duration = videoInfo["duration"]!
         duration = duration.replacingOccurrences(of: "时长: ", with: "")
-        let poster = videoInfo["poster"]!
+        let poster = videoInfo["poster"] ?? ""
         let source = videoInfo["source"]!
         self.init(url: url,
                   source: source,
