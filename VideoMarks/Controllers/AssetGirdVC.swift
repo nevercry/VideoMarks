@@ -155,7 +155,7 @@ class AssetGirdVC: UICollectionViewController {
             guard let task = progressInfo["task"] as? DownloadTask else { return }
            
             // 获得对应的Cell
-            if let taskIdx = self.taskManager.taskList.index(of: task) {
+            if let taskIdx = self.taskManager.taskList.firstIndex(of: task) {
                 if let cell = collectionView?.cellForItem(at: IndexPath(item: taskIdx, section: 1)) as? DownloadViewCell {
                     cell.progressLabel.text = "\(Int(task.progress.fractionCompleted * 100)) %"
                 }
