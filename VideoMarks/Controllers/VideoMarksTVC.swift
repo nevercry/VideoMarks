@@ -11,6 +11,7 @@ import CoreData
 import AVKit
 import AVFoundation
 import StoreKit
+import Reachability
 
 class VideoMarksTVC: UITableViewController {
     
@@ -18,16 +19,44 @@ class VideoMarksTVC: UITableViewController {
     var fetchedResultsController: NSFetchedResultsController<Video>!
     var memCache = NSCache<NSString,NSString>()
     
+    var reachability: Reachability?
+    
     // MARK:  View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
         self.registerNotification()
+        
+        stopNotifier()
+        
+        reachability = Reachability(hostname: "https://www.qq.com/")
+        
+        startNotifier()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        stopNotifier()
     }
+    
+    func startHost(at index: Int) {
+        
+    }
+    
+    func startNotifier() {
+        do {
+            try reachability?.startNotifier()
+        } catch {
+            return
+        }
+    }
+    
+    func stopNotifier() {
+        reachability?.stopNotifier()
+        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: nil)
+        reachability = nil
+    }
+    
     
     func setupViews() {
         
@@ -240,6 +269,8 @@ extension VideoMarksTVC: NSFetchedResultsControllerDelegate {
         case .move:
             tableView.deleteRows(at: [indexPath!], with: .fade)
             tableView.insertRows(at: [newIndexPath!], with: .fade)
+        @unknown default:
+            fatalError("unknown error")
         }
     }
     
