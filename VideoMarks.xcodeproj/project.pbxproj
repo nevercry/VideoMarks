@@ -359,6 +359,8 @@
 		4A4C25711D9D879800EA6F19 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */,
+				4AD4E2951D0C18770002CE90 /* Localizable.strings */,
 				4AE707DD1D4883160064ACEE /* VideoMarks-Bridging-Header.h */,
 				4AD794C51D03497E008A1D2D /* VideoMarks.entitlements */,
 				4AD794A31D0347BD008A1D2D /* Info.plist */,
@@ -446,13 +448,11 @@
 		4AD794931D0347BD008A1D2D /* VideoMarks */ = {
 			isa = PBXGroup;
 			children = (
-				4A4C25711D9D879800EA6F19 /* Support Files */,
 				4AD794941D0347BD008A1D2D /* AppDelegate.swift */,
-				4AD4E29C1D0C1C220002CE90 /* InfoPlist.strings */,
-				4AD4E2951D0C18770002CE90 /* Localizable.strings */,
-				4AA184F21D11F13100A348E7 /* Views */,
 				4A5CFDA31D07FDCB004C2C64 /* Models */,
+				4AA184F21D11F13100A348E7 /* Views */,
 				4A07AE821D0B433900935701 /* Controllers */,
+				4A4C25711D9D879800EA6F19 /* Support Files */,
 				4AD794981D0347BD008A1D2D /* Main.storyboard */,
 				2F5A38F71E44ACF700BA0550 /* TabOneScenes.storyboard */,
 				4A5FF03B1D747BE1002D156A /* TabTwoScenes.storyboard */,
@@ -628,13 +628,13 @@
 					2F5A39011E44BBD500BA0550 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = L8463XAM23;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					4AD794901D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L8463XAM23;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -652,18 +652,18 @@
 					};
 					4AD794A71D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						TestTargetID = 4AD794901D0347BD008A1D2D;
 					};
 					4AD794B21D0347BD008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						TestTargetID = 4AD794901D0347BD008A1D2D;
 					};
 					4AD794C91D034B4D008A1D2D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L8463XAM23;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -677,7 +677,7 @@
 			};
 			buildConfigurationList = 4AD7948C1D0347BD008A1D2D /* Build configuration list for PBXProject "VideoMarks" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -807,6 +807,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-VideoMarks/Pods-VideoMarks-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -814,6 +815,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1151,8 +1153,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1169,8 +1170,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VTodayExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1304,8 +1304,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VideoMarks/VideoMarks-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1331,8 +1330,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VideoMarks/VideoMarks-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1346,8 +1344,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoMarks.app/VideoMarks";
 			};
 			name = Debug;
@@ -1361,8 +1358,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoMarks.app/VideoMarks";
 			};
 			name = Release;
@@ -1375,8 +1371,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = VideoMarks;
 			};
 			name = Debug;
@@ -1389,8 +1384,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarksUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = VideoMarks;
 			};
 			name = Release;
@@ -1409,8 +1403,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1429,8 +1422,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevercry.VideoMarks.VExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
