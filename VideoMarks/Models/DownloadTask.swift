@@ -58,7 +58,7 @@ class DownloadTask: NSObject {
     }
     
     func subTaskIndex(withTaskId taskId: Int) -> Int {
-        return self.taskIdentifiers.index(of: taskId)!
+        return self.taskIdentifiers.firstIndex(of: taskId)!
     }
     
     func fetchAssetCollection(collectionId: String) -> PHAssetCollection? {

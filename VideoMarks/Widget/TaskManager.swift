@@ -276,7 +276,7 @@ class TaskManager: NSObject {
             }
         }
         
-        if let indexTask = self.taskList.index(of: task) {
+        if let indexTask = self.taskList.firstIndex(of: task) {
             print("完成任务 删除task")
             self.taskList.remove(at: indexTask)
         }
