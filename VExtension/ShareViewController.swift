@@ -120,6 +120,7 @@ class ShareViewController: UIViewController {
                                 
                                 if shareText.contains("www.youtube.com/watch?v=") {
                                     // youtube 的分享
+                                    self.videoInfo["source"] = shareText as String
                                     
                                     let youtubeURLComps = URLComponents(string: shareText as String)
                                     
