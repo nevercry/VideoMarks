@@ -211,7 +211,7 @@ run: function(arguments) {
     
     // xvideos
     function xvideosParse() {
-        otherParse();
+        
         if (videoInfo.url.length == 0) {
             var html5video = document.getElementById('html5video');
             var sibling = html5video.nextElementSibling;
