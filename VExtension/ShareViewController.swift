@@ -296,7 +296,7 @@ class ShareViewController: UIViewController {
                                 
                                 var highBitrate = 0
                                 
-                                for var elem in variants {
+                                for elem in variants {
                                     
                                     if let videoType = elem["content_type"].string {
                                         
@@ -452,40 +452,37 @@ class ShareViewController: UIViewController {
                     }
                 }
                 
-                self.videoInfo["title"] = params["title"]
-                self.videoInfo["duration"] =   self.seconds2time(Int(params["length_seconds"]!)!)
+                let encodePlayerRes = params["player_response"]!
+                let decodePlayerRes = encodePlayerRes.removingPercentEncoding!
                 
-                let decodeStreamURLMapString = params["url_encoded_fmt_stream_map"]!.removingPercentEncoding!
+                print("decodePlayerRes is \(decodePlayerRes)")
                 
-                let streamsArr = decodeStreamURLMapString.components(separatedBy: ",").map({ (streamRawString) -> [String: String] in
-                    
-                    return streamRawString.components(separatedBy: "&").map({
-                        $0.components(separatedBy: "=")
-                    }).reduce(into: [String:String]()) { dict, pair in
-                        if pair.count == 2 {
-                            dict[pair[0]] = pair[1]
-                        }
-                    }
-                    
-                })
+                let playerResJSON = JSON(parseJSON: decodePlayerRes)
                 
-                print(streamsArr)
+                if self.videoInfo["title"] == nil || self.videoInfo["title"]!.count == 0 {
+                    self.videoInfo["title"] = playerResJSON["videoDetails"]["title"].stringValue.removingPercentEncoding!
+                }
                 
-                let itag22Info = streamsArr.first(where: { (itagInfo) -> Bool in
-                    return itagInfo["itag"] == "22"
-                })!
+                self.videoInfo["duration"] = self.seconds2time(Int(playerResJSON["videoDetails"]["lengthSeconds"].stringValue)!)
+                                
+                let streamsArr = playerResJSON["streamingData"]["formats"].arrayValue
+                                
+                var itag22VideoURL = ""
                 
-                print(itag22Info)
-                
-                let itag22VideURL = itag22Info["url"]!.removingPercentEncoding!
-                
+                if let itag22Info = streamsArr.first(where: { (itagInfo) -> Bool in
+                    return itagInfo["itag"].intValue == 22
+                }) {
+                    itag22VideoURL = itag22Info["url"].stringValue
+                } else {
+                    itag22VideoURL = streamsArr.first!["url"].stringValue
+                }
                 
                 DispatchQueue.main.async(execute: {
-                    self.videoInfo["url"] = itag22VideURL
-                    self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(itag22VideURL)";
+                    self.videoInfo["url"] = itag22VideoURL
+                    self.LinkLabel.text = "\(NSLocalizedString("Link", comment: "链接")): \(itag22VideoURL)";
                     switch action {
                     case .copy:
-                        UIPasteboard.general.string = itag22VideURL
+                        UIPasteboard.general.string = itag22VideoURL
                         self.hideExtensionWithCompletionHandler()
                         self.tryOpenVideoMarks()
                     case .save:
@@ -911,19 +908,25 @@ class ShareViewController: UIViewController {
     
     // MARK: - 打开APP
     func tryOpenVideoMarks() {
-        let url = NSURL(string:"videomarks://test.com")
-        let context = NSExtensionContext()
-        context.open(url! as URL, completionHandler: nil)
+        let url = URL(string:"videomarks://test.com")
+        let _ = openURL(url!)
         
-        var responder = self as UIResponder?
-        while (responder != nil){
-            if responder?.responds(to: #selector(UIApplication.openURL(_:))) == true{
-                responder?.perform(#selector(UIApplication.openURL(_:)), with: url)
+    }
+    
+    
+    @objc func openURL(_ url: URL) -> Bool {
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let application = responder as? UIApplication {
+                return application.perform(#selector(openURL(_:)), with: url) != nil
             }
-            responder = responder!.next
+            responder = responder?.next
         }
+        return false
     }
 }
+
+
 
 
 
